@@ -19,6 +19,7 @@ header {
 #logo {
     width: 75px;
     height: 75px;
+    cursor: pointer;
 }
 
 /*----------------Main Content----------*/
@@ -69,6 +70,10 @@ h2 {
     background-color: #00A189;
 }
 
+#utm-tools-linked-to-site {
+    background-color: #F1C500;
+}
+
 .utm-logistics a {
     background-color: #6FC7EA;
 }
@@ -78,7 +83,22 @@ h2 {
 }
 
 .planned-features a {
-    background-color: #F1C500;
+    background-color: #8DBF2E;
+}
+
+/*----------------Iframe Pages----------*/
+.iframe-header {
+    margin-bottom: 0px;
+}
+
+.iframe {
+    height: 100vh;
+    padding: 10px; 
+    background: #1E3765;
+}
+
+.iframe-footer {
+    margin-top: 0;
 }
 
 /*----------------Footer----------*/
