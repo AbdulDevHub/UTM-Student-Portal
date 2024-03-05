@@ -1,0 +1,144 @@
+/*----------------universal/Default----------*/
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+/*----------------Header----------*/
+header {
+    height: 100px;
+    background-color: #1E3765;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    color: #ffffff;
+    margin-bottom: 70px;
+}
+
+#logo {
+    width: 75px;
+    height: 75px;
+}
+
+/*----------------Main Content----------*/
+main {
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+h2 {
+    text-align: center;
+}
+
+#primary-links, #secondary-links {
+    display: flex;
+}
+
+.utm-links {
+    width: 75%;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 30px 0;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.utm-links a {
+    padding: 20px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 10px;
+    transition: transform 0.5s;
+}
+
+.utm-links a:hover {
+    transform: translateY(-5px);
+}
+
+.utm-essentials a {
+    background-color: #DC4633;
+}
+
+.utm-tools a {
+    background-color: #00A189;
+}
+
+.utm-logistics a {
+    background-color: #6FC7EA;
+}
+
+.additional-course-links a {
+    background-color: #AB1368;
+}
+
+.planned-features a {
+    background-color: #F1C500;
+}
+
+/*----------------Footer----------*/
+footer {
+    padding: 25px;
+    background-color: #1E3765;
+    margin-top: 70px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.social-icons a{
+    text-decoration: none;
+    font-size: 30px;
+    margin-right: 15px;
+    color: #dddddd;
+    display: inline-block;
+    transition: transform 0.5s;
+}
+
+.social-icons a:hover{
+    color: #fff;
+    transform: translateY(-5px);
+}
+
+/*----------------Scrollbar----------*/
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    transition: 1.0s;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(127, 127, 127, 0.6);
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: 1.0s;
+}
+
+::-webkit-scrollbar-thumb:vertical:hover,
+::-webkit-scrollbar-thumb:horizontal:hover {
+    background-color: rgb(110, 110, 110);
+    transition: 0.3s;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb:vertical:active,
+::-webkit-scrollbar-thumb:horizontal:active {
+    background: rgba(95, 91, 91, 1);
+}
+
+::-webkit-scrollbar-corner {
+    background: none;
+}
