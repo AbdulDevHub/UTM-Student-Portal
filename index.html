@@ -104,18 +104,9 @@
                     <a href="https://utmsu.ca/" target="_blank" rel="noopener noreferrer">UTM STUDENT UNION</a>
                     <!-- Button for ChatBOT in new tab
                     <a href="https://faqbot-94cc1d.zapier.app" id="utm-tools-linked-to-site" target="_blank" rel="noopener noreferrer">UTM Student Portal ChatBot</a> -->
-
-                    <!--Open a small pop-up window for the chatbot when the button is clicked-->
-                    <a href="" id="utm-tools-linked-to-site" onclick="openChat()">UTM Student Portal ChatBot</a>
                 </div>
-
-                <!--Chatbot small pop-up window script when openChat() is called-->
-                <script>
-                    function openChat() {
-                      window.open("https://faqbot-94cc1d.zapier.app", "UTM Student Portal Assistant", "width=500,height=500");}
-                </script>
-
             </section>
+
             <section>
                 <h2>Additional Course Links (Helpful for CS/MATH/STATS/GIS Students)</h2>
                 <div class="utm-links additional-course-links">
@@ -144,7 +135,15 @@
          <script async data-id="8823312429" id="chatling-embed-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
          -->
 
-
+        <!--Open a small pop-up window for the chatbot when the button is clicked-->
+        <section id="chatbot">
+            <img src="chatbot_icon.png" id="chatbot" onclick="openChat()"/>
+            <!--Chatbot small pop-up window script when openChat() is called-->
+            <script>
+                function openChat() {
+                window.open("https://faqbot-94cc1d.zapier.app", "UTM Student Portal Assistant", "width=500,height=500");}
+            </script>
+        </section>
     </main>
 
     <!-- Footer -->

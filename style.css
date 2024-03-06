@@ -250,3 +250,19 @@ input:checked + label svg.sun {
 input:checked + label svg.moon {
 	fill:#fff;
 }
+
+/* CSS For ChatBot*/
+#chatbot {
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    right: -30px; 
+    bottom: 230px;
+    transition: width 0.4s, height 0.4s, transform 0.4s;
+}
+
+#chatbot:hover {
+    width: 300px;
+    height: 300px;
+    transition: width 0.4s, height 0.4s, transform 0.4s;
+}
