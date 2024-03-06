@@ -27,7 +27,7 @@
         .dark {
           background: #333333;
         }
-        .dark .MainTitle, .dark .result, .dark #input_a, .dark #input_b, .dark #operators, .dark #dark_mode_text { /* Change text color for dark mode */
+        .dark .MainTitle, .dark .result, .dark #input_a, .dark #input_b, .dark #operators, .dark #dark_mode_text, .dark #advanced_calc_button { /* Change text color for dark mode */
             color: white;
         }
         .Container{
@@ -68,13 +68,13 @@
             transition: transform 0.5s, box-shadow .3s;
         }
 
-        #input_a:hover, #input_b:hover, #operators:hover, #submit_calculation:hover, .slider:hover {
+        #input_a:hover, #input_b:hover, #operators:hover, #submit_calculation:hover, #advanced_calc_button:hover, .slider:hover {
             transform: translateY(-10px);
             transition: transform 0.5s, box-shadow .3s;
             box-shadow: 0 0 4px 8px #eb0404; 
         }
 
-        #submit_calculation:hover {
+        #submit_calculation:hover{
             transition: transform 0.5s, box-shadow .5s;
             transform: translateY(-10px);
             box-shadow: 0 0 4px 8px #04ea04; 
@@ -174,6 +174,9 @@
         .DarkMode{
             text-align:left;
             margin-top:-50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         #dark_mode_text{
             margin-top:-15px;
@@ -252,6 +255,23 @@
             background-color: #555; /* Darker background for inputs and operator dropdown */
             color: white; /* White text color for better readability */
         }
+
+        /* Advanced Calculator Button */
+        #advanced_calc_button {
+            font-family: AirbusDisp, sans-serif;
+            font-size: 14px;
+            background-color: #007bff;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 300ms;
+        }
+
+        #advanced_calc_button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -262,6 +282,7 @@
           <input id="dark_mode" type="checkbox">
           <span class="slider round"></span>
         </label>
+        <button id="advanced_calc_button" onclick="window.location.href='https://www.desmos.com/scientific';">Advanced Calculator</button>
     </div>
 
     <div class="Container">
