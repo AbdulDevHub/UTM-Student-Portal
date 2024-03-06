@@ -102,9 +102,19 @@
                     <a href="https://www.utoronto.ca/" target="_blank" rel="noopener noreferrer">UTM OFFICIAL SITE</a>
                     <a href="https://brand.utoronto.ca/" target="_blank" rel="noopener noreferrer">BRAND PORTAL</a>
                     <a href="https://utmsu.ca/" target="_blank" rel="noopener noreferrer">UTM STUDENT UNION</a>
-                    <!-- Button for ChatBOT -->
-                    <a href="https://faqbot-94cc1d.zapier.app" id="utm-tools-linked-to-site" target="_blank" rel="noopener noreferrer">UTM Student Portal ChatBot</a>
+                    <!-- Button for ChatBOT in new tab
+                    <a href="https://faqbot-94cc1d.zapier.app" id="utm-tools-linked-to-site" target="_blank" rel="noopener noreferrer">UTM Student Portal ChatBot</a> -->
+
+                    <!--Open a small pop-up window for the chatbot when the button is clicked-->
+                    <a href="" id="utm-tools-linked-to-site" onclick="openChat()">UTM Student Portal ChatBot</a>
                 </div>
+
+                <!--Chatbot small pop-up window script when openChat() is called-->
+                <script>
+                    function openChat() {
+                      window.open("https://faqbot-94cc1d.zapier.app", "UTM Student Portal Assistant", "width=500,height=500");}
+                </script>
+
             </section>
             <section>
                 <h2>Additional Course Links (Helpful for CS/MATH/STATS/GIS Students)</h2>
