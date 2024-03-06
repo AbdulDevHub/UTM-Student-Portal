@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="eng-ca">
+<head>
+    <title>Simple HTML/JavaScript Calculator</title>
+    <!--AJAX SCRIPT-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- CSS Styling-->
+    <style>
+        .MainTitle{
+            text-align: center;
+            font-family: AirbusMCDUa, sans-serif;
+            font-weight: 900;
+            border-block:solid;
+            border-block-color: red;
+            color: black; /* Default color */
+            transition: color 600ms; /* Smooth transition for color change */
+        }
+        body {
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          transition: background-color 600ms;
+  
+        }
+
+        .dark {
+          background: #333333;
+        }
+        .dark .MainTitle, .dark .result, .dark #input_a, .dark #input_b, .dark #operators, .dark #dark_mode_text { /* Change text color for dark mode */
+            color: white;
+        }
+        .Container{
+            margin-top:2px;
+            border-bottom:solid;
+        }
+        .CalculatorInputA{
+            padding-top:10em;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-shadow:inset;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .CalculatorInputB{
+            padding-top:40em;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-shadow:inset;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        /* Input form for number 1 */
+        #input_a{
+            background-color:ButtonHighlight;
+            font-family:AirbusDisp, sans-serif;
+            font-size: 18px;
+            text-align: center;
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: inset;
+            border-radius: 4px;
+            transition: background-color 600ms; /* Smooth transition for background color change */
+            transition: transform 0.5s, box-shadow .3s;
+        }
+
+        #input_a:hover, #input_b:hover, #operators:hover, #submit_calculation:hover, .slider:hover {
+            transform: translateY(-10px);
+            transition: transform 0.5s, box-shadow .3s;
+            box-shadow: 0 0 4px 8px #eb0404; 
+        }
+
+        #submit_calculation:hover {
+            transition: transform 0.5s, box-shadow .5s;
+            transform: translateY(-10px);
+            box-shadow: 0 0 4px 8px #04ea04; 
+        }
+
+        .switch:hover {
+            transform: translateY(-2px);
+            transition: transform 0.5s, box-shadow .3s;
+        }
+
+        /* Input form for number 2 */
+        #input_b{
+            background-color: ButtonHighlight;
+            font-family:AirbusDisp, sans-serif;
+            font-size: 18px;
+            text-align: center;
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: inset;
+            border-radius: 4px;
+            transition: background-color 600ms; /* Smooth transition for background color change */
+            transition: transform 0.5s, box-shadow .3s;
+        }
+
+
+        .OperatorInput{
+            padding-top:20em;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-shadow:inset;
+            box-sizing: border-box;
+            text-align: center;
+            transition: transform 0.5s, box-shadow .3s;
+        }
+        /*Operator option menu*/
+        #operators{
+            background-color: ButtonShadow;
+            font-family:AirbusDisp, sans-serif;
+            font-size: 18px;
+            width: 100%;
+            text-align: center;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: inset;
+            border-radius: 4px;
+            transition: background-color 600ms; /* Smooth transition for background color change */
+            transition: transform 0.5s, box-shadow .3s;
+        }
+
+        /* The submit button div format*/
+        .SubmitButton{ 
+            padding-top:50em;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-shadow:inset;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        /* The submit button*/
+        #submit_calculation{
+            font-family:AirbusDisp, sans-serif;
+            font-size: 18px;
+            background-color: darkred;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: rgb(255, 255, 255);
+            padding: 10px 20px;
+            transition: transform 0.5s, box-shadow .3s;
+        }
+
+        #submit_calculation:hover{
+            background-color: #008000;
+        }
+
+        /* The final calculation results */
+        .result{
+            padding-top:60em;
+            padding: 12px 20px;
+            margin: 8px 0;
+            font-family:AirbusDisp2, sans-serif;
+            font-weight:800;
+            font-size:30px;
+            box-shadow:inset;
+            box-sizing: border-box;
+            text-align: center;
+            border: none;
+            color: black; /* Default color */
+            transition: color 600ms; /* Smooth transition for color change */
+        }
+        
+
+        .DarkMode{
+            text-align:left;
+            margin-top:-50px;
+        }
+        #dark_mode_text{
+            margin-top:-15px;
+            font-size:12px;
+            font-family:AirbusDisp, sans-serif;
+            text-align:center;
+            color:black; /* Default color */
+            transition: color 600ms; /* Smooth transition for color change */
+            transition: transform 0.5s, box-shadow .3s;
+        }
+        /* The switch - the box around the slider */
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 60px;
+          height: 34px;
+        }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        /* The slider */
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 26px;
+          width: 26px;
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+
+        input:checked + .slider {
+          background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+          box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+          -webkit-transform: translateX(26px);
+          -ms-transform: translateX(26px);
+          transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+          border-radius: 34px;
+        }
+
+        .slider.round:before {
+          border-radius: 50%;
+        }
+        
+        /* Dark mode styles for inputs and operator dropdown */
+        .dark #input_a, .dark #input_b, .dark #operators {
+            background-color: #555; /* Darker background for inputs and operator dropdown */
+            color: white; /* White text color for better readability */
+        }
+    </style>
+</head>
+<body>
+    <div class="MainTitle"><h1>Simple Web Calculator by Kaushal Bhingaradia</h1></div>
+    <div class="DarkMode">
+        <label class="switch">
+            <p id="dark_mode_text">Dark Mode</p>
+          <input id="dark_mode" type="checkbox">
+          <span class="slider round"></span>
+        </label>
+    </div>
+
+    <div class="Container">
+    <form id="calculator">
+    <div class="CalculatorInputA">
+     <input type="number" id="input_a" placeholder="Enter the first number" required/>
+    </div>
+    <div class="OperatorInput">
+     <select id="operators">
+         <option value="+">+</option>
+         <option value="-">-</option>
+         <option value="*">x</option>
+         <option value="/">/</option>
+         <option value="^">^</option>
+     </select>
+    </div>
+    <div class="CalculatorInputB">
+     <input type="number" id="input_b" placeholder="Enter the second number" required/>
+    </div>
+    <div class="SubmitButton">
+     <button type="button" id="submit_calculation">Calculate</button>
+    </div>
+    </form>
+    </div>
+    <div class="result" id="calculation_result">
+        <!-- Results will be displayed here -->
+    </div>
+    <script>
+        const btn = document.querySelector('#dark_mode')
+        const body = document.body
+
+        function change(){
+          btn.checked ? body.classList.add("dark") : body.classList.remove("dark")
+        }
+
+        btn.addEventListener('change', change)
+
+        document.getElementById('submit_calculation').addEventListener('click', function() {
+            const inputA = parseFloat(document.getElementById('input_a').value);
+            const inputB = parseFloat(document.getElementById('input_b').value);
+            const operator = document.getElementById('operators').value;
+            let result;
+
+            switch (operator) {
+                case '+':
+                    result = inputA + inputB;
+                    break;
+                case '-':
+                    result = inputA - inputB;
+                    break;
+                case '*':
+                    result = inputA * inputB;
+                    break;
+                case '/':
+                    if(inputB === 0) {
+                        result = "Error: Division by zero";
+                    } else {
+                        result = inputA / inputB;
+                    }
+                    break;
+                case '^':
+                    result = Math.pow(inputA, inputB);
+                    break;
+                default:
+                    result = "Invalid operation";
+            }
+
+            document.getElementById('calculation_result').innerHTML = `Result: ${result}`;
+        });
+    </script>
+</body>
+</html>
