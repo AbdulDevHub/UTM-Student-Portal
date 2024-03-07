@@ -44,7 +44,7 @@ h2 {
     text-align: center;
 }
 
-#primary-links, #secondary-links {
+#first-row, #second-row, #third-row {
     display: flex;
 }
 
@@ -83,7 +83,7 @@ h2 {
     background-color: #00A189;
 }
 
-#utm-tools-linked-to-site {
+.internal-tools a{
     background-color: #F1C500;
 }
 
@@ -95,7 +95,7 @@ h2 {
     background-color: #AB1368;
 }
 
-.planned-features a {
+.external-resources a {
     background-color: #8DBF2E;
 }
 
