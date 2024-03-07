@@ -18,33 +18,6 @@ function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
 }
 
-// Delete The Fake Place Holder Posts
-document.querySelectorAll('.fake-post').forEach(function(button) {
-    button.addEventListener('click', function(e) {
-        e.target.closest('.post').remove();
-    });
-});
-
-// Load fake posts from localStorage on page load
-window.addEventListener('DOMContentLoaded', (event) => {
-    let posts = JSON.parse(localStorage.getItem('posts'));
-    if (posts) {
-        document.getElementById('posts-container').innerHTML = posts;
-    }
-});
-
-// Add event listener to all fake posts to add delete buttons
-document.getElementById('posts-container').addEventListener('click', function(e) {
-    if (e.target.classList.contains('fake-post')) {
-        // Remove post from DOM
-        e.target.closest('.post').remove();
-        
-        // Save current state of posts to localStorage
-        localStorage.setItem('posts', JSON.stringify(document.getElementById('posts-container').innerHTML));
-    }
-});
-
-
 function filterPostsByTag() {
     const searchValue = document.getElementById('search-tags').value.toLowerCase().trim();
     const posts = document.querySelectorAll('.post');
@@ -129,6 +102,19 @@ window.onload = function() {
         postElement.setAttribute('data-tags', post.tags); // Ensure tags are added as a data attribute for searching
         postElement.innerHTML = `<h1>${post.title}</h1><p>${post.message}</p><p style="font-size: 80%">Tags: ${post.tags}</p>`; // Format the post with title, message, and tags
 
+        // Create delete button
+        const deleteButton = document.createElement('button');
+        deleteButton.innerText = 'Delete';
+        deleteButton.classList.add('delete-button'); // Add class to the delete button
+        deleteButton.onclick = function() {
+            postsContainer.removeChild(postElement);
+            // Update local storage
+            let posts = JSON.parse(localStorage.getItem('posts')) || [];
+            posts = posts.filter(p => p.title !== post.title && p.message !== post.message && p.tags !== post.tags);
+            localStorage.setItem('posts', JSON.stringify(posts));
+        };
+
+        postElement.appendChild(deleteButton); // Append delete button to the post
         postsContainer.appendChild(postElement);
     });
 }
