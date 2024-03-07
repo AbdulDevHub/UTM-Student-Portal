@@ -152,8 +152,15 @@
 
             <!--Chatbot small pop-up window script when openChat() is called-->
             <script>
+                var chatWindow;
+
                 function openChat() {
-                window.open("https://faqbot-94cc1d.zapier.app", "UTM Student Portal Assistant", "width=500,height=500");}
+                    if (chatWindow && !chatWindow.closed) {
+                        chatWindow.focus(); // brings the chat window to front
+                    } else {
+                        chatWindow = window.open('https://faqbot-94cc1d.zapier.app', 'UTM Student Portal Assistant', 'width=500,height=500');
+                        }
+                    }
             </script>
         </section>
 
