@@ -1,8 +1,17 @@
 // =================Universal Logic========================
 // Change Background When Dark Mode Toggle Click 
+// Check if 'dark-mode' was saved in localStorage
+if (localStorage.getItem('dark-mode') === 'true') {
+    document.body.classList.add('dark-mode');
+    document.getElementById('darkmode-toggle').checked = true;
+}
+
 document.getElementById('darkmode-toggle').addEventListener('change', function(event) {
-    document.body.classList.toggle('dark-mode', event.target.checked)
-})
+    document.body.classList.toggle('dark-mode', event.target.checked);
+    // Save the current state of 'dark-mode' in localStorage
+    localStorage.setItem('dark-mode', event.target.checked);
+});
+
 
 // =================Notes Page Logic========================
 function toggleDarkMode() {
