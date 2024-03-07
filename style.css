@@ -216,6 +216,13 @@ input:checked + label {
 	background: #242424;
 }
 
+input#tags{
+	width: 200px;
+	height: 16px;
+	display: block;
+	margin: 10px;
+}
+
 input:checked + label:after {
 	left:98px;
 	transform: translateX(-100%);
