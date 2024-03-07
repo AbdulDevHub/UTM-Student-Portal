@@ -260,24 +260,134 @@ input:checked + label svg.moon {
 	fill:#fff;
 }
 
-/* CSS For ChatBot*/
+/*----------------ChatBot----------*/
 #chatbot {
     position: fixed;
-    width: 200px;
-    height: 200px;
-    right: -30px; 
-    bottom: 230px;
+    width: 150px;
+    height: 150px;
+    right: 0px; 
+    bottom: 50px;
     transition: width 0.4s, height 0.4s, transform 0.4s, box-shadow .3s;
 }
 
 #chatbot:hover {
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
     transition: width 0.4s, height 0.4s, transform 0.4s;
 }
 
 #chatbot:active {
-    width: 350px;
-    height: 350px;
+    width: 225px;
+    height: 225px;
     transition: width 0.2s, height 0.2s, transform 0.4s;
+}
+
+/*----------------Notes Page----------*/
+/* Added styles for dark mode */
+body.dark-mode {
+    background-color: #242424;
+    color: white; /* Ensure body text is white in dark mode */
+}
+
+body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-bar textarea{
+    background-color: #333; /* Dark background for posts in dark mode */
+    color: white; /* Ensure post text is white in dark mode */
+}
+
+.new-post {
+    text-align: center;
+    margin: 40px auto 0 auto;
+    width: 85%;
+}
+
+.new-post input[type="text"], .new-post textarea {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: box-shadow .3s;
+    resize: none;
+    font-size: 16px;
+}
+
+.new-post textarea:hover{
+    transition: box-shadow .3s;
+    box-shadow: 0 0 4px 6px #D0D1C9; 
+}
+
+.new-post button {
+    height: 50px;
+    padding: 10px 50px;
+    border-radius: 10px;
+    font-size: 20px;
+    background-color: #1E3765;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: width 0.4s, height 0.4s, transform 0.4s, box-shadow .3s;
+}
+
+.new-post button:hover {
+    transition: width 0.4s, height 0.4s, transform 0.4s, box-shadow .3s;
+    box-shadow: 0 0 4px 4px #01b2ca; 
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px auto 20px auto;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    width: 60%;
+}
+
+.search-bar textarea {
+    flex-grow: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+    transition: box-shadow .3s;
+    resize: none;
+    font-size: 16px;
+}
+
+.search-bar textarea:focus {
+    box-shadow: 0 0 4px 6px #D0D1C9; 
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1E3765;
+    color: white;
+    cursor: pointer;
+    transition: background-color .3s;
+}
+
+.search-bar button:hover {
+    background-color: #01b2ca;
+}
+
+.post {
+    border: 5px outset blue;
+    background-color: white;    
+    text-align: left;
+    width: 85%;
+    padding: 25px;
+    margin: 20px auto; /* Center the posts */
+    color: black; /* Ensure text color is black for visibility */
+    transition: width 0.4s, height 0.4s, transform 0.4s, box-shadow .3s;
+}
+  
+.post:hover {
+    transition: width 0.4s, height 0.4s, transform 0.4s;
+    transform: translateY(-10px);
+    box-shadow: 0 0 2px 4px rgb(27, 27, 255) 
 }
