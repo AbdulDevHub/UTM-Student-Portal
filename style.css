@@ -283,7 +283,6 @@ input:checked + label svg.moon {
 }
 
 /*----------------Notes Page----------*/
-/* Added styles for dark mode */
 body.dark-mode {
     background-color: #242424;
     color: white; /* Ensure body text is white in dark mode */
@@ -384,6 +383,20 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
     margin: 20px auto; /* Center the posts */
     color: black; /* Ensure text color is black for visibility */
     transition: width 0.4s, height 0.4s, transform 0.4s, box-shadow .3s;
+}
+
+.delete-button {
+    margin-left: auto;
+    background: red;
+    padding: 5px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.delete-button:hover {
+    background-color: rgb(255, 79, 79);
 }
   
 .post:hover {
