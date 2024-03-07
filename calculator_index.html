@@ -23,10 +23,11 @@
           transition: background-color 600ms;
   
         }
-
+        /*dark mode*/
         .dark {
           background: #333333;
         }
+         /*dark mode off*/
         .dark .MainTitle, .dark .result, .dark #input_a, .dark #input_b, .dark #operators, .dark #dark_mode_text, .dark #advanced_calc_button { /* Change text color for dark mode */
             color: white;
         }
@@ -67,23 +68,31 @@
             transition: background-color 600ms; /* Smooth transition for background color change */
             transition: transform 0.5s, box-shadow .3s;
         }
-
-        #input_a:hover, #input_b:hover, #operators:hover, #submit_calculation:hover, #advanced_calc_button:hover, .slider:hover {
+        /*hover effect for inputs and operators and other buttons*/
+        #input_a:hover, #input_b:hover, #operators:hover, #submit_calculation:hover, #advanced_calc_button:hover{
             transform: translateY(-10px);
             transition: transform 0.5s, box-shadow .3s;
             box-shadow: 0 0 4px 8px #eb0404; 
         }
 
+        /*calculation button hover effect*/
         #submit_calculation:hover{
             transition: transform 0.5s, box-shadow .5s;
             transform: translateY(-10px);
             box-shadow: 0 0 4px 8px #04ea04; 
         }
 
-        .switch:hover {
-            transform: translateY(-2px);
+        /*Dark mode switch hover effects*/
+        .switch:hover{
+            transform: translateY(-10px);
             transition: transform 0.5s, box-shadow .3s;
         }
+
+        .slider:hover{
+            transition: transform 0.5s, box-shadow .3s;
+            box-shadow: 0 0 4px 8px #045ff1; 
+        }rgb(4, 100, 235)rgb(0, 106, 255)
+
 
         /* Input form for number 2 */
         #input_b{
@@ -193,6 +202,8 @@
           display: inline-block;
           width: 60px;
           height: 34px;
+          right: -10px;
+          transition: transform 0.5s, box-shadow .3s;
         }
 
         /* Hide default HTML checkbox */
@@ -213,6 +224,7 @@
           background-color: #ccc;
           -webkit-transition: .4s;
           transition: .4s;
+          transition: transform 0.5s, box-shadow .3s;
         }
 
         .slider:before {
@@ -266,7 +278,9 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            transition: background-color 300ms;
+            transition: background-color 300ms, transform 0.5s, box-shadow .3s;
+            position: relative; /* Added to allow positioning */
+            left: -10px; /* Shifts the button a bit to the left */
         }
 
         #advanced_calc_button:hover {
