@@ -18,6 +18,18 @@
   width: 1000px;
   padding: 25px;
   margin: 20px;
+  color: black; /* Ensure text color is black for visibility */
+}
+
+/* Added styles for dark mode */
+body.dark-mode {
+  background-color: #242424;
+  color: white; /* Ensure body text is white in dark mode */
+}
+
+body.dark-mode .post {
+  background-color: #333; /* Dark background for posts in dark mode */
+  color: white; /* Ensure post text is white in dark mode */
 }
 </style>
 
@@ -34,7 +46,7 @@
         
         <!-- Dark Mode Toggle -->
         <div class="darkmode-toggle">
-            <input type="checkbox" id="darkmode-toggle"/>
+            <input type="checkbox" id="darkmode-toggle" onchange="document.body.classList.toggle('dark-mode');"/>
             <label for="darkmode-toggle">
                 <!-- Sun SVG Icon -->
                 <svg version="1.1" class="sun" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
