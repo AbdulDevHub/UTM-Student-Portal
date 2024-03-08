@@ -180,6 +180,7 @@ footer {
 body.dark-mode {
     background: #242424;
     color: white;
+    transition: 0.3s;
 }
 
 label {
@@ -286,6 +287,7 @@ input:checked + label svg.moon {
 body.dark-mode {
     background-color: #242424;
     color: white; /* Ensure body text is white in dark mode */
+    transition: 0.3s;
 }
 
 body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-bar textarea {
@@ -406,6 +408,12 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
 }
 
 /*----------------iFrame Page----------*/
+
+iframe{
+    transition: 0.3s;
+}
+/*Global Dark mode for iframe*/
 body.dark-mode iframe {
     filter: invert(95%) hue-rotate(180deg);
+    transition: 0.3s;
 }
