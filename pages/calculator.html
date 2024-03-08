@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="eng-ca">
+  <head>
+    <title>Simple HTML/JavaScript Calculator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../css/calculator_style.css">
+  </head>
+
+  <body>
+
+    <!-- Top Section -->
+    <div class="MainTitle">
+      <h1>Simple Web Calculator</h1>
+    </div>
+
+    <div class="DarkMode">
+      <label class="switch">
+        <p id="dark_mode_text">Dark Mode</p>
+        <input id="dark_mode" type="checkbox" />
+        <span class="slider round"></span>
+      </label>
+      <button
+        id="advanced_calc_button"
+        onclick=window.location.href='https://www.desmos.com/scientific';
+      >
+        Advanced Calculator
+      </button>
+    </div>
+
+    <!-- Calculation Section -->
+    <div class="Container">
+      <form id="calculator">
+        <div class="CalculatorInputA">
+          <input
+            type="number"
+            id="input_a"
+            placeholder="Enter the first number"
+            required
+          />
+        </div>
+
+        <div class="OperatorInput">
+          <select id="operators">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">x</option>
+            <option value="/">/</option>
+            <option value="^">^</option>
+          </select>
+        </div>
+
+        <div class="CalculatorInputB">
+          <input
+            type="number"
+            id="input_b"
+            placeholder="Enter the second number"
+            required
+          />
+        </div>
+
+        <div class="SubmitButton">
+          <button type="button" id="submit_calculation">Calculate</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="result" id="calculation_result">
+      <!-- Results will be displayed here -->
+    </div>
+
+    <!-- JavaScript File -->
+    <script src="../js/calculator.js"></script>
+  </body>
+</html>
