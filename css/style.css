@@ -44,6 +44,21 @@ h2 {
     text-align: center;
 }
 
+#first-row section {
+    /* border: 1px solid green; <= Testing Purpose*/
+    width: 50%;
+}
+
+#second-row section {
+    /* border: 1px solid blue; <= Testing Purpose*/
+    width: 50%;
+}
+
+#third-row section {
+    /* border: 1px solid red; <= Testing Purpose*/
+    width: 50%;
+}
+
 #first-row, #second-row, #third-row {
     display: flex;
 }
@@ -412,6 +427,7 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
 iframe{
     transition: 0.3s;
 }
+
 /*Global Dark mode for iframe*/
 body.dark-mode iframe {
     filter: invert(95%) hue-rotate(180deg);
