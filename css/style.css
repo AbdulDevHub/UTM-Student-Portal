@@ -288,7 +288,7 @@ body.dark-mode {
     color: white; /* Ensure body text is white in dark mode */
 }
 
-body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-bar textarea{
+body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-bar textarea {
     background-color: #333; /* Dark background for posts in dark mode */
     color: white; /* Ensure post text is white in dark mode */
 }
@@ -405,4 +405,7 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
     box-shadow: 0 0 2px 4px rgb(27, 27, 255) 
 }
 
-/*----------------Calculator Page----------*/
+/*----------------iFrame Page----------*/
+body.dark-mode iframe {
+    filter: invert(95%) hue-rotate(180deg);
+}

@@ -8,6 +8,26 @@
   transition: color 600ms; /* Smooth transition for color change */
 }
 
+/* Advanced Calculator Button */
+#advanced_calc_button {
+  font-family: AirbusDisp, sans-serif;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 300ms, transform 0.5s, box-shadow 0.3s;
+  position: relative; /* Added to allow positioning */
+  right: -10px; /* Shifts the button a bit to the left */
+  top: -60px;
+}
+
+#advanced_calc_button:hover {
+  background-color: #0056b3;
+}
+
 body {
   flex-direction: column;
   align-items: center;
@@ -16,21 +36,6 @@ body {
   transition: background-color 600ms;
 }
 
-/*dark mode*/
-.dark {
-  background: #333333;
-}
-
-/*dark mode off*/
-.dark .MainTitle,
-.dark .result,
-.dark #input_a,
-.dark #input_b,
-.dark #operators,
-.dark #dark_mode_text,
-.dark #advanced_calc_button {
-  color: white;
-}
 
 .Container {
   margin-top: 2px;
@@ -88,16 +93,6 @@ body {
   box-shadow: 0 0 4px 8px #04ea04;
 }
 
-/*Dark mode switch hover effects*/
-.switch:hover {
-  transform: translateY(-10px);
-  transition: transform 0.5s, box-shadow 0.3s;
-}
-
-.slider:hover {
-  transition: transform 0.5s, box-shadow 0.3s;
-  box-shadow: 0 0 4px 8px #045ff1;
-}
 
 /* Input form for number 2 */
 #input_b {
@@ -182,33 +177,6 @@ body {
   transition: color 600ms; /* Smooth transition for color change */
 }
 
-.DarkMode {
-  text-align: left;
-  margin-top: -50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-#dark_mode_text {
-  margin-top: -15px;
-  font-size: 12px;
-  font-family: AirbusDisp, sans-serif;
-  text-align: center;
-  color: black; /* Default color */
-  transition: color 600ms, transform 0.5s, box-shadow 0.3s;
-}
-
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-  right: -10px;
-  transition: transform 0.5s, box-shadow 0.3s;
-}
-
 /* Hide default HTML checkbox */
 .switch input {
   opacity: 0;
@@ -216,77 +184,5 @@ body {
   height: 0;
 }
 
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.4s;
-  transition: 0.4s, transform 0.5s, box-shadow 0.3s;
-}
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
 
-input:checked + .slider {
-  background-color: #2196f3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196f3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-
-/* Dark mode styles for inputs and operator dropdown */
-.dark #input_a,
-.dark #input_b,
-.dark #operators {
-  background-color: #555; /* Darker background for inputs and operator dropdown */
-  color: white; /* White text color for better readability */
-}
-
-/* Advanced Calculator Button */
-#advanced_calc_button {
-  font-family: AirbusDisp, sans-serif;
-  font-size: 14px;
-  background-color: #007bff;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 300ms, transform 0.5s, box-shadow 0.3s;
-  position: relative; /* Added to allow positioning */
-  left: -10px; /* Shifts the button a bit to the left */
-}
-
-#advanced_calc_button:hover {
-  background-color: #0056b3;
-}

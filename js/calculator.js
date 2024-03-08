@@ -1,14 +1,4 @@
-const btn = document.querySelector("#dark_mode");
-const body = document.body;
-
-function change() {
-  btn.checked
-    ? body.classList.add("dark")
-    : body.classList.remove("dark");
-}
-
-btn.addEventListener("change", change);
-
+// calculation logic
 document
   .getElementById("submit_calculation")
   .addEventListener("click", function () {
