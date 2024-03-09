@@ -447,7 +447,7 @@ iframe{
 }
 
 /*Global Dark mode for iframe*/
-body.dark-mode iframe {
+body.dark-mode iframe:not(#clock-iframe) {
     filter: invert(95%) hue-rotate(180deg);
     transition: 0.3s;
 }
