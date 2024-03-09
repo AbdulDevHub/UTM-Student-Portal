@@ -1,4 +1,5 @@
 // =================Universal Logic========================
+
 // Change Background When Dark Mode Toggle Click 
 // Check if 'dark-mode' was saved in localStorage
 if (localStorage.getItem('dark-mode') === 'true') {
@@ -12,6 +13,29 @@ document.getElementById('darkmode-toggle').addEventListener('change', function(e
     localStorage.setItem('dark-mode', event.target.checked);
 });
 
+// Weather Feature Button
+document.addEventListener('DOMContentLoaded', (event) => {
+    // Get the button and the container
+    const button = document.getElementById('show-weather');
+    const container = document.getElementById('weather-widget');
+
+    // Hide the container by default
+    container.style.display = 'none';
+
+    // Add a click event listener to the button
+    button.addEventListener('click', () => {
+        // Check the current display status of the container
+        if (container.style.display === 'none') {
+            // If the container is hidden, show it and update the button text
+            container.style.display = 'block';
+            button.textContent = 'Hide Weather';
+        } else {
+            // If the container is visible, hide it and update the button text
+            container.style.display = 'none';
+            button.textContent = 'Show Weather';
+        }
+    });
+});
 
 // =================Notes Page Logic========================
 function toggleDarkMode() {
