@@ -44,6 +44,8 @@ header a {
     padding: 10px;
     background: skyblue;
     cursor: pointer;
+    color: white;
+    font-weight: bold;
 }
 
 #clock {
