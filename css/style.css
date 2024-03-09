@@ -300,7 +300,7 @@ input:checked + label svg.moon {
     width: 150px;
     height: 150px;
     right: 0px; 
-    bottom: 50px;
+    bottom: 20px;
     transition: width 0.4s, height 0.4s, transform 0.4s, box-shadow .3s;
 }
 
