@@ -19,17 +19,16 @@
             </div>
         </a>
 
-         <!--Weather Feature-->
-         <div id="ww_b85eae778b671" v='1.3' loc='auto' a='{"t":"horizontal","lang":"en","sl_lpl":1,"ids":[],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius",
-         "cl_bkg":"#FFFFFF00","cl_font":"rgba(255,255,255,1)","cl_cloud":"#d4d4d4","cl_persp":"rgba(135,214,250,1)","cl_sun":"#FFC107","cl_moon":"#FFC107",
-         "cl_thund":"#FF5722","el_phw":3,"el_whr":3}'><a href="https://weatherwidget.org/" id="ww_b85eae778b671_u" target="_blank">Widget weather HTML</a>
-        </div>
-        <script async src="https://app2.weatherwidget.org/js/?id=ww_b85eae778b671"></script>
-        
-        <!--Clock-->
-        <iframe src="https://free.timeanddate.com/clock/i99yor00/n1187/fn11/fs26/fcdc4633/tct/pct/ftb/pa8/tt0/th2/ta1/tb4" frameborder="0" width="356" 
-        height="79" allowtransparency="true">
-        </iframe>
+        <div class="left-widgets">
+            <!--Weather Feature-->
+            <button id="show-weather">Show Weather</button>
+            
+
+            <!--Clock-->
+            <iframe 
+                src="https://free.timeanddate.com/clock/i99yta70/n1187/fn6/fs16/fcfff/tc1e3765/pc1e3765/ftb/pa8/tt0/tw1/tm1/th2/ta1/tb4" 
+                frameborder="0" width="162" height="54" id="clock-iframe"
+            ></iframe>
         
         <!-- Dark Mode Toggle -->
         <div class="darkmode-toggle">
@@ -72,6 +71,16 @@
         </div>
     </header>
 
+    <!-- Weather Feature Container -->
+    <container id="weather-widget">
+        <div id="ww_2f586b574b05f" v='1.3' loc='id' a='{"t":"responsive","lang":"en","sl_lpl":1,"ids":["wl3619"],"font":"Arial",
+            "sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA",
+            "cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>
+                More forecasts: <a href="https://oneweather.org/calgary/30_days/" id="ww_2f586b574b05f_u" target="_blank">Weather forecast Calgary 30 days</a>
+        </div>
+        <script async src="https://app2.weatherwidget.org/js/?id=ww_2f586b574b05f"></script>
+    </container>
+    
     <!-- Main Iframe Section -->
     <div class="iframe">
         <iframe src="https://ttb.utoronto.ca/" name="important-dates" scrolling="yes" frameborder="1" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen></iframe>
