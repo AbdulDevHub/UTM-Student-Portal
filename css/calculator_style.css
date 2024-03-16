@@ -1,188 +1,153 @@
-.MainTitle {
-  text-align: center;
-  font-family: AirbusMCDUa, sans-serif;
-  font-weight: 900;
-  border-block: solid;
-  border-block-color: red;
-  color: black; /* Default color */
-  transition: color 600ms; /* Smooth transition for color change */
+/*Calculator web page body*/
+body {
+  background: linear-gradient(45deg, #6FC7EA, #F1C500);
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  margin: 0;
+  padding-top: 20px;
 }
 
-/* Advanced Calculator Button */
-#advanced_calc_button {
-  font-family: AirbusDisp, sans-serif;
-  font-size: 14px;
-  background-color: #007bff;
-  color: white;
-  padding: 8px 16px;
+.calculator-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  width: 100%;
+}
+
+.calculator {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 100%;
+}
+
+.display {
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.display input {
+  width: 1px; 
+  min-width: 100%; 
+  font-size: 24px;
+  text-align: right;
   border: none;
-  border-radius: 4px;
+  outline: none;
+  background-color: transparent;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+
+button {
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #e0e0e0;
   cursor: pointer;
-  transition: background-color 300ms, transform 0.5s, box-shadow 0.3s;
-  position: relative; /* Added to allow positioning */
-  right: -10px; /* Shifts the button a bit to the left */
-  top: -60px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #d0d0d0;
+}
+
+.operator {
+  background-color: #ff9800;
+  color: #fff;
+}
+
+.clear {
+  background-color: #e53935;
+  color: #fff;
+}
+
+/*Calculation history*/
+.calculation-history {
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  max-width: 300px;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.calculation-history h3 {
+  margin-top: 0;
+}
+
+#history-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+#history-list li {
+  margin-bottom: 5px;
+}
+
+#clear-history {
+  margin-top: 10px;
+  position: sticky;
+  left: 220px;
+  bottom: 0;
+  background-color: #e53935;
+  color: #fff;
+  transition: background-color 0.3s, transform 0.4s, box-shadow 0.3s;
+}
+
+#clear-history:hover {
+  background-color: #22ff00;
+  box-shadow: 0 0 2px 4px #ff0000;
+}
+
+#advanced_calc_button {
+  margin-top: 20px;
+  font-size: 16px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 #advanced_calc_button:hover {
   background-color: #0056b3;
 }
 
-body {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  transition: background-color 600ms;
+@media (max-width: 767px) {
+  .calculator-container {
+    max-width: 400px;
+  }
+
+  .buttons {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
+@media (max-width: 480px) {
+  .calculator-container {
+    max-width: 300px;
+  }
 
-.Container {
-  margin-top: 2px;
-  border-bottom: solid;
+  .buttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
-
-.CalculatorInputA {
-  padding-top: 10em;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-shadow: inset;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-.CalculatorInputB {
-  padding-top: 40em;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-shadow: inset;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-/* Input form for number 1 */
-#input_a {
-  background-color: ButtonHighlight;
-  font-family: AirbusDisp, sans-serif;
-  font-size: 18px;
-  text-align: center;
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border: inset;
-  border-radius: 4px;
-  transition: background-color 600ms, transform 0.5s, box-shadow 0.3s;
-}
-
-/*hover effect for inputs and operators and other buttons*/
-#input_a:hover,
-#input_b:hover,
-#operators:hover,
-#submit_calculation:hover,
-#advanced_calc_button:hover {
-  transform: translateY(-10px);
-  transition: transform 0.5s, box-shadow 0.3s;
-  box-shadow: 0 0 4px 8px #eb0404;
-}
-
-/*calculation button hover effect*/
-#submit_calculation:hover {
-  transition: transform 0.5s, box-shadow 0.5s;
-  transform: translateY(-10px);
-  box-shadow: 0 0 4px 8px #04ea04;
-}
-
-
-/* Input form for number 2 */
-#input_b {
-  background-color: ButtonHighlight;
-  font-family: AirbusDisp, sans-serif;
-  font-size: 18px;
-  text-align: center;
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border: inset;
-  border-radius: 4px;
-  transition: background-color 600ms, transform 0.5s, box-shadow 0.3s;
-}
-
-.OperatorInput {
-  padding-top: 20em;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-shadow: inset;
-  box-sizing: border-box;
-  text-align: center;
-  transition: transform 0.5s, box-shadow 0.3s;
-}
-
-/*Operator option menu*/
-#operators {
-  background-color: ButtonShadow;
-  font-family: AirbusDisp, sans-serif;
-  font-size: 18px;
-  width: 100%;
-  text-align: center;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border: inset;
-  border-radius: 4px;
-  transition: background-color 600ms, transform 0.5s, box-shadow 0.3s;
-}
-
-/* The submit button div format*/
-.SubmitButton {
-  padding-top: 50em;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-shadow: inset;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-/* The submit button*/
-#submit_calculation {
-  font-family: AirbusDisp, sans-serif;
-  font-size: 18px;
-  background-color: darkred;
-  width: 100%;
-  border-radius: 5px;
-  border: none;
-  color: rgb(255, 255, 255);
-  padding: 10px 20px;
-  transition: transform 0.5s, box-shadow 0.3s;
-}
-
-#submit_calculation:hover {
-  background-color: #008000;
-}
-
-/* The final calculation results */
-.result {
-  padding-top: 60em;
-  padding: 12px 20px;
-  margin: 8px 0;
-  font-family: AirbusDisp2, sans-serif;
-  font-weight: 800;
-  font-size: 30px;
-  box-shadow: inset;
-  box-sizing: border-box;
-  text-align: center;
-  border: none;
-  color: black; /* Default color */
-  transition: color 600ms; /* Smooth transition for color change */
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-
-

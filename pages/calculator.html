@@ -1,66 +1,51 @@
 <!DOCTYPE html>
 <html lang="eng-ca">
   <head>
-    <title>Simple HTML/JavaScript Calculator</title>
+    <title>Gradient Calculator</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../css/calculator_style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
+  <!--The calculator body-->
   <body>
+    <div class="calculator-container">
+      <div class="calculator">
+        <div class="display">
+          <input type="text" id="result" disabled>
+        </div>
+        <div class="buttons">
+          <button class="operator" onclick="appendToResult('/')">÷</button>
+          <button class="operator" onclick="appendToResult('*')">×</button>
+          <button class="operator" onclick="appendToResult('-')">-</button>
+          <button class="operator" onclick="appendToResult('+')">+</button>
+          <button class="number" onclick="appendToResult('7')">7</button>
+          <button class="number" onclick="appendToResult('8')">8</button>
+          <button class="number" onclick="appendToResult('9')">9</button>
+          <button class="number" onclick="appendToResult('4')">4</button>
+          <button class="number" onclick="appendToResult('5')">5</button>
+          <button class="number" onclick="appendToResult('6')">6</button>
+          <button class="number" onclick="appendToResult('1')">1</button>
+          <button class="number" onclick="appendToResult('2')">2</button>
+          <button class="number" onclick="appendToResult('3')">3</button>
+          <button class="number" onclick="appendToResult('0')">0</button>
+          <button class="number" onclick="appendToResult('.')">.</button>
+          <button class="operator" onclick="calculate()">=</button>
+          <button class="clear" onclick="clearResult()">C</button>
+        </div>
+      </div>
 
-    <!-- Top Section -->
-    <div class="MainTitle">
-      <h1>Simple Web Calculator</h1>
-    </div>
-      <button
-        id="advanced_calc_button"
-        onclick=window.location.href="https://www.desmos.com/scientific";>
-        Advanced Calculator
+      <!--Calculation result history-->
+      <div class="calculation-history">
+        <h3>Calculation History</h3>
+        <ul id="history-list"></ul>
+        <button id="clear-history" onclick="clearHistory()">Clear History</button>
+      </div>
+      <button id="advanced_calc_button" onclick="window.location.href='https://www.desmos.com/calculator'">
+        Graphing Calculator
       </button>
     </div>
 
-    <!-- Calculation Section -->
-    <div class="Container">
-      <form id="calculator">
-        <div class="CalculatorInputA">
-          <input
-            type="number"
-            id="input_a"
-            placeholder="Enter the first number"
-            required
-          />
-        </div>
-
-        <div class="OperatorInput">
-          <select id="operators">
-            <option value="+">+</option>
-            <option value="-">-</option>
-            <option value="*">x</option>
-            <option value="/">/</option>
-            <option value="^">^</option>
-          </select>
-        </div>
-
-        <div class="CalculatorInputB">
-          <input
-            type="number"
-            id="input_b"
-            placeholder="Enter the second number"
-            required
-          />
-        </div>
-
-        <div class="SubmitButton">
-          <button type="button" id="submit_calculation">Calculate</button>
-        </div>
-      </form>
-    </div>
-
-    <div class="result" id="calculation_result">
-      <!-- Results will be displayed here -->
-    </div>
-
-    <!-- JavaScript File -->
     <script src="../js/calculator.js"></script>
   </body>
 </html>
