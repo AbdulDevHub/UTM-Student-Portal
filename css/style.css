@@ -61,12 +61,15 @@ header a {
 
 /* Weather widget animations*/
 #weather-widget {
+    display: none; /*You can get rid of display if you want an animation*/
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.5s linear, visibility 0.5s linear;
+    transition-behavior: allow-discrete; /*Experimental feature for display transition on some browsers*/
+    transition: opacity 0.5s linear, visibility 0.5s linear, display 0.5s;
 }
 
 #weather-widget.show {
+    display: block;
     opacity: 1;
     visibility: visible;
 }
