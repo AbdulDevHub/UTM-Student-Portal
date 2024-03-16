@@ -39,14 +39,22 @@ header a {
     gap: 20px;
 }
 
+/*Show weather button*/
 #show-weather {
     border-radius: 20px;
     padding: 10px;
-    background: skyblue;
+    background: #87ceeb;
     cursor: pointer;
     color: white;
     font-weight: bold;
+    transition: width 0.4s, height 0.4s, transform 0.4s, box-shadow .3s, background-color 0.3s;
 }
+
+#show-weather:hover {
+    box-shadow: 0 0 2px 4px #00b7ff;
+    background: rgb(4, 180, 4);
+}
+
 
 #clock {
     color: white;
