@@ -47,12 +47,16 @@ header a {
     cursor: pointer;
     color: white;
     font-weight: bold;
-    transition: width 0.4s, height 0.4s, transform 0.4s, box-shadow .3s, background-color 0.3s;
+    transition: width 0.4s, height 0.4s, transform 0.4s, box-shadow .3s, background-color 0.4s;
 }
 
 #show-weather:hover {
     box-shadow: 0 0 2px 4px #00b7ff;
     background: rgb(4, 180, 4);
+}
+
+#show-weather:active {
+    background: rgb(255, 4, 0);
 }
 
 /* Weather widget animations*/
