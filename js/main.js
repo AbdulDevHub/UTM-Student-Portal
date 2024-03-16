@@ -22,6 +22,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Hide the container by default
     container.style.display = 'none';
 
+    // Load the saved state of the button when the page loads
+    if (localStorage.getItem('showWeatherButton') === 'true') {
+        container.style.display = 'block';
+        button.textContent = 'Hide Weather';
+    }
     // Add a click event listener to the button
     button.addEventListener('click', () => {
         // Check the current display status of the container
@@ -34,6 +39,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
             container.style.display = 'none';
             button.textContent = 'Show Weather';
         }
+
+        // Save the current state of the button in localStorage
+        localStorage.setItem('showWeatherButton', container.style.display === 'block');
     });
 });
 
