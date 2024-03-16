@@ -55,7 +55,19 @@ header a {
     background: rgb(4, 180, 4);
 }
 
+/* Weather widget animations*/
+#weather-widget {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s linear, visibility 0.5s linear;
+}
 
+#weather-widget.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/*Clock button*/
 #clock {
     color: white;
 }

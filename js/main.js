@@ -19,31 +19,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const button = document.getElementById('show-weather');
     const container = document.getElementById('weather-widget');
 
-    // Hide the container by default
-    container.style.display = 'none';
-
     // Load the saved state of the button when the page loads
     if (localStorage.getItem('showWeatherButton') === 'true') {
-        container.style.display = 'block';
+        container.classList.add('show');
         button.textContent = 'Hide Weather';
     }
     // Add a click event listener to the button
     button.addEventListener('click', () => {
         // Check the current display status of the container
-        if (container.style.display === 'none') {
-            // If the container is hidden, show it and update the button text
-            container.style.display = 'block';
-            button.textContent = 'Hide Weather';
-        } else {
+        if (container.classList.contains('show')) {
             // If the container is visible, hide it and update the button text
-            container.style.display = 'none';
+            container.classList.remove('show');
             button.textContent = 'Show Weather';
+        } else {
+            // If the container is hidden, show it and update the button text
+            container.classList.add('show');
+            button.textContent = 'Hide Weather';
         }
 
         // Save the current state of the button in localStorage
-        localStorage.setItem('showWeatherButton', container.style.display === 'block');
+        localStorage.setItem('showWeatherButton', container.classList.contains('show'));
     });
 });
+
 
 // =================Notes Page Logic========================
 function toggleDarkMode() {
