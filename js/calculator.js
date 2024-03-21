@@ -18,24 +18,21 @@ function calculate() {
       const [numerator, denominator] = expression.split('/');
       if (parseFloat(denominator) === 0) {
         calculation = "Error: Division by zero";
-        result.value = calculation;
-        calculationHistory.push(calculation);
-        updateHistory();
-        saveHistory();
-        return;
+        throw new Error(calculation);
       }
     }
 
     if (Math.abs(evaluatedResult) > Number.MAX_SAFE_INTEGER) {
-      calculation = "Number too large";
-      result.value = calculation;
+      calculation = "Error: Number too large";
+      throw new Error(calculation);
     } else {
       calculation = `${expression} = ${evaluatedResult}`;
       result.value = evaluatedResult;
     }
   } catch (error) {
-    calculation = "Invalid expression";
-    result.value = calculation;
+    calculation = error.message;
+    result.value = '';
+    alert(calculation);
   }
   calculationHistory.push(calculation);
   updateHistory();
@@ -90,12 +87,37 @@ function handleKeyboardInput(event) {
       appendToResult(event.key);
     }
   } else if (event.key === 'Enter') {
+    event.preventDefault(); // Prevent the default form submission behavior
     calculate();
+    displayResult(); // Display the calculated result
   } else if (event.key === 'Backspace' || event.key === 'Delete') {
     result.value = result.value.slice(0, -1);
   } else if (event.key === 'Escape') {
     clearResult();
   }
+}
+
+function displayResult() {
+  const result = document.getElementById('result');
+  const lastCalculation = calculationHistory[calculationHistory.length - 1];
+  
+  if (lastCalculation.startsWith('Error:')) {
+    // If the last calculation is an error, clear the calculation window
+    result.value = '';
+  } else {
+    // Otherwise, display the calculated result in the calculation window
+    const resultValue = lastCalculation.split('=').pop().trim();
+    result.value = resultValue;
+  }
+}
+// Paste event handling
+const resultInput = document.getElementById('result');
+resultInput.addEventListener('paste', handlePaste);
+
+function handlePaste(event) {
+  const pastedData = event.clipboardData.getData('text');
+  appendToResult(pastedData);
+  event.preventDefault(); // Prevent the default paste behavior
 }
 
 window.onload = loadHistory;
