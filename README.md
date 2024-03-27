@@ -34,7 +34,7 @@ To run this project locally, follow these steps:
 
 ## Contributing
 
-While this is a personal project, I'm open to collaboration. If you have suggestions for improvements, please open an issue.
+While this is a personal group project, we are open to collaboration. If you have suggestions for improvements, please open an issue.
 
 ## License
 
