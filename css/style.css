@@ -133,7 +133,7 @@ h2 {
 
 .utm-links a:hover {
     transform: translateY(-5px);
-    box-shadow: 0 0 2px 7px #0D534D; 
+    box-shadow: 0 0 2px 4px #002d5a;
 }
 
 
@@ -151,6 +151,10 @@ h2 {
 
 .utm-logistics a {
     background-color: #6FC7EA;
+}
+
+.campus-life a {
+    background-color: #FBB040;
 }
 
 .additional-course-links a {

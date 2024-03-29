@@ -1,4 +1,4 @@
-// =================Universal Logic========================
+// ================= Universal Logic ========================
 
 // Change Background When Dark Mode Toggle Click 
 // Check if 'dark-mode' was saved in localStorage
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 
-// =================Notes Page Logic========================
+// ================= Notes Page Logic ========================
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
 }
