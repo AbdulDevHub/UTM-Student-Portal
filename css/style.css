@@ -82,7 +82,6 @@ header a {
 /*----------------Main Content----------*/
 main {
     margin-top: 70px;
-    width: 90%;
     margin-right: auto;
     margin-left: auto;
 }
@@ -159,6 +158,25 @@ h2 {
 
 .additional-course-links a {
     background-color: #AB1368;
+}
+
+#third-row section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#majors{
+    font-size: 1.5em;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    font-weight: 700;
+    border-radius: 10px;
+}
+
+.hidden {
+    display: none;
 }
 
 .external-resources a {

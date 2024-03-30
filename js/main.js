@@ -13,7 +13,7 @@ document.getElementById('darkmode-toggle').addEventListener('change', function(e
     localStorage.setItem('dark-mode', event.target.checked);
 });
 
-// Weather Feature Button
+//  Weather Feature Logic
 document.addEventListener('DOMContentLoaded', (event) => {
     // Get the button and the container
     const button = document.getElementById('show-weather');
@@ -42,6 +42,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
+// Show Links Based On Major Selection
+function showLinks(major) {
+    var majors = ["cs/math", "biology", "ccit", "anthropology", "language", "psychology", "history"];
+    majors.forEach(function(m) {
+        document.getElementById(m).style.display = (m == major) ? "flex" : "none";
+    });
+}
 
 // ================= Notes Page Logic ========================
 function toggleDarkMode() {
