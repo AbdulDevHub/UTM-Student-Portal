@@ -160,11 +160,13 @@ h2 {
     background-color: #AB1368;
 }
 
+/*The section with links respective to the list of different majors*/
 #third-row section {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 
 #majors{
     font-size: 1.5em;
@@ -173,6 +175,13 @@ h2 {
     margin: 10px 0;
     font-weight: 700;
     border-radius: 10px;
+    transition: width 0.4s, height 0.4s, box-shadow .4s, transform .3s;
+}
+
+#majors:hover {
+    transition: width 0.4s, height 0.4s, box-shadow .4s, transform .3s;
+    transform: translateY(-5px);
+    box-shadow: 0 0 2px 4px rgb(27, 27, 255) 
 }
 
 .hidden {
