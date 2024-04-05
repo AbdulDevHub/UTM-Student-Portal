@@ -511,3 +511,114 @@ body.dark-mode iframe:not(#clock-iframe) {
     filter: invert(95%) hue-rotate(180deg);
     transition: 0.3s;
 }
+
+/*----------------Student Projects----------*/
+#student-projects-page {
+   min-height: 80vh; 
+   max-width: 90%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+@keyframes grow {
+    0% {
+        transform: scale(0.50);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+#student-projects-page h1 {
+    font-size: 50px;
+    background: linear-gradient(to right, darkblue, rgb(203, 135, 235));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: transform 0.5s;
+    animation: grow 2s ease-in-out;
+}
+
+#student-projects-page h1:hover {
+    transform: translateY(-5px);
+}
+
+.work-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 40px;
+    margin-top: 50px;
+    width: 100%;
+}
+  
+.work {
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+  
+.work img {
+    width: 100%;
+    border-radius: 10px;
+    display: block;
+    transition: transform 0.5s;
+}
+  
+.layer {
+    height: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), #1c2ad7);
+    border-radius: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    font-size: 14px;
+    transition: height 0.5s;
+    color: white;
+}
+  
+.layer h3 {
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+  
+.link-container {
+    display: flex;
+    gap: 20px;
+}
+  
+a .fa-external-link-alt {
+    margin-top: 20px;
+    color: #1c2ad7;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 60px;
+    background: #fff;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    text-align: center;
+}
+  
+.link-container a .fa-github {
+    font-size: 28px;
+}
+  
+.link-container a .fa-figma {
+    font-size: 24px;
+}
+  
+.work:hover img {
+    transform: scale(1.1);
+}
+  
+.work:hover .layer {
+    height: 100%;
+}
