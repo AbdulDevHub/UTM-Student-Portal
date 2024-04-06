@@ -18,8 +18,9 @@ header {
 /*Student Portal Header Text*/
 header a {
     text-decoration: none;
-    background: -webkit-linear-gradient(#6FC7EA, #8DBF2E);
+    background: -webkit-linear-gradient(#ffffff, rgb(166, 255, 0));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
