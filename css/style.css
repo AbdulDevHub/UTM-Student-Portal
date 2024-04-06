@@ -398,7 +398,16 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
     margin: 20px; 
     font-size: 16px;
     float: right;
+    transition: background-color .3s, box-shadow .3s;
 }
+
+/*Hover animation for sign-in/out button*/
+#sign-in-button:hover, #sign-out-button:hover {
+    background-color: #01b2ca;
+    box-shadow: 0 0 4px 6px #00fffb; 
+    transition: background-color .3s, box-shadow .3s;
+}
+
 
 #user-profile {
     padding: 10px 15px;
