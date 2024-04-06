@@ -53,7 +53,6 @@ function showLinks(major) {
     "cs/math",
     "biology",
     "ccit",
-    "anthropology",
     "language",
     "psychology",
     "history",

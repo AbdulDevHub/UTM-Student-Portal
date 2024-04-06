@@ -168,7 +168,7 @@ h2 {
 }
 
 
-#majors{
+#majors {
     font-size: 1.5em;
     text-align: center;
     padding: 10px;
@@ -212,6 +212,24 @@ footer {
     padding: 25px;
     background-color: #1E3765;
     margin-top: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 75px;
+}
+
+#Suggestion-btn {
+    background-color: #6FC7EA;
+    text-decoration: none;
+    color: white;
+    padding: 10px 17px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+#Suggestion-btn:hover {
+    background-color: #00A189;
 }
 
 .social-icons {
