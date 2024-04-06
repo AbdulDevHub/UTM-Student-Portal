@@ -377,6 +377,7 @@ input:checked + label svg.moon {
 }
 
 /*----------------Notes Page----------*/
+/*Dark Mode Related Stuff*/
 body.dark-mode {
     background-color: #242424;
     color: white; /* Ensure body text is white in dark mode */
