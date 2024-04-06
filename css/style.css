@@ -221,7 +221,7 @@ footer {
     gap: 75px;
 }
 
-#Suggestion-btn {
+#suggestion-btn {
     background-color: #6FC7EA;
     text-decoration: none;
     color: white;
@@ -231,7 +231,7 @@ footer {
     cursor: pointer;
 }
 
-#Suggestion-btn:hover {
+#suggestion-btn:hover {
     background-color: #00A189;
 }
 
@@ -617,6 +617,13 @@ body.dark-mode iframe:not(#clock-iframe) {
    align-items: center;
 }
 
+#top-header-container {
+    margin: 0 0 20px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 @keyframes grow {
     0% {
         transform: scale(0.50);
@@ -627,7 +634,7 @@ body.dark-mode iframe:not(#clock-iframe) {
 }
 
 #student-projects-page h1 {
-    font-size: 50px;
+    font-size: 70px;
     background: linear-gradient(to right, darkblue, rgb(203, 135, 235));
     -webkit-background-clip: text;
     background-clip: text;
