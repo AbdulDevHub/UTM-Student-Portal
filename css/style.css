@@ -442,7 +442,7 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
 #user-profile {
     padding: 10px 15px;
     border-radius: 50px;
-    display: flex;
+    display: none;
     gap: 20px;
     margin-right: 10px;
     margin-left: auto;
@@ -529,22 +529,31 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
     justify-content: center;
     align-items: center;
     margin: 50px auto 20px auto;
-    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
-    padding: 10px;
+    padding: 15px;
+    gap: 25px;
     border-radius: 5px;
-    width: 60%;
+    max-width: 950px;
+    border: #002d5a 3px solid;
+}
+
+@media screen and (max-width: 1056px) {
+    .search-bar {
+        max-width: 100%;
+        margin: 50px 30px 20px 30px;
+    }
 }
 
 .search-bar textarea {
     flex-grow: 1;
     padding: 10px;
-    margin-right: 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
     transition: box-shadow .3s;
     resize: none;
     font-size: 16px;
+    height: 20px;
+    max-width: 800px;
 }
 
 .search-bar textarea:focus {
@@ -565,15 +574,38 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
     background-color: #01b2ca;
 }
 
+#posts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+    padding: 0 30px;
+}
+
 .post {
-    border: 5px outset blue;
+    border: 5px outset #1E3765;
     background-color: white;    
     text-align: left;
-    width: 85%;
+    box-sizing: border-box;
+    width: 100%;
     padding: 25px;
-    margin: 20px auto; /* Center the posts */
+    margin: 10px auto; /* Center the posts */
     color: black; /* Ensure text color is black for visibility */
     transition: width 0.4s, height 0.4s, transform 0.4s, box-shadow .3s;
+    word-wrap: break-word; /* Add this line */
+}
+
+.edit-button {
+    margin-left: auto;
+    background: #6FC7EA;
+    padding: 5px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.edit-button:hover {
+    background-color: #00A189;
 }
 
 .delete-button {
@@ -589,11 +621,25 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
 .delete-button:hover {
     background-color: rgb(255, 79, 79);
 }
+
+.publish-button {
+    margin-left: auto;
+    background: #1E3765;
+    padding: 5px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.publish-button:hover {
+    background-color: #01b2ca;
+}
   
 .post:hover {
     transition: width 0.4s, height 0.4s, transform 0.4s;
     transform: translateY(-10px);
-    box-shadow: 0 0 2px 4px rgb(27, 27, 255) 
+    box-shadow: 0 0 2px 4px #01b2ca 
 }
 
 /*----------------iFrame Page----------*/

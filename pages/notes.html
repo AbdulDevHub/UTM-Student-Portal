@@ -100,7 +100,7 @@
 
     <!-- Enhanced Search Bar -->
     <div class="search-bar">
-        <textarea id="search-field" placeholder="Search for post with title or message"></textarea>
+        <textarea id="search-field" placeholder="Search for post with title or content"></textarea>
         <button onclick="searchPosts()">Search</button>
     </div>
 
@@ -113,7 +113,7 @@
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, query, where, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, updateDoc, orderBy, query, where, deleteDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
       
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -139,6 +139,7 @@
           signInWithPopup(auth, provider)
             .then((result) => {
               console.log('User signed in');
+              userProfile.style.display = 'flex';
             })
             .catch((error) => {
               console.error('Sign in error', error);
@@ -152,6 +153,10 @@
               signInButton.style.display = 'block';
               signOutButton.style.display = 'none';
               userProfile.style.display = 'none';
+
+              // Clear the posts
+              const postsContainer = document.getElementById('posts-container');
+              postsContainer.innerHTML = '';
             })
             .catch((error) => {
               console.error('Sign out error', error);
@@ -197,50 +202,104 @@
                 title: postTitle,
                 content: postContent,
                 userId: auth.currentUser.uid,
+                public: false,
+                timestamp: new Date() // Add a timestamp field
             })
-                .then((docRef) => {
+            .then((docRef) => {
                 console.log('Document written with ID: ', docRef.id);
 
                 // Create a new post element
                 const postElement = document.createElement('div');
                 postElement.classList.add('post');
-                postElement.setAttribute('data-id', docRef.id); // Add the data-id attribute
+                postElement.setAttribute('data-id', docRef.id);
                 postElement.innerHTML = `
                     <h1>${postTitle}</h1>
                     <p>${postContent}</p>
+                    <button class="edit-button" onclick="editPost('${doc.id}')">Edit</button>
                     <button class="delete-button" onclick="deletePost('${docRef.id}')">Delete</button>
+                    <button class="publish-button" onclick="publishPost('${docRef.id}')">Publish</button>
                 `;
 
-                // Append the new post element to the posts container
+                // Insert the new post element at the beginning of the posts container
                 const postsContainer = document.getElementById('posts-container');
-                postsContainer.appendChild(postElement);
-                })
-                .catch((error) => {
+                postsContainer.insertBefore(postElement, postsContainer.firstChild);
+            })
+            .catch((error) => {
                 console.error('Error adding document: ', error);
             });
         }
 
-        function fetchPosts() {
-        const postsContainer = document.getElementById('posts-container');
-        postsContainer.innerHTML = '';
-
-        const q = query(collection(db, 'posts'), where('userId', '==', auth.currentUser.uid));
-        getDocs(q)
-            .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                const postElement = document.createElement('div');
-                postElement.classList.add('post');
-                postElement.setAttribute('data-id', doc.id); // Add the data-id attribute
-                postElement.innerHTML = `
-                <h1>${doc.data().title}</h1>
-                <p>${doc.data().content}</p>
-                <button class="delete-button" onclick="deletePost('${doc.id}')">Delete</button>
-                `;
-                postsContainer.appendChild(postElement);
-            });
+        window.publishPost = function(postId) {
+            const postRef = doc(db, 'posts', postId);
+            getDoc(postRef)
+            .then((doc) => {
+                if (doc.exists()) {
+                    const isPublic = doc.data().public;
+                    updateDoc(postRef, { public: !isPublic })
+                    .then(() => {
+                        console.log('Document successfully updated!');
+                        const postElement = document.querySelector(`.post[data-id="${postId}"]`);
+                        const publishButton = postElement.querySelector('.publish-button');
+                        publishButton.textContent = isPublic ? 'Publish' : 'Unpublish';
+                    })
+                    .catch((error) => {
+                        console.error('Error updating document: ', error);
+                    });
+                } else {
+                    console.log('No such document!');
+                }
             })
             .catch((error) => {
-            console.error('Error getting documents: ', error);
+                console.error('Error getting document:', error);
+            });
+        }
+
+        function fetchPosts() {
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = '';
+
+            const q = query(collection(db, 'posts'), where('userId', '==', auth.currentUser.uid), orderBy('timestamp', 'desc')); // Order posts by timestamp
+            getDocs(q)
+                .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    const postElement = document.createElement('div');
+                    postElement.classList.add('post');
+                    postElement.setAttribute('data-id', doc.id);
+                    postElement.innerHTML = `
+                    <h1>${doc.data().title}</h1>
+                    <p>${doc.data().content}</p>
+                    <button class="edit-button" onclick="editPost('${doc.id}')">Edit</button>
+                    <button class="delete-button" onclick="deletePost('${doc.id}')">Delete</button>
+                    <button class="publish-button" onclick="publishPost('${doc.id}')">${doc.data().public ? 'Unpublish' : 'Publish'}</button>
+                    `;
+                    postsContainer.appendChild(postElement);
+                });
+                })
+                .catch((error) => {
+                console.error('Error getting documents: ', error);
+            });
+        }
+
+        window.editPost = function(postId) {
+            const postRef = doc(db, 'posts', postId);
+            getDoc(postRef)
+                .then((doc) => {
+                    if (doc.exists()) {
+                        const postTitle = document.getElementById('post-title');
+                        const postContent = document.getElementById('post-content');
+
+                        // Populate the post form with the title and content of the post
+                        postTitle.value = doc.data().title;
+                        postContent.value = doc.data().content;
+
+                        // Delete the post
+                        deletePost(postId);
+                    } else {
+                        console.log('No such document!');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error getting document:', error);
             });
         }
 
@@ -259,7 +318,7 @@
         }
       
         window.searchPosts = function() {
-            const searchField = document.getElementById('search-field').value;
+            const searchField = document.getElementById('search-field').value.toLowerCase(); // Convert search field to lower case
             const postsContainer = document.getElementById('posts-container');
             postsContainer.innerHTML = '';
 
@@ -268,7 +327,7 @@
                 .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     // Only show the post if the title or content includes the search text
-                    if (doc.data().title.includes(searchField) || doc.data().content.includes(searchField)) {
+                    if (doc.data().title.toLowerCase().includes(searchField) || doc.data().content.toLowerCase().includes(searchField)) { // Convert title and content to lower case
                     const postElement = document.createElement('div');
                     postElement.classList.add('post');
                     postElement.setAttribute('data-id', doc.id); // Add the data-id attribute
@@ -285,7 +344,7 @@
                 console.error('Error getting documents: ', error);
             });
         }
-      </script>          
+    </script>
 
     <!-- Footer -->
     <footer>
