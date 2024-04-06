@@ -15,10 +15,15 @@ header {
     padding: 5px 40px;
 }
 
+/*Student Portal Header Text*/
 header a {
     text-decoration: none;
+    background: -webkit-linear-gradient(#6FC7EA, #8DBF2E);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
+/*Header Logo*/
 #logo {
     width: 75px;
     height: 75px;
