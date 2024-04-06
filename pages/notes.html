@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="shortcut icon" type="image/x-icon" href="../images/logo.png" />
     <script src="https://kit.fontawesome.com/3491f85d9f.js" crossorigin="anonymous"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js"></script>
 </head>
 
 <body>
@@ -81,31 +85,207 @@
         </div>
         <script async src="https://app2.weatherwidget.org/js/?id=ww_2f586b574b05f"></script>
     </container>
-        
+
+    <div id="user-profile"></div>
+    <button id="sign-in-button">Sign In With Google</button>
+    <button id="sign-out-button">Sign Out</button>
+    
     <!-- New Post Form -->
     <div class="new-post">
-        <h2>Create a New Post</h2>
-        <p><b>You must enter all fields: title, message, (tags), otherwise you can not post!.</b></p>
-        <textarea id="new-post-content" placeholder="Post title on the first line here. Example: This is a title!&#10;Main message on the second line. Example: This is my message!&#10;Tags on the last line. Example: (CCT286) (Tags always last)!"></textarea>
+        <h2>Create A New Post</h2>
+        <textarea id="post-title" placeholder="Enter post title"></textarea>
+        <textarea id="post-content" placeholder="Enter post content"></textarea>
         <button onclick="createPost()">Post</button>
     </div>
 
     <!-- Enhanced Search Bar -->
     <div class="search-bar">
-        <textarea id="search-tags" placeholder="Search for post...e.g. title, message,or (tag)"></textarea>
-        <button onclick="filterPostsByTag()">Search</button>
+        <textarea id="search-field" placeholder="Search for post with title or message"></textarea>
+        <button onclick="searchPosts()">Search</button>
     </div>
 
     <!-- Posts will be dynamically inserted here -->
     <div id="posts-container">
         <!-- Existing posts will be fetched and displayed here -->
-        <div class="post fake-post" data-tags="(CSC209) (Lecture)">
-            <h1>Recent CSC209 Notes</h1>
-            <p>Does anyone have notes on the prof's writing from the most recent lecture? I missed the last few slides.</p>
-            <p style="font-size: 80%">Tags: (CSC209) (Lecture)</p>
-            <button class="delete-button fake-post">Delete</button>
-        </div>
     </div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, query, where, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyB036gHwHmbG-r_0VWlu4oifpZWEZJJ6uU",
+          authDomain: "utm-student-portal.firebaseapp.com",
+          projectId: "utm-student-portal",
+          storageBucket: "utm-student-portal.appspot.com",
+          messagingSenderId: "708863567163",
+          appId: "1:708863567163:web:b81dfb03c1a30e7447431e"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const db = getFirestore();
+      
+        const userProfile = document.getElementById('user-profile');
+        const signInButton = document.getElementById('sign-in-button');
+        const signOutButton = document.getElementById('sign-out-button');
+      
+        signInButton.addEventListener('click', () => {
+          const provider = new GoogleAuthProvider();
+          signInWithPopup(auth, provider)
+            .then((result) => {
+              console.log('User signed in');
+            })
+            .catch((error) => {
+              console.error('Sign in error', error);
+            });
+        });
+      
+        signOutButton.addEventListener('click', () => {
+          signOut(auth)
+            .then(() => {
+              console.log('User signed out');
+              signInButton.style.display = 'block';
+              signOutButton.style.display = 'none';
+              userProfile.style.display = 'none';
+            })
+            .catch((error) => {
+              console.error('Sign out error', error);
+            });
+        });
+      
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            // User is signed in
+            signInButton.style.display = 'none';
+            signOutButton.style.display = 'block';
+            userProfile.innerHTML = `<img src="${user.photoURL}" alt="Profile Picture"><p>${user.displayName}</p>`;
+          } else {
+            // User is signed out
+            signInButton.style.display = 'block';
+            signOutButton.style.display = 'none';
+          }
+        });
+
+        window.onload = function() {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                // User is signed in
+                signInButton.style.display = 'none';
+                signOutButton.style.display = 'block';
+                userProfile.innerHTML = `<img src="${user.photoURL}" alt="Profile Picture"><p>${user.displayName}</p>`;
+                fetchPosts(); // Fetch posts when a user is signed in
+                } else {
+                // User is signed out
+                signInButton.style.display = 'block';
+                signOutButton.style.display = 'none';
+                }
+            });
+        }
+
+        window.createPost = function() {
+            const postTitle = document.getElementById('post-title').value;
+            const postContent = document.getElementById('post-content').value;
+            document.getElementById('post-title').value = '';
+            document.getElementById('post-content').value = '';
+
+            addDoc(collection(db, 'posts'), {
+                title: postTitle,
+                content: postContent,
+                userId: auth.currentUser.uid,
+            })
+                .then((docRef) => {
+                console.log('Document written with ID: ', docRef.id);
+
+                // Create a new post element
+                const postElement = document.createElement('div');
+                postElement.classList.add('post');
+                postElement.setAttribute('data-id', docRef.id); // Add the data-id attribute
+                postElement.innerHTML = `
+                    <h1>${postTitle}</h1>
+                    <p>${postContent}</p>
+                    <button class="delete-button" onclick="deletePost('${docRef.id}')">Delete</button>
+                `;
+
+                // Append the new post element to the posts container
+                const postsContainer = document.getElementById('posts-container');
+                postsContainer.appendChild(postElement);
+                })
+                .catch((error) => {
+                console.error('Error adding document: ', error);
+            });
+        }
+
+        function fetchPosts() {
+        const postsContainer = document.getElementById('posts-container');
+        postsContainer.innerHTML = '';
+
+        const q = query(collection(db, 'posts'), where('userId', '==', auth.currentUser.uid));
+        getDocs(q)
+            .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('post');
+                postElement.setAttribute('data-id', doc.id); // Add the data-id attribute
+                postElement.innerHTML = `
+                <h1>${doc.data().title}</h1>
+                <p>${doc.data().content}</p>
+                <button class="delete-button" onclick="deletePost('${doc.id}')">Delete</button>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+            })
+            .catch((error) => {
+            console.error('Error getting documents: ', error);
+            });
+        }
+
+        window.deletePost = function(postId) {
+            deleteDoc(doc(db, 'posts', postId))
+                .then(() => {
+                console.log('Document successfully deleted!');
+
+                // Remove the post element from the page
+                const postElement = document.querySelector(`.post[data-id="${postId}"]`);
+                postElement.remove();
+                })
+                .catch((error) => {
+                console.error('Error removing document: ', error);
+            });
+        }
+      
+        window.searchPosts = function() {
+            const searchField = document.getElementById('search-field').value;
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = '';
+
+            const q = query(collection(db, 'posts'), where('userId', '==', auth.currentUser.uid));
+            getDocs(q)
+                .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    // Only show the post if the title or content includes the search text
+                    if (doc.data().title.includes(searchField) || doc.data().content.includes(searchField)) {
+                    const postElement = document.createElement('div');
+                    postElement.classList.add('post');
+                    postElement.setAttribute('data-id', doc.id); // Add the data-id attribute
+                    postElement.innerHTML = `
+                        <h1>${doc.data().title}</h1>
+                        <p>${doc.data().content}</p>
+                        <button class="delete-button" onclick="deletePost('${doc.id}')">Delete</button>
+                    `;
+                    postsContainer.appendChild(postElement);
+                    }
+                });
+                })
+                .catch((error) => {
+                console.error('Error getting documents: ', error);
+            });
+        }
+      </script>          
 
     <!-- Footer -->
     <footer>
@@ -120,7 +300,7 @@
     </footer>
 
     <!-- JavaScript File -->
-    <script src="../js/main.js"></script>
+    <script type="module" src="../js/main.js"></script>
 </body>
 </html>
 

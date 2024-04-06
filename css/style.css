@@ -388,22 +388,70 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
     color: white; /* Ensure post text is white in dark mode */
 }
 
+#sign-in-button, #sign-out-button {
+    background-color: #1E3765;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px; 
+    font-size: 16px;
+    float: right;
+}
+
+#user-profile {
+    padding: 10px 15px;
+    border-radius: 50px;
+    display: flex;
+    gap: 20px;
+    margin-right: 10px;
+    margin-left: auto;
+    margin-top: 10px;
+    background: #1E3765;
+    color: white;
+    width: fit-content;
+}
+
+#user-profile img{
+    width: 50px;
+    border-radius: 50%;
+}
+
+#sign-out-button {
+    display: none;
+}
+
 .new-post {
     text-align: center;
     margin: 40px auto 0 auto;
     width: 85%;
 }
 
+.new-post h2 {
+    display: flex;
+    font-size: 30px;
+}
+
+#post-title {
+    height: 50px;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+#post-content {
+    height: 200px;
+    font-size: 20px;
+}
+
 .new-post input[type="text"], .new-post textarea {
     width: 100%;
-    height: 200px;
     padding: 10px;
     margin: 10px 0;
     border-radius: 5px;
     border: 1px solid #ccc;
     transition: box-shadow .3s;
     resize: none;
-    font-size: 16px;
 }
 
 .new-post textarea:hover{
