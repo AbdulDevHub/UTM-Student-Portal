@@ -420,11 +420,18 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
     background: #1E3765;
     color: white;
     width: fit-content;
+    transition: translate .3s, box-shadow .3s;
 }
 
 #user-profile img{
     width: 50px;
     border-radius: 50%;
+}
+
+#user-profile:hover{
+    translate: translateY(-5px);
+    box-shadow: 0 0 4px 6px #00fffb; 
+    transition: translate .3s, box-shadow .3s;
 }
 
 #sign-out-button {
