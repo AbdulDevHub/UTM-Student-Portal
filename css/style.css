@@ -617,11 +617,8 @@ body.dark-mode iframe:not(#clock-iframe) {
    align-items: center;
 }
 
-#top-header-container {
+#student-projects-page #suggestion-btn {
     margin: 0 0 20px 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
 }
 
 @keyframes grow {
@@ -644,7 +641,7 @@ body.dark-mode iframe:not(#clock-iframe) {
 }
 
 #student-projects-page h1:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
 }
 
 .work-list {
