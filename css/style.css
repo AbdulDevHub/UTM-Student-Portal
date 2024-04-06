@@ -388,6 +388,7 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
     color: white; /* Ensure post text is white in dark mode */
 }
 
+/*The sign in and sign out buttons*/
 #sign-in-button, #sign-out-button {
     background-color: #1E3765;
     color: white;
@@ -398,7 +399,23 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
     margin: 20px; 
     font-size: 16px;
     float: right;
+    transition: background-color .3s, box-shadow .3s;
 }
+
+/*Hover animation for sign-in button*/
+#sign-in-button:hover {
+    background-color: #01b2ca;
+    box-shadow: 0 0 4px 6px #00fffb; 
+    transition: background-color .3s, box-shadow .3s;
+}
+
+/*Hover animation for sign-out button*/
+#sign-out-button:hover {
+    background-color:red;
+    box-shadow: 0 0 4px 6px #00fffb; 
+    transition: background-color .3s, box-shadow .3s;
+}
+
 
 #user-profile {
     padding: 10px 15px;
@@ -411,11 +428,18 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
     background: #1E3765;
     color: white;
     width: fit-content;
+    transition: translate .3s, box-shadow .3s;
 }
 
 #user-profile img{
     width: 50px;
     border-radius: 50%;
+}
+
+#user-profile:hover{
+    translate: translateY(-5px);
+    box-shadow: 0 0 4px 6px #00fffb; 
+    transition: translate .3s, box-shadow .3s;
 }
 
 #sign-out-button {
@@ -459,6 +483,7 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
     box-shadow: 0 0 4px 6px #D0D1C9; 
 }
 
+/*The button for submitting a post*/
 .new-post button {
     height: 50px;
     padding: 10px 50px;
@@ -468,12 +493,13 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
     color: white;
     border: none;
     cursor: pointer;
-    transition: width 0.4s, height 0.4s, transform 0.4s, box-shadow .3s;
+    transition: width 0.4s, height 0.4s, transform 0.4s, box-shadow .3s, background-color .3s;
 }
 
 .new-post button:hover {
-    transition: width 0.4s, height 0.4s, transform 0.4s, box-shadow .3s;
+    background-color: rgb(19, 220, 19);
     box-shadow: 0 0 4px 4px #01b2ca; 
+    transition: width 0.4s, height 0.4s, transform 0.4s, box-shadow .3s, background-color .3s;
 }
 
 .search-bar {
