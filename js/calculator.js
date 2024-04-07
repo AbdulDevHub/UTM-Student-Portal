@@ -1,3 +1,5 @@
+// ================= Calculator Page Logic ========================
+
 let calculationHistory = [];
 
 function appendToResult(value) {
