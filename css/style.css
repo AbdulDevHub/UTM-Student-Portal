@@ -397,7 +397,7 @@ input:checked + label svg.moon {
     transition: width 0.2s, height 0.2s, transform 0.4s;
 }
 
-/*----------------Notes Page----------*/
+/*----------------Notes Page (Both For Personal & Public)----------*/
 /*Dark Mode Related Stuff*/
 body.dark-mode {
     background-color: #242424;
@@ -410,6 +410,18 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
     color: white; /* Ensure post text is white in dark mode */
 }
 
+#public-notes-title {
+    font-size: 40px;
+}
+
+.profile-section {
+    display: flex;
+    align-items: flex-end;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
 /*The sign in and sign out buttons*/
 #sign-in-button, #sign-out-button {
     background-color: #1E3765;
@@ -418,7 +430,7 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    margin: 20px; 
+    margin: 15px; 
     font-size: 16px;
     float: right;
     transition: background-color .3s, box-shadow .3s;
@@ -572,6 +584,13 @@ body.dark-mode .post, body.dark-mode .new-post textarea, body.dark-mode .search-
 
 .search-bar button:hover {
     background-color: #01b2ca;
+}
+
+#sign-in-message {
+    display: none;
+    text-align: center;
+    color: rgb(255, 102, 102);
+    margin: 80px 0 136px 0;
 }
 
 #posts-container {

@@ -86,9 +86,11 @@
         <script async src="https://app2.weatherwidget.org/js/?id=ww_2f586b574b05f"></script>
     </container>
 
-    <div id="user-profile"></div>
-    <button id="sign-in-button">Sign In With Google</button>
-    <button id="sign-out-button">Sign Out</button>
+    <div class="profile-section">
+        <div id="user-profile"></div>
+        <button id="sign-in-button">Sign In With Google</button>
+        <button id="sign-out-button">Sign Out</button>
+    </div>
     
     <!-- New Post Form -->
     <div class="new-post">
@@ -183,6 +185,7 @@
                 signInButton.style.display = 'none';
                 signOutButton.style.display = 'block';
                 userProfile.innerHTML = `<img src="${user.photoURL}" alt="Profile Picture"><p>${user.displayName}</p>`;
+                userProfile.style.display = 'flex';
                 fetchPosts(); // Fetch posts when a user is signed in
                 } else {
                 // User is signed out
