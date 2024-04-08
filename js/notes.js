@@ -23,6 +23,7 @@ const db = getFirestore();
 const userProfile = document.getElementById('user-profile');
 const signInButton = document.getElementById('sign-in-button');
 const signOutButton = document.getElementById('sign-out-button');
+const signInMessage = document.getElementById('sign-in-message');
 
 signInButton.addEventListener('click', () => {
     const provider = new GoogleAuthProvider();
@@ -56,29 +57,33 @@ signOutButton.addEventListener('click', () => {
 onAuthStateChanged(auth, (user) => {
     if (user) {
     // User is signed in
-    signInButton.style.display = 'none';
-    signOutButton.style.display = 'block';
-    userProfile.innerHTML = `<img src="${user.photoURL}" alt="Profile Picture"><p>${user.displayName}</p>`;
+        signInButton.style.display = 'none';
+        signOutButton.style.display = 'block';
+        userProfile.innerHTML = `<img src="${user.photoURL}" alt="Profile Picture"><p>${user.displayName}</p>`;
+        signInMessage.style.display = 'none';
     } else {
-    // User is signed out
-    signInButton.style.display = 'block';
-    signOutButton.style.display = 'none';
+        // User is signed out
+        signInButton.style.display = 'block';
+        signOutButton.style.display = 'none';
+        signInMessage.style.display = 'block';
     }
 });
 
 window.onload = function() {
     onAuthStateChanged(auth, (user) => {
         if (user) {
-        // User is signed in
-        signInButton.style.display = 'none';
-        signOutButton.style.display = 'block';
-        userProfile.innerHTML = `<img src="${user.photoURL}" alt="Profile Picture"><p>${user.displayName}</p>`;
-        userProfile.style.display = 'flex';
-        fetchPosts(); // Fetch posts when a user is signed in
+            // User is signed in
+            signInButton.style.display = 'none';
+            signOutButton.style.display = 'block';
+            userProfile.innerHTML = `<img src="${user.photoURL}" alt="Profile Picture"><p>${user.displayName}</p>`;
+            userProfile.style.display = 'flex';
+            signInMessage.style.display = 'none';
+            fetchPosts(); // Fetch posts when a user is signed in
         } else {
-        // User is signed out
-        signInButton.style.display = 'block';
-        signOutButton.style.display = 'none';
+            // User is signed out
+            signInButton.style.display = 'block';
+            signOutButton.style.display = 'none';
+            signInMessage.style.display = 'block';
         }
     });
 }
