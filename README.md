@@ -1,6 +1,8 @@
 # UTM Student Portal 
 
-<img height="400" src="./images/Screenshot.png">
+<a href="https://utmstudentportal.netlify.app/" target="_blank" rel="noreferrer"> 
+  <img height="400" src="./images/Screenshot.png">
+</a>
 
 ## Overview
 
