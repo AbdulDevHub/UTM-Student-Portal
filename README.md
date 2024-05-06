@@ -1,5 +1,7 @@
 # UTM Student Portal 
-![image](https://github.com/AbdulDevHub/UTM-Student-Portal/assets/75636044/ead60247-8aa8-4eac-a422-65843727d7e5)
+
+<img height="400" src="./images/Screenshot.png">
+
 ## Overview
 
 Welcome to the repository for the University of Toronto Mississauga (UTM) Student Portal. This portal is designed to streamline the academic experience for students by centralizing access to important UTM tools and resources. Note: This is not an official website created by the University of Toronto Mississauga.
