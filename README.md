@@ -18,16 +18,6 @@ Welcome to the repository for the University of Toronto Mississauga (UTM) Studen
 - **Degree Planning**: Tools to plan out your academic career.
 - **Employment Opportunities**: A portal to connect students with on-campus and off-campus job openings.
 
-## Getting Started
-
-Visit the portal: https://utmstudentportal.netlify.app/
-
-## Technologies Used
-
-- HTML
-- CSS
-- JavaScript
-
 ## Setup
 
 To run this project locally, follow these steps:
