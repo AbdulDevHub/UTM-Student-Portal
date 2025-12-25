@@ -382,19 +382,20 @@ input:checked + label svg.moon {
     height: 150px;
     right: 0px; 
     bottom: 20px;
-    transition: width 0.4s, height 0.4s, transform 0.4s, box-shadow .3s;
+    cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
 #chatbot:hover {
-    width: 200px;
-    height: 200px;
-    transition: width 0.4s, height 0.4s, transform 0.4s;
+    transform: scale(1.08) translateY(-3px);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3)) brightness(1.1);
 }
 
 #chatbot:active {
-    width: 225px;
-    height: 225px;
-    transition: width 0.2s, height 0.2s, transform 0.4s;
+    transform: scale(1.05) translateY(-2px);
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4)) brightness(0.95);
+    transition: transform 0.1s ease, filter 0.1s ease;
 }
 
 /*----------------iFrame Page----------*/
