@@ -5,17 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UTM Student Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" type="image/x-icon" href="images/logo.png" />
     <script src="https://kit.fontawesome.com/3491f85d9f.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <!-- Header -->
     <header>
         <a href="index.html">
             <div class="logo-and-title">
                 <img id="logo" src="images/logo.png" alt="Logo">
-                <h1>Student Portal</h1>
+                <div>
+                    <span class="eyebrow">University of Toronto Mississauga</span>
+                    <h1>Student Portal</h1>
+                </div>
             </div>
         </a>
 
@@ -33,7 +40,7 @@
             <!-- Dark Mode Toggle -->
             <div class="darkmode-toggle">
                 <input type="checkbox" id="darkmode-toggle"/>
-                <label for="darkmode-toggle">
+                <label for="darkmode-toggle" class="dm-label">
                     <!-- Sun SVG Icon -->
                     <svg version="1.1" class="sun" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                         viewBox="0 0 496 496" style="enable-background:new 0 0 496 496;" xml:space="preserve">
@@ -83,10 +90,18 @@
     </container>
 
     <!-- Main Section -->
-    <main>
+    <main id="main-content">
+        <p class="page-lead">Every UofT Mississauga tool, portal, and resource students actually use — in one place. Search below, or browse by category.</p>
+
+        <div class="directory-search">
+            <input type="text" id="link-search" placeholder="Search ACORN, Quercus, timetable, library…" aria-label="Search portal links" autocomplete="off">
+        </div>
+        <p class="search-meta" id="search-meta" aria-live="polite"></p>
+        <p class="no-results" id="no-results">No links match your search. Try a different term.</p>
+
         <!-- First Row Section -->
         <section id="first-row">
-            <section>
+            <section class="section-card">
                 <h2>UTM Essentials</h2>
                 <div class="utm-links utm-essentials">
                     <a href="https://utm.calendar.utoronto.ca/" target="_blank" rel="noopener noreferrer" aria-label="Academic Calendar">ACADEMIC CALENDAR</a>
@@ -103,7 +118,7 @@
                 </div>   
             </section>
 
-            <section>
+            <section class="section-card">
                 <h2>UTM Tools</h2>
                 <div class="utm-links utm-tools">
                     <a href="https://www.utorid.utoronto.ca/cgi-bin/utorid/activate.pl" target="_blank" rel="noopener noreferrer" aria-label="Activate UTORid">ACTIVATE UTORID</a>
@@ -126,7 +141,7 @@
 
         <!-- Second Row Section -->
         <section id="second-row">
-            <section>
+            <section class="section-card">
                 <h2>UTM Logistics</h2>
                 <div class="utm-links utm-logistics">
                     <a href="https://brand.utoronto.ca/" target="_blank" rel="noopener noreferrer" aria-label="University of Toronto Brand Portal">BRAND PORTAL</a>
@@ -139,7 +154,7 @@
                 </div>
             </section>
 
-            <section>
+            <section class="section-card">
                 <h2>Campus Life</h2>
                 <div class="utm-links campus-life">
                     <a href="https://www.utm.utoronto.ca/housing/" target="_blank" rel="noopener noreferrer" aria-label="Campus Housing">CAMPUS HOUSING</a>
@@ -155,7 +170,8 @@
         <!-- Third Row Section -->
         <section id="third-row">
             <!-- Additional Course Links -->
-            <section>
+            <section class="section-card">
+                <label class="majors-label" for="majors">Explore links by major</label>
                 <select id="majors" onchange="showLinks(this.value)">
                     <option value="cs/math">Computer Science</option>
                     <option value="biology">Biology</option>
@@ -200,7 +216,7 @@
                 </div>
             </section>
 
-            <section>
+            <section class="section-card">
                 <h2>Internal Tools</h2>
                 <div class="utm-links internal-tools">
                     <a href="pages/calculator.html" id="utm-tools-linked-to-site" aria-label="Simple plus Graphing Calculator">BASIC CALCULATOR</a>
@@ -215,7 +231,7 @@
         
         <!-- Fourth Row Section -->
         <section id="fourth-row">
-            <section>
+            <section class="section-card">
                 <h2>External Tools</h2>
                 <div class="utm-links external-resources">
                     <a href="https://www.adobe.com/home" target="_blank" rel="noopener noreferrer" aria-label="Adobe Creative Cloud">ADOBE CREATIVE CLOUD</a>
@@ -245,7 +261,7 @@
         </section>
 
         <!--Chatbot button-->
-        <section id="chatbot">
+        <section id="chatbot-launcher">
             <!--Open a small pop-up window for the chatbot when the button is clicked-->
             <img id="chatbot" src="images/chatbot_icon_v3.png" alt="Help Chatbot" aria-label="Help Chatbot" onclick="openChat()"/>
 

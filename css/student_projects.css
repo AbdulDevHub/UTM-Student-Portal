@@ -9,6 +9,22 @@
  
  #student-projects-page #suggestion-btn {
      margin: 0 0 20px 0;
+     display: inline-block;
+     background-color: var(--navy-2);
+     color: #fff;
+     border: none;
+     padding: 12px 26px;
+     border-radius: 999px;
+     font-weight: 700;
+     font-size: 0.9rem;
+     text-decoration: none;
+     transition: background-color 0.25s, transform 0.2s, box-shadow 0.25s;
+ }
+
+ #student-projects-page #suggestion-btn:hover {
+     background-color: var(--c-tools);
+     transform: translateY(-2px);
+     box-shadow: var(--shadow-md);
  }
  
  @keyframes grow {

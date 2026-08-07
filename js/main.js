@@ -58,9 +58,66 @@ function showLinks(major) {
     "history",
   ]
   majors.forEach(function (m) {
-    document.getElementById(m).style.display = m == major ? "flex" : "none"
+    document.getElementById(m).classList.toggle("hidden", m !== major)
   })
 }
+
+// ================= Directory Search Logic ========================
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("link-search")
+  if (!input) return // Not on the homepage
+
+  const meta = document.getElementById("search-meta")
+  const noResults = document.getElementById("no-results")
+  const cards = Array.from(document.querySelectorAll("main .section-card"))
+
+  function runFilter() {
+    const query = input.value.trim().toLowerCase()
+    let totalMatches = 0
+
+    cards.forEach((card) => {
+      const isMajorsCard = !!card.querySelector("#majors")
+      const groups = card.querySelectorAll(".utm-links:not(.hidden)")
+      let cardHasMatch = false
+
+      groups.forEach((group) => {
+        group.querySelectorAll("a").forEach((link) => {
+          const text = (link.textContent || "").toLowerCase()
+          const label = (link.getAttribute("aria-label") || "").toLowerCase()
+          const matches = query === "" || text.includes(query) || label.includes(query)
+          link.classList.toggle("hidden-by-search", !matches)
+          if (matches) {
+            totalMatches++
+            cardHasMatch = true
+          }
+        })
+      })
+
+      // Never fully hide the majors selector card, just its links
+      if (!isMajorsCard) {
+        card.classList.toggle("hidden", query !== "" && !cardHasMatch)
+      }
+    })
+
+    if (query === "") {
+      meta.textContent = ""
+      noResults.classList.remove("show")
+    } else {
+      meta.textContent = `${totalMatches} link${totalMatches === 1 ? "" : "s"} found`
+      noResults.classList.toggle("show", totalMatches === 0)
+    }
+  }
+
+  input.addEventListener("input", runFilter)
+
+  // Re-run the filter whenever the major dropdown changes visible groups
+  const majorsSelect = document.getElementById("majors")
+  if (majorsSelect) {
+    majorsSelect.addEventListener("change", () => {
+      if (input.value.trim() !== "") runFilter()
+    })
+  }
+})
 
 // ================= Notes Page Logic ========================
 function toggleDarkMode() {
