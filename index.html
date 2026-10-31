@@ -4,7 +4,86 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UTM Student Portal</title>
+    <title>UTM Student Portal | Every UofT Mississauga Link, Tool &amp; Resource</title>
+    <meta name="description" content="Free UTM student portal: ACORN, Quercus, timetable builder, exam schedule, library, GPA calculator and every UofT Mississauga link in one searchable page.">
+    <meta name="keywords" content="UTM, UTM student portal, University of Toronto Mississauga, UofT Mississauga, ACORN, Quercus, UTM exam schedule, UTM timetable, UofT GPA calculator, UTM resources">
+    <meta name="author" content="Abdul Hadi Khan">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#16233F">
+    <link rel="canonical" href="https://utmstudentportal.netlify.app/">
+
+    <!-- Open Graph / Facebook / LinkedIn / Discord -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://utmstudentportal.netlify.app/">
+    <meta property="og:site_name" content="UTM Student Portal">
+    <meta property="og:title" content="UTM Student Portal | Every UofT Mississauga Link in One Place">
+    <meta property="og:description" content="ACORN, Quercus, exam schedule, timetable builder, library, GPA calculator and more. One searchable page for University of Toronto Mississauga students.">
+    <meta property="og:image" content="https://utmstudentportal.netlify.app/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="UTM Student Portal home page with categorized UofT Mississauga links">
+    <meta property="og:locale" content="en_CA">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="UTM Student Portal | Every UofT Mississauga Link in One Place">
+    <meta name="twitter:description" content="ACORN, Quercus, exam schedule, timetable builder, library, GPA calculator and more. One searchable page for UTM students.">
+    <meta name="twitter:image" content="https://utmstudentportal.netlify.app/images/og-image.png">
+    <meta name="twitter:image:alt" content="UTM Student Portal home page with categorized UofT Mississauga links">
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="images/logo.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://utmstudentportal.netlify.app/#website",
+          "name": "UTM Student Portal",
+          "alternateName": ["UofT Mississauga Student Portal", "UTM Portal"],
+          "url": "https://utmstudentportal.netlify.app/",
+          "inLanguage": "en-CA",
+          "description": "A one-stop shop for University of Toronto Mississauga students to quickly access the links, tools and resources they need.",
+          "creator": { "@id": "https://utmstudentportal.netlify.app/#creator" }
+        },
+        {
+          "@type": "WebApplication",
+          "name": "UTM Student Portal",
+          "url": "https://utmstudentportal.netlify.app/",
+          "applicationCategory": "EducationalApplication",
+          "operatingSystem": "All",
+          "browserRequirements": "Requires JavaScript.",
+          "isAccessibleForFree": true,
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
+          "audience": {
+            "@type": "EducationalAudience",
+            "educationalRole": "student",
+            "audienceType": "University of Toronto Mississauga students"
+          },
+          "featureList": [
+            "Searchable directory of UTM and UofT links (ACORN, Quercus, exam schedule, timetable builder)",
+            "GPA and CGPA calculator",
+            "Basic and Desmos graphing calculators",
+            "Note taker and shared public notes",
+            "Links grouped by major and campus life",
+            "Dark mode"
+          ],
+          "creator": { "@id": "https://utmstudentportal.netlify.app/#creator" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://utmstudentportal.netlify.app/#creator",
+          "name": "Abdul Hadi Khan",
+          "url": "https://abdulhadikhan.vercel.app/",
+          "sameAs": ["https://github.com/AbdulDevHub"]
+        }
+      ]
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -18,10 +97,10 @@
     <header>
         <a href="index.html">
             <div class="logo-and-title">
-                <img id="logo" src="images/logo.png" alt="Logo">
+                <img id="logo" src="images/logo.png" alt="UTM Student Portal logo" width="52" height="52">
                 <div>
                     <span class="eyebrow">University of Toronto Mississauga</span>
-                    <h1>Student Portal</h1>
+                    <h1><span class="visually-hidden">UTM </span>Student Portal</h1>
                 </div>
             </div>
         </a>
@@ -80,14 +159,14 @@
     </header>
 
     <!-- Weather Feature Container -->
-    <container id="weather-widget">
+    <div id="weather-widget">
         <div id="ww_2f586b574b05f" v='1.3' loc='id' a='{"t":"responsive","lang":"en","sl_lpl":1,"ids":["wl3619"],"font":"Arial",
             "sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA",
             "cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>
                 More forecasts: <a href="https://oneweather.org/calgary/30_days/" id="ww_2f586b574b05f_u" target="_blank">Weather forecast Calgary 30 days</a>
         </div>
         <script async src="https://app2.weatherwidget.org/js/?id=ww_2f586b574b05f"></script>
-    </container>
+    </div>
 
     <!-- Main Section -->
     <main id="main-content">
@@ -219,12 +298,12 @@
             <section class="section-card">
                 <h2>Internal Tools</h2>
                 <div class="utm-links internal-tools">
-                    <a href="pages/calculator.html" id="utm-tools-linked-to-site" aria-label="Simple plus Graphing Calculator">BASIC CALCULATOR</a>
-                    <a href="pages/desmos.html" id="utm-tools-linked-to-site" rel="noopener noreferrer" aria-label="DESMOS CALCULATOR">DESMOS CALCULATOR</a>
-                    <a href="pages/gpa_calculator.html" id="utm-tools-linked-to-site" aria-label="GPA AND CGPA CALCULATOR">GPA CALCULATOR</a>
-                    <a href="pages/notes.html" id="utm-tools-linked-to-site" rel="noopener noreferrer" aria-label="Note Taker">NOTE TAKER</a>
-                    <a href="pages/public_notes.html" id="utm-tools-linked-to-site" rel="noopener noreferrer" aria-label="Public Notes">PUBLIC NOTES</a>
-                    <a href="pages/student_projects.html" id="utm-tools-linked-to-site" rel="noopener noreferrer" aria-label="Student Projects">STUDENT PROJECTS</a>
+                    <a href="pages/calculator.html" class="utm-tools-linked-to-site" aria-label="Simple plus Graphing Calculator">BASIC CALCULATOR</a>
+                    <a href="pages/desmos.html" class="utm-tools-linked-to-site" rel="noopener noreferrer" aria-label="DESMOS CALCULATOR">DESMOS CALCULATOR</a>
+                    <a href="pages/gpa_calculator.html" class="utm-tools-linked-to-site" aria-label="GPA AND CGPA CALCULATOR">GPA CALCULATOR</a>
+                    <a href="pages/notes.html" class="utm-tools-linked-to-site" rel="noopener noreferrer" aria-label="Note Taker">NOTE TAKER</a>
+                    <a href="pages/public_notes.html" class="utm-tools-linked-to-site" rel="noopener noreferrer" aria-label="Public Notes">PUBLIC NOTES</a>
+                    <a href="pages/student_projects.html" class="utm-tools-linked-to-site" rel="noopener noreferrer" aria-label="Student Projects">STUDENT PROJECTS</a>
                 </div>
             </section>
         </section>

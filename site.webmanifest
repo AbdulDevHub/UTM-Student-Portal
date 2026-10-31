@@ -1,0 +1,19 @@
+{
+  "name": "UTM Student Portal",
+  "short_name": "UTM Portal",
+  "description": "Every University of Toronto Mississauga link, tool and resource in one searchable page.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#16233F",
+  "theme_color": "#16233F",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "sizes": "500x500",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

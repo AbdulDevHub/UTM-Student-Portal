@@ -109,10 +109,26 @@ header a { text-decoration: none; color: #ffffff; }
   color: #ffffff;
 }
 
-.logo-and-title h1 {
+.logo-and-title h1,
+.logo-and-title .site-title {
+  font-family: var(--font-display);
   font-size: 1.35rem;
+  font-weight: 700;
   margin: 0;
   letter-spacing: 0.2px;
+}
+
+/* Text for search engines and screen readers only */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .logo-and-title span.eyebrow {
@@ -568,7 +584,7 @@ body.dark-mode iframe:not(#clock-iframe) {
 
 @media (max-width: 640px) {
   header { padding: 10px 16px; }
-  .logo-and-title h1 { font-size: 1.05rem; }
+  .logo-and-title h1, .logo-and-title .site-title { font-size: 1.05rem; }
   #logo { width: 42px; height: 42px; }
   #clock-iframe { display: none; }
   main { padding: 8px 14px 32px; }
