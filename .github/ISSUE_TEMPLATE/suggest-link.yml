@@ -1,0 +1,45 @@
+name: Suggest a link
+description: Add a UTM or UofT link, tool or resource to the portal
+title: "Suggest link: "
+labels: ["link suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for helping other UTM students! Links must be free to access and useful to UofT Mississauga students.
+  - type: input
+    id: name
+    attributes:
+      label: Link name
+      placeholder: e.g. UTM Food Bank
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      placeholder: https://
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - UTM Essentials
+        - UTM Tools
+        - Support & Services
+        - Campus Life
+        - Links by Major
+        - External Tools
+    validations:
+      required: true
+  - type: input
+    id: desc
+    attributes:
+      label: Short description (under 40 characters)
+      placeholder: e.g. Free groceries for students
+  - type: input
+    id: aliases
+    attributes:
+      label: Words people might search for it with (optional)
+      placeholder: e.g. food, groceries, pantry

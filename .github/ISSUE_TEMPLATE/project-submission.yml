@@ -1,0 +1,32 @@
+name: Submit a student project
+description: Show off something you built for the Student Projects page
+title: "Project submission: "
+labels: ["project submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Projects must be your own work: personal projects, or course projects with open-ended briefs (like "make a game"), so they inspire without giving away assignment answers. Every submission is reviewed.
+  - type: input
+    id: title
+    attributes:
+      label: Project name
+    validations:
+      required: true
+  - type: textarea
+    id: desc
+    attributes:
+      label: What it does and what you built it with (2–3 sentences)
+    validations:
+      required: true
+  - type: input
+    id: links
+    attributes:
+      label: Links (live demo, GitHub, Figma…)
+    validations:
+      required: true
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: Drag an image here (portrait or square works best).

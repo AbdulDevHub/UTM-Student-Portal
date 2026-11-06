@@ -1,0 +1,22 @@
+name: Report a problem
+description: Something on the portal is broken or wrong
+labels: ["bug"]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Which page?
+      placeholder: https://utmstudentportal.netlify.app/...
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and browser
+      placeholder: e.g. iPhone 15, Safari

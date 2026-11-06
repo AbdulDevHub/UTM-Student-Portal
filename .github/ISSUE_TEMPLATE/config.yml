@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Open the portal
+    url: https://utmstudentportal.netlify.app/
+    about: Every UTM link, tool and deadline in one place.
