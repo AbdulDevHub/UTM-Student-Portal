@@ -1,0 +1,44 @@
+name: Weekly link check
+
+on:
+  schedule:
+    - cron: "0 13 * * 1" # Mondays, 9am Toronto
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check every portal link
+        id: check
+        run: node scripts/check-links.mjs --json broken.json
+        continue-on-error: true
+      - name: Open or update an issue when links break
+        if: steps.check.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          {
+            echo "The weekly link check found links that no longer work. Fix or replace them in \`js/data/links.js\`, then run \`npm run build\`."
+            echo
+            echo "| Link | Category | Status | URL |"
+            echo "|---|---|---|---|"
+            jq -r '.[] | "| \(.name) | \(.category) | \(.status) | \(.url) |"' broken.json
+            echo
+            echo "_Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}_"
+          } > body.md
+          existing=$(gh issue list --label broken-links --state open --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body-file body.md
+          else
+            gh label create broken-links --color D73A4A --description "Found by the weekly link check" 2>/dev/null || true
+            gh issue create --title "Broken links found by weekly check" --label broken-links --body-file body.md
+          fi
