@@ -108,8 +108,8 @@ export const links = {
   // Site-relative pages that live in this repo
   portal: [
     { name: "GPA Calculator", url: "/gpa-calculator/", desc: "UofT GPA, CGPA and final-exam planner", aliases: ["gpa", "cgpa", "grades", "final exam", "what do i need"] },
-    { name: "Calculators", url: "/calculator/", desc: "Desmos scientific, graphing, matrix", aliases: ["calc", "calculator", "desmos", "graphing", "scientific", "matrix", "graph", "math"] },
-    { name: "Notes", url: "/notes/", desc: "Your notes + notes shared by students", aliases: ["notes", "notepad", "note taker", "public notes", "shared notes"] },
+    { name: "Desmos", url: "/desmos/", desc: "Scientific, graphing and matrix calculators", aliases: ["calc", "calculator", "desmos", "graphing", "scientific", "matrix", "graph", "math"] },
+    { name: "Notes", url: "/notes/", desc: "Quick notes saved in your browser", aliases: ["notes", "notepad", "note taker", "write"] },
     { name: "Student Projects", url: "/student-projects/", desc: "Apps and games built by students", aliases: ["projects", "portfolio", "showcase"] },
   ],
 

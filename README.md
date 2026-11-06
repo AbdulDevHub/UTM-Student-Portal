@@ -34,8 +34,8 @@ UTM students juggle a dozen UofT systems: ACORN for enrolment, Quercus for cours
 | **Live Mississauga weather** | Current conditions and a 4-day forecast for campus, from [Open-Meteo](https://open-meteo.com/) (free, no API key). |
 | **UofT GPA calculator** | Converts marks or letters to the UofT 4.0 scale, gives you your sessional GPA and CGPA, works out the final-exam mark you need, plans a target CGPA, and makes shareable links. |
 | **Quick math + calculators** | Type a sum like `85*0.4+72*0.6` into any search box for an instant answer (a safe parser, no `eval`). Desmos scientific, graphing, matrix and geometry calculators sit in one tabbed page. |
-| **Notes** | Google sign-in notes stored in Firebase, with a Shared notes tab for notes students choose to publish. |
-| **Student Projects** | A gallery of apps, games and designs built by UTM students. |
+| **Notes** | Write, search and pin course notes saved in your browser (no account). Share a note as a link and back everything up to a file. |
+| **Student Projects** | A showcase for apps, games and designs built by UTM students, with a submission form. |
 | **Installable and offline** | A PWA with a service worker: add it to your home screen and the main pages still load without a connection. |
 | **Dark mode** | Follows your system setting, or toggle it yourself. |
 
@@ -89,15 +89,15 @@ Not a coder? [Suggest a link](https://github.com/AbdulDevHub/UTM-Student-Portal/
 ```
 ├── index.html              Home: search, term tracker, pins, link directory, FAQ
 ├── gpa-calculator/         UofT GPA / CGPA / final-exam calculator
-├── calculator/             Desmos calculators (tabs)
-├── notes/                  My notes + Shared notes (Firebase)
+├── desmos/                 Desmos calculators (tabs)
+├── notes/                  Notes saved in the browser (share links, backup)
 ├── student-projects/       Student project gallery
 ├── css/style.css           One stylesheet for the whole site
 ├── js/
 │   ├── data/               links.js, dates.js: the content
 │   ├── lib/                Pure logic (search, gpa, term, calc), unit-tested
 │   └── *.js                Page scripts, Ctrl+K palette, weather, store
-├── images/                 Icons, project shots, README screenshots
+├── images/                 Icons, social image, README screenshots
 ├── scripts/                Build-only: build, dev server, link checker,
 │                           shared partials/, unit tests/, Lighthouse config
 └── sw.js                   Service worker (offline + install)

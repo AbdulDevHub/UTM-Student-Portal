@@ -17,32 +17,32 @@
   force = true
 [[redirects]]
   from = "/pages/calculator.html"
-  to = "/calculator/"
+  to = "/desmos/"
   status = 301
   force = true
 [[redirects]]
   from = "/pages/calculator"
-  to = "/calculator/"
+  to = "/desmos/"
   status = 301
   force = true
 [[redirects]]
   from = "/pages/simple_calculator.html"
-  to = "/calculator/"
+  to = "/desmos/"
   status = 301
   force = true
 [[redirects]]
   from = "/pages/simple_calculator"
-  to = "/calculator/"
+  to = "/desmos/"
   status = 301
   force = true
 [[redirects]]
   from = "/pages/desmos.html"
-  to = "/calculator/"
+  to = "/desmos/"
   status = 301
   force = true
 [[redirects]]
   from = "/pages/desmos"
-  to = "/calculator/"
+  to = "/desmos/"
   status = 301
   force = true
 [[redirects]]
@@ -57,12 +57,12 @@
   force = true
 [[redirects]]
   from = "/pages/public_notes.html"
-  to = "/notes/?view=public"
+  to = "/notes/"
   status = 301
   force = true
 [[redirects]]
   from = "/pages/public_notes"
-  to = "/notes/?view=public"
+  to = "/notes/"
   status = 301
   force = true
 [[redirects]]
@@ -96,25 +96,25 @@
   status = 301
   force = true
 
-# Pages merged in v2.1
+# Pages merged/renamed in v2.1
 [[redirects]]
-  from = "/desmos/*"
-  to = "/calculator/"
+  from = "/calculator/*"
+  to = "/desmos/"
   status = 301
   force = true
 [[redirects]]
-  from = "/desmos"
-  to = "/calculator/"
+  from = "/calculator"
+  to = "/desmos/"
   status = 301
   force = true
 [[redirects]]
   from = "/public-notes/*"
-  to = "/notes/?view=public"
+  to = "/notes/"
   status = 301
   force = true
 [[redirects]]
   from = "/public-notes"
-  to = "/notes/?view=public"
+  to = "/notes/"
   status = 301
   force = true
 
@@ -125,7 +125,7 @@
   status = 301
 [[redirects]]
   from = "/calc"
-  to = "/calculator/"
+  to = "/desmos/"
   status = 301
 
 # ---- Headers ----

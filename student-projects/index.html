@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>UTM Student Projects | Apps, Games &amp; Designs Built by UofT Students</title>
-    <meta name="description" content="Explore websites, Chrome extensions, games and UI/UX designs built by University of Toronto Mississauga students, with live demos, GitHub repos and Figma files.">
+    <meta name="description" content="A showcase for websites, apps, games and designs built by University of Toronto Mississauga students. Submit your own project to get it featured.">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <link rel="canonical" href="https://utmstudentportal.netlify.app/student-projects/">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://utmstudentportal.netlify.app/student-projects/">
     <meta property="og:site_name" content="UTM Student Portal">
     <meta property="og:title" content="UTM Student Projects | Built by UofT Mississauga Students">
-    <meta property="og:description" content="Websites, extensions, games and UI/UX designs built by UTM students.">
+    <meta property="og:description" content="A showcase for projects built by UTM students. Submit yours.">
     <meta property="og:image" content="https://utmstudentportal.netlify.app/images/og-image.jpg">
     <meta property="og:locale" content="en_CA">
     <meta name="twitter:card" content="summary_large_image">
@@ -87,7 +87,7 @@
         <nav class="site-nav" aria-label="Main">
           <a href="/" data-nav="/">Home</a>
           <a href="/gpa-calculator/" data-nav="/gpa-calculator/">GPA<span class="nav-long"> Calculator</span></a>
-          <a href="/calculator/" data-nav="/calculator/">Calculators</a>
+          <a href="/desmos/" data-nav="/desmos/">Desmos</a>
           <a href="/notes/" data-nav="/notes/">Notes</a>
           <a href="/student-projects/" data-nav="/student-projects/" aria-current="page">Projects</a>
         </nav>
@@ -115,129 +115,37 @@
             <div>
                 <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Portal</a> / <span aria-current="page">Student Projects</span></nav>
                 <h1>Student Projects</h1>
-                <p>Websites, extensions, games and designs built by UTM students. Get inspired, then show off your own.</p>
+                <p>A showcase for websites, apps, games and designs built by UTM students. Built something? Get it featured here.</p>
             </div>
             <a class="btn btn-primary" href="https://github.com/AbdulDevHub/UTM-Student-Portal/issues/new?template=project-submission.yml" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Submit your project</a>
         </section>
 
-        <div class="tabs project-filter" role="group" aria-label="Filter projects" data-filter>
-            <button type="button" aria-pressed="true" data-type="all">All</button>
-            <button type="button" aria-pressed="false" data-type="web">Web</button>
-            <button type="button" aria-pressed="false" data-type="software">Software</button>
-            <button type="button" aria-pressed="false" data-type="design">Design</button>
-        </div>
-
         <div class="project-grid">
-            <article class="project" data-type="web">
-                <img src="/images/projects/project-11.webp" alt="Screenshot of Opal Labs (Next.js Project)" width="650" height="800" loading="lazy" decoding="async">
+            <article class="project project--example">
+                <div class="project-art" aria-hidden="true">
+                    <svg class="icon" viewBox="0 0 24 24"><use href="#i-grad"/></svg>
+                    <span>Your project here</span>
+                </div>
                 <div class="project-body">
-                    <span class="project-type">Web & extensions</span>
-                    <h2>Opal Labs (Next.js Project)</h2>
-                    <p>This is a Notion-like productivity website made using the Agile model, Next.js, TypeScript, Google OAuth, PostgreSQL, Redis, Playwright, and Go.</p>
-                    <div class="project-links"><a class="btn btn-sm" href="https://opal-labs.vercel.app/" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>Live site</a><a class="btn btn-sm" href="https://github.com/AbdulDevHub/Opal-Labs-Frontend" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a></div>
+                    <span class="project-type">Example</span>
+                    <h2>Course Planner (example)</h2>
+                    <p>This is what a featured project looks like: a screenshot, two or three sentences on what it does and what it's built with, and links to try it and see the code.</p>
+                    <div class="project-links">
+                        <a class="btn btn-sm" href="https://github.com/AbdulDevHub/UTM-Student-Portal/issues/new?template=project-submission.yml" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>Live site</a>
+                        <a class="btn btn-sm" href="https://github.com/AbdulDevHub/UTM-Student-Portal/issues/new?template=project-submission.yml" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
+                    </div>
                 </div>
             </article>
-            <article class="project" data-type="web">
-                <img src="/images/projects/project-10.webp" alt="Screenshot of 3D Apple Website" width="650" height="800" loading="lazy" decoding="async">
-                <div class="project-body">
-                    <span class="project-type">Web & extensions</span>
-                    <h2>3D Apple Website</h2>
-                    <p>This is a 3D Apple website built using Three.js, WebGi, and GSAP, which are powerful libraries for creating rich, interactive web experiences.</p>
-                    <div class="project-links"><a class="btn btn-sm" href="https://3d-apple-website-with-threejs.netlify.app/" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>Live site</a><a class="btn btn-sm" href="https://github.com/AbdulDevHub/3D-Apple-Website-With-Three.js-WebGi-GSAP" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a></div>
-                </div>
-            </article>
-            <article class="project" data-type="web">
-                <img src="/images/projects/project-7.webp" alt="Screenshot of Local Video Player Extension" width="650" height="800" loading="lazy" decoding="async">
-                <div class="project-body">
-                    <span class="project-type">Web & extensions</span>
-                    <h2>Local Video Player Extension</h2>
-                    <p>This is a chrome extension that plays local videos on the browser along with features like 0.10x to 16x video speed, stretch video to fill screen (only for 16:10 screens), a video seeker, and keyboard shortcuts.</p>
-                    <div class="project-links"><a class="btn btn-sm" href="https://github.com/AbdulDevHub/Local-Video-Player" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a></div>
-                </div>
-            </article>
-            <article class="project" data-type="web">
-                <img src="/images/projects/project-6.webp" alt="Screenshot of Linkest Extension" width="650" height="800" loading="lazy" decoding="async">
-                <div class="project-body">
-                    <span class="project-type">Web & extensions</span>
-                    <h2>Linkest Extension</h2>
-                    <p>This is a chrome extension that lets users take notes, save tab links, open local files on the browser, and Google search saved text with one click.</p>
-                    <div class="project-links"><a class="btn btn-sm" href="https://github.com/AbdulDevHub/Linkest" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a></div>
-                </div>
-            </article>
-            <article class="project" data-type="software">
-                <img src="/images/projects/project-1.webp" alt="Screenshot of Unity Underwater Game" width="650" height="800" loading="lazy" decoding="async">
-                <div class="project-body">
-                    <span class="project-type">Software & games</span>
-                    <h2>Unity Underwater Game</h2>
-                    <p>This is an underwater treasure hunt game that I made using Maya, C#, Adobe Audition, and Unity. You play as a diver looking for 3 keys to open a sunken chest in an immersive and vibrant underwater environment, all while evading blood-thirsty sharks.</p>
-                    <div class="project-links"><a class="btn btn-sm" href="https://drive.google.com/file/d/1YxazFiaz7mzQGSIvxFZEZn0RkmqnBNvy/view?usp=sharing" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Download</a></div>
-                </div>
-            </article>
-            <article class="project" data-type="software">
-                <img src="/images/projects/project-2.webp" alt="Screenshot of Space Invader" width="650" height="800" loading="lazy" decoding="async">
-                <div class="project-body">
-                    <span class="project-type">Software & games</span>
-                    <h2>Space Invader</h2>
-                    <p>This is an advanced version of the Space Invaders game which uses the pygame library to create features like spawning enemies, a giant final boss, dynamic music, and various power ups.</p>
-                    <div class="project-links"><a class="btn btn-sm" href="https://github.com/AbdulDevHub/SpaceInvaders" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a></div>
-                </div>
-            </article>
-            <article class="project" data-type="software">
-                <img src="/images/projects/project-9.webp" alt="Screenshot of Todo List Application" width="650" height="800" loading="lazy" decoding="async">
-                <div class="project-body">
-                    <span class="project-type">Software & games</span>
-                    <h2>Todo List Application</h2>
-                    <p>This is a python application that uses the Tkinter, Pickle, Json, and Matplotlib modules to allow the user to create, edit, save, retrieve, and delete tasks. It also allows users to set reminders and to track their task creation, editing, and deletion by displaying it as a graph.</p>
-                    <div class="project-links"><a class="btn btn-sm" href="https://github.com/AbdulDevHub/TkinterToDoList" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a></div>
-                </div>
-            </article>
-            <article class="project" data-type="software">
-                <img src="/images/projects/project-8.webp" alt="Screenshot of Huffman Compress Algorithm" width="650" height="800" loading="lazy" decoding="async">
-                <div class="project-body">
-                    <span class="project-type">Software & games</span>
-                    <h2>Huffman Compress Algorithm</h2>
-                    <p>This is a simple python program that takes in a file and compresses it using the huffman algorithm. It also allows for decompressing afterwards.</p>
-                    <div class="project-links"><a class="btn btn-sm" href="https://github.com/AbdulDevHub/Huffman-Compression" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a></div>
-                </div>
-            </article>
-            <article class="project" data-type="design">
-                <img src="/images/projects/project-4.webp" alt="Screenshot of Acme De La Vie App Wireframe" width="650" height="800" loading="lazy" decoding="async">
-                <div class="project-body">
-                    <span class="project-type">UI/UX design</span>
-                    <h2>Acme De La Vie App Wireframe</h2>
-                    <p>This is a Figma wireframe for an app based on the Acme De La Vie clothing store website. This was made in a group of 4 people using extensive background and user research.</p>
-                    <div class="project-links"><a class="btn btn-sm" href="https://www.figma.com/file/kADx4p9ZRCVGOGD0eeHWUJ/Acme-De-La-Vie-App-Design?type=design&amp;mode=design&amp;t=IQ6qG95QhBMW04do-1" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>Figma</a></div>
-                </div>
-            </article>
-            <article class="project" data-type="design">
-                <img src="/images/projects/project-3.webp" alt="Screenshot of Productivity Website Wireframe" width="650" height="800" loading="lazy" decoding="async">
-                <div class="project-body">
-                    <span class="project-type">UI/UX design</span>
-                    <h2>Productivity Website Wireframe</h2>
-                    <p>This is a Figma wireframe for a productivity & Notion like website that is currently being used by my group of 7 to create a working prototype of the website.</p>
-                    <div class="project-links"><a class="btn btn-sm" href="https://www.figma.com/file/HSrBSJcjruF7Gwhl08EuK3/Productivity-Website-Wireframe?type=design&amp;mode=design&amp;t=IQ6qG95QhBMW04do-1" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>Figma</a></div>
-                </div>
-            </article>
-            <article class="project" data-type="design">
-                <img src="/images/projects/project-5.webp" alt="Screenshot of Health Check In App Wireframe" width="650" height="800" loading="lazy" decoding="async">
-                <div class="project-body">
-                    <span class="project-type">UI/UX design</span>
-                    <h2>Health Check In App Wireframe</h2>
-                    <p>This is a Figma wireframe for a Health Check In app that outlines how people can use an app to sign in to a hospital instead of manually talking to the front desk, thus speeding up the process.</p>
-                    <div class="project-links"><a class="btn btn-sm" href="https://www.figma.com/file/9hS9qkz5G8J5AMeQS0m1Uh/Health-Check-In-Application?type=design&amp;mode=design&amp;t=IQ6qG95QhBMW04do-1" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>Figma</a></div>
-                </div>
-            </article>
-            <article class="project" data-type="design">
-                <img src="/images/projects/project-12.webp" alt="Screenshot of Car Infotainment Dashboard Wireframe" width="650" height="800" loading="lazy" decoding="async">
-                <div class="project-body">
-                    <span class="project-type">UI/UX design</span>
-                    <h2>Car Infotainment Dashboard Wireframe</h2>
-                    <p>This is a Figma wireframe for a Car Infotainment Dashboard that outlines an enhanced version of current solutions that prioritizes practical and safe usage, along with superior aesthetics.</p>
-                    <div class="project-links"><a class="btn btn-sm" href="https://www.figma.com/file/rijactiaEXwzbgVDGUCeh7/CCT478-PROJECT-1---Safety-Critical-Systems-Design?type=design&amp;node-id=84%3A694&amp;mode=design&amp;t=1mjVzbiNJDAYZGPo-1" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>Figma</a></div>
-                </div>
+            <article class="project project-cta">
+                <h2>Get your project featured</h2>
+                <ol>
+                    <li>Open the <a href="https://github.com/AbdulDevHub/UTM-Student-Portal/issues/new?template=project-submission.yml" target="_blank" rel="noopener">project submission form</a> on GitHub.</li>
+                    <li>Add a name, a short description, your links and a screenshot.</li>
+                    <li>Once it's reviewed, it shows up here for every UTM student.</li>
+                </ol>
+                <p class="fine">Projects must be your own work: personal projects, or course projects with open-ended briefs (like "make a game"), so they inspire without giving away assignment answers.</p>
             </article>
         </div>
-        <p class="fine">Projects must be your own work (personal projects, or course projects with open-ended briefs like “make a game”) so they inspire without giving away assignment answers. Every submission is reviewed.</p>
     </main>
 
     <!-- @footer -->
@@ -256,9 +164,8 @@
           <h2>Portal tools</h2>
           <ul class="footer-links">
             <li><a href="/gpa-calculator/">UofT GPA Calculator</a></li>
-            <li><a href="/calculator/">Scientific &amp; Graphing Calculators</a></li>
-            <li><a href="/notes/">Note Taker</a></li>
-            <li><a href="/notes/?view=public">Public Notes</a></li>
+            <li><a href="/desmos/">Desmos Calculators</a></li>
+            <li><a href="/notes/">Notes</a></li>
             <li><a href="/student-projects/">Student Projects</a></li>
           </ul>
         </div>
@@ -291,14 +198,5 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script type="module" src="/js/app.js"></script>
     <!-- /@footer -->
-    <script type="module">
-        const bar = document.querySelector("[data-filter]")
-        bar.addEventListener("click", (e) => {
-            const b = e.target.closest("button[data-type]")
-            if (!b) return
-            bar.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)))
-            document.querySelectorAll(".project").forEach((p) => (p.hidden = b.dataset.type !== "all" && p.dataset.type !== b.dataset.type))
-        })
-    </script>
 </body>
 </html>

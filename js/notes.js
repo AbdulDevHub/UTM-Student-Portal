@@ -1,29 +1,52 @@
-// Notes page: private notes per Google account (My notes) plus the feed of
-// notes students chose to publish (Shared notes), on two tabs.
-import { collection, addDoc, getDocs, updateDoc, orderBy, query, where, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js"
-import { auth, db, esc, formatDate, setupAuth } from "./notes-firebase.js"
+// Notes page: notes saved in this browser (localStorage), no account needed.
+// Share a single note as a link (#share=...), and back up / restore all notes as JSON.
+import { store } from "./store.js"
 import { toast } from "./app.js"
 
-const form = document.getElementById("note-form")
-const titleEl = document.getElementById("post-title")
-const contentEl = document.getElementById("post-content")
-const submitBtn = form.querySelector("[type=submit]")
-const cancelBtn = document.getElementById("cancel-edit")
-const searchEl = document.getElementById("search-field")
-const container = document.getElementById("posts-container")
-const countEl = document.getElementById("notes-count")
+const KEY = "portal.notes"
+const DRAFT = "portal.notes.draft"
+const $ = (s) => document.querySelector(s)
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c])
 
-let posts = [] // { id, title, content, public, timestamp }
+const form = $("#note-form")
+const titleEl = $("#note-title")
+const contentEl = $("#note-content")
+const submitBtn = form.querySelector("[type=submit]")
+const cancelBtn = $("#cancel-edit")
+const searchEl = $("#note-search")
+const list = $("#notes-list")
+const countEl = $("#notes-count")
+
+// ---------- Storage (sanitised: localStorage and imports are untrusted) ----------
+const newId = () => (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`)
+const clean = (n) => ({
+  id: String(n?.id || newId()).slice(0, 64),
+  title: String(n?.title ?? "").slice(0, 140),
+  content: String(n?.content ?? "").slice(0, 50000),
+  pinned: !!n?.pinned,
+  created: Number(n?.created) || Date.now(),
+  updated: Number(n?.updated) || Number(n?.created) || Date.now(),
+})
+const loadNotes = () => {
+  const raw = store.get(KEY, [])
+  return Array.isArray(raw) ? raw.filter(Boolean).map(clean) : []
+}
+let notes = loadNotes()
+const save = () => store.set(KEY, notes)
 let editingId = null
 
-function card(p) {
-  return `<article class="post" data-id="${esc(p.id)}">
-    <div class="post-top"><h2>${esc(p.title) || "<span class='muted'>Untitled</span>"}</h2><span class="badge ${p.public ? "on" : ""}">${p.public ? "Public" : "Private"}</span></div>
-    <p class="post-content">${esc(p.content)}</p>
-    <div class="post-foot"><span class="post-date">${formatDate(p.timestamp)}</span>
+// ---------- Rendering ----------
+const fmt = (t) => new Date(t).toLocaleDateString("en-CA", { month: "short", day: "numeric", year: "numeric" })
+
+function card(n) {
+  return `<article class="post${n.pinned ? " pinned" : ""}" data-id="${esc(n.id)}">
+    <div class="post-top"><h2>${n.title ? esc(n.title) : "<span class='muted'>Untitled</span>"}</h2>
+      <button class="icon-btn pin-note" type="button" data-act="pin" aria-pressed="${n.pinned}" aria-label="${n.pinned ? "Unpin" : "Pin"} note"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></button></div>
+    <p class="post-content">${esc(n.content)}</p>
+    <div class="post-foot"><span class="post-date">${n.updated > n.created + 1000 ? "Edited " : ""}${fmt(n.updated)}</span>
       <div class="post-actions">
         <button class="btn btn-sm" type="button" data-act="edit">Edit</button>
-        <button class="btn btn-sm" type="button" data-act="publish">${p.public ? "Make private" : "Publish"}</button>
+        <button class="btn btn-sm" type="button" data-act="share"><svg class="icon" aria-hidden="true"><use href="#i-link"/></svg>Share</button>
         <button class="btn btn-sm btn-danger" type="button" data-act="delete">Delete</button>
       </div>
     </div>
@@ -32,164 +55,171 @@ function card(p) {
 
 function render() {
   const q = searchEl.value.trim().toLowerCase()
-  const shown = q ? posts.filter((p) => `${p.title} ${p.content}`.toLowerCase().includes(q)) : posts
-  container.innerHTML = shown.length
+  const sorted = [...notes].sort((a, b) => b.pinned - a.pinned || b.updated - a.updated)
+  const shown = q ? sorted.filter((n) => `${n.title} ${n.content}`.toLowerCase().includes(q)) : sorted
+  list.innerHTML = shown.length
     ? shown.map(card).join("")
-    : `<p class="empty-hint">${posts.length ? "No notes match that search." : "No notes yet. Write your first one above."}</p>`
-  countEl.textContent = posts.length ? `${posts.length} note${posts.length === 1 ? "" : "s"}` : ""
+    : `<p class="empty-hint">${notes.length ? "No notes match that search." : "No notes yet. Write your first one above. It stays in this browser, no sign-in needed."}</p>`
+  countEl.textContent = notes.length ? `${notes.length} note${notes.length === 1 ? "" : "s"}` : ""
 }
 
-async function load() {
-  const q = query(collection(db, "posts"), where("userId", "==", auth.currentUser.uid), orderBy("timestamp", "desc"))
-  const snap = await getDocs(q)
-  posts = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
-  render()
-}
-
+// ---------- Create / edit ----------
 function resetForm() {
   editingId = null
   form.reset()
   submitBtn.textContent = "Save note"
   cancelBtn.hidden = true
+  store.set(DRAFT, null)
 }
 
-form.addEventListener("submit", async (e) => {
+form.addEventListener("submit", (e) => {
   e.preventDefault()
   const title = titleEl.value.trim()
   const content = contentEl.value.trim()
   if (!title && !content) return toast("Write something first")
-  submitBtn.disabled = true
-  try {
-    if (editingId) {
-      await updateDoc(doc(db, "posts", editingId), { title, content })
-      Object.assign(posts.find((p) => p.id === editingId), { title, content })
-      publicPosts = null
-      toast("Note updated")
-    } else {
-      const data = { title, content, userId: auth.currentUser.uid, public: false, timestamp: new Date() }
-      const ref = await addDoc(collection(db, "posts"), data)
-      posts.unshift({ id: ref.id, ...data })
-      toast("Note saved")
-    }
-    resetForm()
-    render()
-  } catch (err) {
-    console.error(err)
-    toast("Couldn't save. Check your connection.")
-  } finally {
-    submitBtn.disabled = false
+  const editing = editingId && notes.find((n) => n.id === editingId)
+  if (editing) {
+    Object.assign(editing, { title, content, updated: Date.now() })
+    toast("Note updated")
+  } else {
+    notes.push(clean({ title, content }))
+    toast("Note saved")
   }
+  save()
+  resetForm()
+  render()
+})
+form.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) form.requestSubmit()
 })
 cancelBtn.addEventListener("click", resetForm)
 searchEl.addEventListener("input", render)
 
+// Keep an unsaved draft so a refresh never loses what you were typing
+const draft = store.get(DRAFT, null)
+if (draft && (draft.title || draft.content)) {
+  titleEl.value = String(draft.title || "")
+  contentEl.value = String(draft.content || "")
+}
+form.addEventListener("input", () => {
+  if (!editingId) store.set(DRAFT, { title: titleEl.value, content: contentEl.value })
+})
+
+// ---------- Card actions ----------
 const armed = new Map()
-container.addEventListener("click", async (e) => {
+list.addEventListener("click", async (e) => {
   const btn = e.target.closest("button[data-act]")
   if (!btn) return
   const id = btn.closest(".post").dataset.id
-  const post = posts.find((p) => p.id === id)
-  if (!post) return
-  const act = btn.dataset.act
+  const note = notes.find((n) => n.id === id)
+  if (!note) return
 
-  if (act === "edit") {
-    editingId = id
-    titleEl.value = post.title || ""
-    contentEl.value = post.content || ""
-    submitBtn.textContent = "Update note"
-    cancelBtn.hidden = false
-    form.scrollIntoView({ behavior: "smooth", block: "center" })
-    titleEl.focus()
-  } else if (act === "publish") {
-    try {
-      await updateDoc(doc(db, "posts", id), { public: !post.public })
-      post.public = !post.public
+  switch (btn.dataset.act) {
+    case "edit":
+      editingId = id
+      titleEl.value = note.title
+      contentEl.value = note.content
+      submitBtn.textContent = "Update note"
+      cancelBtn.hidden = false
+      form.scrollIntoView({ behavior: "smooth", block: "center" })
+      titleEl.focus()
+      break
+    case "pin":
+      note.pinned = !note.pinned
+      save()
       render()
-      publicPosts = null
-      toast(post.public ? "Published to Shared notes" : "Note is private again")
-    } catch (err) {
-      console.error(err)
-      toast("Couldn't update. Try again.")
+      break
+    case "share": {
+      const url = `${location.origin}/notes/#share=${encodeShare(note)}`
+      try {
+        if (navigator.share && matchMedia("(pointer: coarse)").matches) await navigator.share({ title: note.title || "Note", url })
+        else { await navigator.clipboard.writeText(url); toast("Share link copied") }
+      } catch { /* cancelled */ }
+      break
     }
-  } else if (act === "delete") {
-    // Two-step delete so a misclick can't lose a note
-    if (!armed.has(id)) {
-      btn.textContent = "Tap to confirm"
-      armed.set(id, setTimeout(() => { armed.delete(id); btn.textContent = "Delete" }, 3000))
-      return
-    }
-    clearTimeout(armed.get(id))
-    armed.delete(id)
-    try {
-      await deleteDoc(doc(db, "posts", id))
-      posts = posts.filter((p) => p.id !== id)
-      publicPosts = null
+    case "delete":
+      // Two-step delete so a misclick can't lose a note
+      if (!armed.has(id)) {
+        btn.textContent = "Tap to confirm"
+        armed.set(id, setTimeout(() => { armed.delete(id); btn.textContent = "Delete" }, 3000))
+        return
+      }
+      clearTimeout(armed.get(id))
+      armed.delete(id)
+      notes = notes.filter((n) => n.id !== id)
       if (editingId === id) resetForm()
+      save()
       render()
       toast("Note deleted")
-    } catch (err) {
-      console.error(err)
-      toast("Couldn't delete. Try again.")
-    }
+      break
   }
 })
 
-// ---------- Shared notes ----------
-const pubSearch = document.getElementById("public-search")
-const pubContainer = document.getElementById("public-container")
-const pubCount = document.getElementById("public-count")
-let publicPosts = null // null = not loaded yet
-
-function renderPublic() {
-  const q = pubSearch.value.trim().toLowerCase()
-  const shown = q ? publicPosts.filter((p) => `${p.title} ${p.content}`.toLowerCase().includes(q)) : publicPosts
-  pubContainer.innerHTML = shown.length
-    ? shown.map((p) => `<article class="post"><div class="post-top"><h2>${esc(p.title) || "Untitled"}</h2></div><p class="post-content">${esc(p.content)}</p><div class="post-foot"><span class="post-date">${formatDate(p.timestamp)}</span></div></article>`).join("")
-    : `<p class="empty-hint">${publicPosts.length ? "No shared notes match that search." : "No shared notes yet. Publish one from My notes to be the first."}</p>`
-  pubCount.textContent = publicPosts.length ? `${publicPosts.length} note${publicPosts.length === 1 ? "" : "s"}` : ""
+// ---------- Share links: the note travels inside the URL, nothing is uploaded ----------
+function encodeShare(n) {
+  const json = JSON.stringify({ t: n.title, c: n.content })
+  return btoa(unescape(encodeURIComponent(json))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "")
 }
-async function loadPublic(force = false) {
-  if (publicPosts && !force) return renderPublic()
-  pubContainer.innerHTML = `<p class="empty-hint">Loading shared notes…</p>`
+function decodeShare(s) {
   try {
-    const snap = await getDocs(query(collection(db, "posts"), where("public", "==", true), orderBy("timestamp", "desc")))
-    publicPosts = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
-    renderPublic()
-  } catch (err) {
-    console.error(err)
-    pubContainer.innerHTML = `<p class="empty-hint">Couldn't load shared notes. Refresh to try again.</p>`
+    const o = JSON.parse(decodeURIComponent(escape(atob(s.replace(/-/g, "+").replace(/_/g, "/")))))
+    return clean({ title: o.t, content: o.c })
+  } catch {
+    return null
   }
 }
-pubSearch.addEventListener("input", () => publicPosts && renderPublic())
-
-// ---------- Tabs (?view=public opens Shared notes) ----------
-const tabs = [...document.querySelectorAll("[data-note-tabs] [role=tab]")]
-function showTab(id, focus) {
-  for (const t of tabs) {
-    const on = t.id === id
-    t.setAttribute("aria-selected", String(on))
-    t.tabIndex = on ? 0 : -1
-    document.getElementById(t.getAttribute("aria-controls")).hidden = !on
+function showShared() {
+  const shareMatch = location.hash.match(/^#share=([\w-]+)/)
+  if (!shareMatch) return
+  const shared = decodeShare(shareMatch[1])
+  const box = $("#shared-note")
+  if (!shared || !box) return
+  box.querySelector("[data-shared-body]").innerHTML = `<h2>${esc(shared.title) || "Untitled"}</h2><p class="post-content">${esc(shared.content)}</p>`
+  box.hidden = false
+  const close = () => { box.hidden = true; history.replaceState(null, "", location.pathname) }
+  box.querySelector("[data-save-shared]").onclick = () => {
+    notes.push(clean({ title: shared.title, content: shared.content }))
+    save()
+    render()
+    close()
+    toast("Saved to your notes")
   }
-  const u = new URL(location.href)
-  if (id === "tab-public") { u.searchParams.set("view", "public"); if (auth.currentUser) loadPublic() }
-  else u.searchParams.delete("view")
-  history.replaceState(null, "", u)
-  if (focus) document.getElementById(id).focus()
+  box.querySelector("[data-dismiss-shared]").onclick = close
+  box.scrollIntoView({ block: "start" })
 }
-tabs.forEach((t, i) => {
-  t.addEventListener("click", () => showTab(t.id))
-  t.addEventListener("keydown", (e) => {
-    const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0
-    if (d) showTab(tabs[(i + d + tabs.length) % tabs.length].id, true)
-  })
-})
-const startPublic = new URLSearchParams(location.search).get("view") === "public"
-showTab(startPublic ? "tab-public" : "tab-mine")
+showShared()
+// A share link opened while the Notes page is already open only changes the hash
+window.addEventListener("hashchange", showShared)
 
-setupAuth((user) => {
-  if (user) {
-    load().catch((err) => { console.error(err); container.innerHTML = `<p class="empty-hint">Couldn't load your notes. Refresh to try again.</p>` })
-    if (!document.getElementById("panel-public").hidden) loadPublic()
-  } else { posts = []; publicPosts = null; container.innerHTML = ""; pubContainer.innerHTML = ""; resetForm() }
+// ---------- Backup / restore ----------
+$("#export-notes").addEventListener("click", () => {
+  if (!notes.length) return toast("No notes to back up yet")
+  const blob = new Blob([JSON.stringify({ app: "utm-student-portal", version: 1, notes }, null, 2)], { type: "application/json" })
+  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `utm-notes-${new Date().toISOString().slice(0, 10)}.json` })
+  a.click()
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000)
 })
+$("#import-notes").addEventListener("change", async (e) => {
+  const file = e.target.files?.[0]
+  e.target.value = ""
+  if (!file) return
+  try {
+    const data = JSON.parse(await file.text())
+    const incoming = (Array.isArray(data) ? data : data.notes || []).map(clean)
+    const have = new Set(notes.map((n) => n.id))
+    const added = incoming.filter((n) => !have.has(n.id))
+    notes.push(...added)
+    save()
+    render()
+    toast(`Restored ${added.length} note${added.length === 1 ? "" : "s"}`)
+  } catch {
+    toast("That file isn't a notes backup")
+  }
+})
+
+// Other open tabs editing notes stay in sync
+window.addEventListener("storage", (e) => {
+  if (e.key === KEY) { notes = loadNotes(); render() }
+})
+
+render()

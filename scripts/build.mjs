@@ -22,7 +22,7 @@ const CHECK = process.argv.includes("--check")
 const PAGES = [
   { file: "index.html", path: "/", priority: "1.0", changefreq: "weekly" },
   { file: "gpa-calculator/index.html", path: "/gpa-calculator/", priority: "0.9", changefreq: "monthly" },
-  { file: "calculator/index.html", path: "/calculator/", priority: "0.6", changefreq: "yearly" },
+  { file: "desmos/index.html", path: "/desmos/", priority: "0.6", changefreq: "yearly" },
   { file: "student-projects/index.html", path: "/student-projects/", priority: "0.6", changefreq: "monthly" },
   { file: "notes/index.html", path: "/notes/", priority: "0.5", changefreq: "weekly" },
   { file: "404.html", path: null },
@@ -32,7 +32,8 @@ const PAGES = [
 const PRECACHE = [
   "/",
   "/gpa-calculator/",
-  "/calculator/",
+  "/notes/",
+  "/js/notes.js",
   "/css/style.css",
   "/js/app.js",
   "/js/home.js",

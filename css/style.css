@@ -977,3 +977,27 @@ html:not(.js) .pin, html:not(.js) .for-you, html:not(.js) .term-bar { display: n
 .cat-hint code { font-size: 0.82rem; padding: 1px 6px; border-radius: 6px; background: var(--bg-2); color: var(--ink); }
 .cat-hint a { color: var(--accent); font-weight: 600; }
 @media (max-width: 640px) { .nav-long { display: none; } .site-nav a { padding: 7px 10px; } }
+
+/* Student projects: example card + how-to */
+.project-art { height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #fff; font-weight: 700; letter-spacing: 0.02em;
+  background: radial-gradient(60% 80% at 80% 10%, rgba(255, 143, 126, 0.45), transparent 60%), linear-gradient(135deg, #2A4C9C, #3567DE 55%, #7357E0); border-bottom: 1px solid var(--line); }
+.project-art .icon { width: 44px; height: 44px; stroke-width: 1.6; }
+.project--example .project-type { --c: var(--c-campus); }
+.project-cta { padding: 24px; gap: 12px; justify-content: center; background: var(--surface-2); border-style: dashed; }
+.project-cta h2 { font-size: 1.2rem; }
+.project-cta ol { margin: 0; padding-left: 20px; display: grid; gap: 8px; color: var(--muted); }
+.project-cta a { color: var(--accent); font-weight: 600; }
+.project-cta:hover { transform: none; box-shadow: var(--shadow-sm); }
+
+/* Notes (local) */
+.notes-backup { display: flex; gap: 8px; }
+.notes-backup label { cursor: pointer; }
+.note-form-actions { align-items: center; }
+.note-privacy { margin-right: auto; font-size: 0.78rem; color: var(--muted); }
+.shared-note { margin-bottom: 20px; border-color: var(--accent); display: grid; gap: 10px; }
+.shared-note h2 { font-size: 1.1rem; }
+.post.pinned { border-color: color-mix(in srgb, var(--c-campus) 45%, var(--line)); }
+.pin-note { width: 30px; height: 30px; flex: none; }
+.pin-note[aria-pressed="true"] { color: var(--c-campus); }
+.pin-note[aria-pressed="true"] .icon { fill: currentColor; }
+.project-grid:has(.project--example) { max-width: 920px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
