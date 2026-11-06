@@ -1,0 +1,4 @@
+.playwright-mcp/
+node_modules/
+.lighthouseci/
+*.log

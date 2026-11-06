@@ -1,0 +1,133 @@
+# Netlify config. The site is static and pre-built: run `npm run build` locally
+# and commit the output. Netlify just publishes the repo root.
+[build]
+  publish = "."
+  command = ""
+
+# ---- v1 URLs (/pages/*.html) → v2 clean URLs, permanently ----
+[[redirects]]
+  from = "/pages/gpa_calculator.html"
+  to = "/gpa-calculator/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/gpa_calculator"
+  to = "/gpa-calculator/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/calculator.html"
+  to = "/calculator/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/calculator"
+  to = "/calculator/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/simple_calculator.html"
+  to = "/calculator/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/simple_calculator"
+  to = "/calculator/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/desmos.html"
+  to = "/desmos/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/desmos"
+  to = "/desmos/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/notes.html"
+  to = "/notes/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/notes"
+  to = "/notes/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/public_notes.html"
+  to = "/public-notes/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/public_notes"
+  to = "/public-notes/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/student_projects.html"
+  to = "/student-projects/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/student_projects"
+  to = "/student-projects/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/old_scrapped_chatbot.html"
+  to = "/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/old_scrapped_chatbot"
+  to = "/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/*"
+  to = "/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+# Short, shareable aliases
+[[redirects]]
+  from = "/gpa"
+  to = "/gpa-calculator/"
+  status = 301
+[[redirects]]
+  from = "/calc"
+  to = "/calculator/"
+  status = 301
+
+# ---- Headers ----
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    Strict-Transport-Security = "max-age=31536000"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/site.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

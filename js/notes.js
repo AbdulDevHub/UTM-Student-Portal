@@ -1,248 +1,136 @@
-// ================= Personal Notes Page Logic ========================
+// Note Taker: private notes per Google account, optionally published to Public Notes.
+import { collection, addDoc, getDocs, updateDoc, orderBy, query, where, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js"
+import { auth, db, esc, formatDate, setupAuth } from "./notes-firebase.js"
+import { toast } from "./app.js"
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, updateDoc, orderBy, query, where, deleteDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+const form = document.getElementById("note-form")
+const titleEl = document.getElementById("post-title")
+const contentEl = document.getElementById("post-content")
+const submitBtn = form.querySelector("[type=submit]")
+const cancelBtn = document.getElementById("cancel-edit")
+const searchEl = document.getElementById("search-field")
+const container = document.getElementById("posts-container")
+const countEl = document.getElementById("notes-count")
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyB036gHwHmbG-r_0VWlu4oifpZWEZJJ6uU",
-    authDomain: "utm-student-portal.firebaseapp.com",
-    projectId: "utm-student-portal",
-    storageBucket: "utm-student-portal.appspot.com",
-    messagingSenderId: "708863567163",
-    appId: "1:708863567163:web:b81dfb03c1a30e7447431e"
-};
+let posts = [] // { id, title, content, public, timestamp }
+let editingId = null
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const db = getFirestore();
+function card(p) {
+  return `<article class="post" data-id="${esc(p.id)}">
+    <div class="post-top"><h2>${esc(p.title) || "<span class='muted'>Untitled</span>"}</h2><span class="badge ${p.public ? "on" : ""}">${p.public ? "Public" : "Private"}</span></div>
+    <p class="post-content">${esc(p.content)}</p>
+    <div class="post-foot"><span class="post-date">${formatDate(p.timestamp)}</span>
+      <div class="post-actions">
+        <button class="btn btn-sm" type="button" data-act="edit">Edit</button>
+        <button class="btn btn-sm" type="button" data-act="publish">${p.public ? "Make private" : "Publish"}</button>
+        <button class="btn btn-sm btn-danger" type="button" data-act="delete">Delete</button>
+      </div>
+    </div>
+  </article>`
+}
 
-const userProfile = document.getElementById('user-profile');
-const signInButton = document.getElementById('sign-in-button');
-const signOutButton = document.getElementById('sign-out-button');
-const signInMessage = document.getElementById('sign-in-message');
+function render() {
+  const q = searchEl.value.trim().toLowerCase()
+  const shown = q ? posts.filter((p) => `${p.title} ${p.content}`.toLowerCase().includes(q)) : posts
+  container.innerHTML = shown.length
+    ? shown.map(card).join("")
+    : `<p class="empty-hint">${posts.length ? "No notes match that search." : "No notes yet. Write your first one above."}</p>`
+  countEl.textContent = posts.length ? `${posts.length} note${posts.length === 1 ? "" : "s"}` : ""
+}
 
-signInButton.addEventListener('click', () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-    .then((result) => {
-        console.log('User signed in');
-        userProfile.style.display = 'flex';
-    })
-    .catch((error) => {
-        console.error('Sign in error', error);
-    });
-});
+async function load() {
+  const q = query(collection(db, "posts"), where("userId", "==", auth.currentUser.uid), orderBy("timestamp", "desc"))
+  const snap = await getDocs(q)
+  posts = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+  render()
+}
 
-signOutButton.addEventListener('click', () => {
-    signOut(auth)
-    .then(() => {
-        console.log('User signed out');
-        signInButton.style.display = 'block';
-        signOutButton.style.display = 'none';
-        userProfile.style.display = 'none';
+function resetForm() {
+  editingId = null
+  form.reset()
+  submitBtn.textContent = "Save note"
+  cancelBtn.hidden = true
+}
 
-        // Clear the posts
-        const postsContainer = document.getElementById('posts-container');
-        postsContainer.innerHTML = '';
-    })
-    .catch((error) => {
-        console.error('Sign out error', error);
-    });
-});
-
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-    // User is signed in
-        signInButton.style.display = 'none';
-        signOutButton.style.display = 'block';
-        userProfile.innerHTML = `<img src="${user.photoURL}" alt="Profile Picture"><p>${user.displayName}</p>`;
-        signInMessage.style.display = 'none';
+form.addEventListener("submit", async (e) => {
+  e.preventDefault()
+  const title = titleEl.value.trim()
+  const content = contentEl.value.trim()
+  if (!title && !content) return toast("Write something first")
+  submitBtn.disabled = true
+  try {
+    if (editingId) {
+      await updateDoc(doc(db, "posts", editingId), { title, content })
+      Object.assign(posts.find((p) => p.id === editingId), { title, content })
+      toast("Note updated")
     } else {
-        // User is signed out
-        signInButton.style.display = 'block';
-        signOutButton.style.display = 'none';
-        signInMessage.style.display = 'block';
+      const data = { title, content, userId: auth.currentUser.uid, public: false, timestamp: new Date() }
+      const ref = await addDoc(collection(db, "posts"), data)
+      posts.unshift({ id: ref.id, ...data })
+      toast("Note saved")
     }
-});
+    resetForm()
+    render()
+  } catch (err) {
+    console.error(err)
+    toast("Couldn't save. Check your connection.")
+  } finally {
+    submitBtn.disabled = false
+  }
+})
+cancelBtn.addEventListener("click", resetForm)
+searchEl.addEventListener("input", render)
 
-window.onload = function() {
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            // User is signed in
-            signInButton.style.display = 'none';
-            signOutButton.style.display = 'block';
-            userProfile.innerHTML = `<img src="${user.photoURL}" alt="Profile Picture"><p>${user.displayName}</p>`;
-            userProfile.style.display = 'flex';
-            signInMessage.style.display = 'none';
-            fetchPosts(); // Fetch posts when a user is signed in
-        } else {
-            // User is signed out
-            signInButton.style.display = 'block';
-            signOutButton.style.display = 'none';
-            signInMessage.style.display = 'block';
-        }
-    });
-}
+const armed = new Map()
+container.addEventListener("click", async (e) => {
+  const btn = e.target.closest("button[data-act]")
+  if (!btn) return
+  const id = btn.closest(".post").dataset.id
+  const post = posts.find((p) => p.id === id)
+  if (!post) return
+  const act = btn.dataset.act
 
-window.createPost = function() {
-    const postTitle = document.getElementById('post-title').value;
-    const postContent = document.getElementById('post-content').value;
-    document.getElementById('post-title').value = '';
-    document.getElementById('post-content').value = '';
+  if (act === "edit") {
+    editingId = id
+    titleEl.value = post.title || ""
+    contentEl.value = post.content || ""
+    submitBtn.textContent = "Update note"
+    cancelBtn.hidden = false
+    form.scrollIntoView({ behavior: "smooth", block: "center" })
+    titleEl.focus()
+  } else if (act === "publish") {
+    try {
+      await updateDoc(doc(db, "posts", id), { public: !post.public })
+      post.public = !post.public
+      render()
+      toast(post.public ? "Published to Public Notes" : "Note is private again")
+    } catch (err) {
+      console.error(err)
+      toast("Couldn't update. Try again.")
+    }
+  } else if (act === "delete") {
+    // Two-step delete so a misclick can't lose a note
+    if (!armed.has(id)) {
+      btn.textContent = "Tap to confirm"
+      armed.set(id, setTimeout(() => { armed.delete(id); btn.textContent = "Delete" }, 3000))
+      return
+    }
+    clearTimeout(armed.get(id))
+    armed.delete(id)
+    try {
+      await deleteDoc(doc(db, "posts", id))
+      posts = posts.filter((p) => p.id !== id)
+      if (editingId === id) resetForm()
+      render()
+      toast("Note deleted")
+    } catch (err) {
+      console.error(err)
+      toast("Couldn't delete. Try again.")
+    }
+  }
+})
 
-    addDoc(collection(db, 'posts'), {
-        title: postTitle,
-        content: postContent,
-        userId: auth.currentUser.uid,
-        public: false,
-        timestamp: new Date() // Add a timestamp field
-    })
-    .then((docRef) => {
-        console.log('Document written with ID: ', docRef.id);
-
-        // Create a new post element
-        const postElement = document.createElement('div');
-        postElement.classList.add('post');
-        postElement.setAttribute('data-id', docRef.id);
-        postElement.innerHTML = `
-            <h1>${postTitle}</h1>
-            <p>${postContent}</p>
-            <button class="edit-button" onclick="editPost('${doc.id}')">Edit</button>
-            <button class="delete-button" onclick="deletePost('${docRef.id}')">Delete</button>
-            <button class="publish-button" onclick="publishPost('${docRef.id}')">Publish</button>
-        `;
-
-        // Insert the new post element at the beginning of the posts container
-        const postsContainer = document.getElementById('posts-container');
-        postsContainer.insertBefore(postElement, postsContainer.firstChild);
-    })
-    .catch((error) => {
-        console.error('Error adding document: ', error);
-    });
-}
-
-window.publishPost = function(postId) {
-    const postRef = doc(db, 'posts', postId);
-    getDoc(postRef)
-    .then((doc) => {
-        if (doc.exists()) {
-            const isPublic = doc.data().public;
-            updateDoc(postRef, { public: !isPublic })
-            .then(() => {
-                console.log('Document successfully updated!');
-                const postElement = document.querySelector(`.post[data-id="${postId}"]`);
-                const publishButton = postElement.querySelector('.publish-button');
-                publishButton.textContent = isPublic ? 'Publish' : 'Unpublish';
-                // Open new tab that leads to the public notes page if the post is published
-                if (!isPublic) {
-                    window.open('https://utmstudentportal.netlify.app/pages/public_notes', '_blank');
-                }
-            })
-            .catch((error) => {
-                console.error('Error updating document: ', error);
-            });
-        } else {
-            console.log('No such document!');
-        }
-    })
-    .catch((error) => {
-        console.error('Error getting document:', error);
-    });
-}
-
-function fetchPosts() {
-    const postsContainer = document.getElementById('posts-container');
-    postsContainer.innerHTML = '';
-
-    const q = query(collection(db, 'posts'), where('userId', '==', auth.currentUser.uid), orderBy('timestamp', 'desc')); // Order posts by timestamp
-    getDocs(q)
-        .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            const postElement = document.createElement('div');
-            postElement.classList.add('post');
-            postElement.setAttribute('data-id', doc.id);
-            postElement.innerHTML = `
-            <h1>${doc.data().title}</h1>
-            <p>${doc.data().content}</p>
-            <button class="edit-button" onclick="editPost('${doc.id}')">Edit</button>
-            <button class="delete-button" onclick="deletePost('${doc.id}')">Delete</button>
-            <button class="publish-button" onclick="publishPost('${doc.id}')">${doc.data().public ? 'Unpublish' : 'Publish'}</button>
-            `;
-            postsContainer.appendChild(postElement);
-        });
-        })
-        .catch((error) => {
-        console.error('Error getting documents: ', error);
-    });
-}
-
-window.editPost = function(postId) {
-    const postRef = doc(db, 'posts', postId);
-    getDoc(postRef)
-        .then((doc) => {
-            if (doc.exists()) {
-                const postTitle = document.getElementById('post-title');
-                const postContent = document.getElementById('post-content');
-
-                // Populate the post form with the title and content of the post
-                postTitle.value = doc.data().title;
-                postContent.value = doc.data().content;
-
-                // Delete the post
-                deletePost(postId);
-            } else {
-                console.log('No such document!');
-            }
-        })
-        .catch((error) => {
-            console.error('Error getting document:', error);
-    });
-}
-
-window.deletePost = function(postId) {
-    deleteDoc(doc(db, 'posts', postId))
-        .then(() => {
-        console.log('Document successfully deleted!');
-
-        // Remove the post element from the page
-        const postElement = document.querySelector(`.post[data-id="${postId}"]`);
-        postElement.remove();
-        })
-        .catch((error) => {
-        console.error('Error removing document: ', error);
-    });
-}
-
-window.searchPosts = function() {
-    const searchField = document.getElementById('search-field').value.toLowerCase(); // Convert search field to lower case
-    const postsContainer = document.getElementById('posts-container');
-    postsContainer.innerHTML = '';
-
-    const q = query(collection(db, 'posts'), where('userId', '==', auth.currentUser.uid));
-    getDocs(q)
-        .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            // Only show the post if the title or content includes the search text
-            if (doc.data().title.toLowerCase().includes(searchField) || doc.data().content.toLowerCase().includes(searchField)) { // Convert title and content to lower case
-            const postElement = document.createElement('div');
-            postElement.classList.add('post');
-            postElement.setAttribute('data-id', doc.id); // Add the data-id attribute
-            postElement.innerHTML = `
-                <h1>${doc.data().title}</h1>
-                <p>${doc.data().content}</p>
-                <button class="edit-button" onclick="editPost('${doc.id}')">Edit</button>
-                <button class="delete-button" onclick="deletePost('${doc.id}')">Delete</button>
-                <button class="publish-button" onclick="publishPost('${doc.id}')">Publish</button>
-            `;
-            postsContainer.appendChild(postElement);
-            }
-        });
-        })
-        .catch((error) => {
-        console.error('Error getting documents: ', error);
-    });
-}
+setupAuth((user) => {
+  if (user) load().catch((err) => { console.error(err); container.innerHTML = `<p class="empty-hint">Couldn't load your notes. Refresh to try again.</p>` })
+  else { posts = []; container.innerHTML = ""; resetForm() }
+})

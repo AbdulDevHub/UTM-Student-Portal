@@ -1,0 +1,50 @@
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <strong>UTM Student Portal</strong>
+      <p>A free, student-made shortcut to every University of Toronto Mississauga link, tool and deadline. Not affiliated with or endorsed by the University of Toronto.</p>
+      <div class="footer-cta">
+        <a class="btn btn-sm" href="https://github.com/AbdulDevHub/UTM-Student-Portal/issues/new?template=suggest-link.yml" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Suggest a link</a>
+        <a class="btn btn-sm" href="https://github.com/AbdulDevHub/UTM-Student-Portal" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>Source on GitHub</a>
+        <button class="btn btn-sm install-btn" type="button" data-install hidden><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Install app</button>
+      </div>
+    </div>
+    <div>
+      <h2>Portal tools</h2>
+      <ul class="footer-links">
+        <li><a href="/gpa-calculator/">UofT GPA Calculator</a></li>
+        <li><a href="/calculator/">Calculator</a></li>
+        <li><a href="/desmos/">Desmos Calculators</a></li>
+        <li><a href="/notes/">Note Taker</a></li>
+        <li><a href="/public-notes/">Public Notes</a></li>
+        <li><a href="/student-projects/">Student Projects</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>UTM on social</h2>
+      <div class="social-icons">
+        <a href="https://www.instagram.com/uoftmississauga/" target="_blank" rel="noopener" aria-label="UTM on Instagram"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg></a>
+        <a href="https://www.facebook.com/UTMississauga/" target="_blank" rel="noopener" aria-label="UTM on Facebook"><svg class="icon" aria-hidden="true"><use href="#i-facebook"/></svg></a>
+        <a href="https://www.reddit.com/r/UTM/" target="_blank" rel="noopener" aria-label="r/UTM on Reddit"><svg class="icon" aria-hidden="true"><use href="#i-reddit"/></svg></a>
+        <a href="https://x.com/UTM" target="_blank" rel="noopener" aria-label="UTM on X"><svg class="icon" aria-hidden="true"><use href="#i-twitter"/></svg></a>
+        <a href="https://www.youtube.com/@utm/videos" target="_blank" rel="noopener" aria-label="UTM on YouTube"><svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg></a>
+        <a href="https://www.linkedin.com/school/university-of-toronto-mississauga/" target="_blank" rel="noopener" aria-label="UTM on LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-meta">
+    <span>Made by <a href="https://abdulhadikhan.vercel.app/" target="_blank" rel="noopener">Abdul Hadi Khan</a> · MIT licensed</span>
+    <span>Press <kbd>Ctrl</kbd> <kbd>K</kbd> or <kbd>/</kbd> anywhere to search</span>
+  </div>
+</footer>
+<dialog class="palette" id="palette" aria-label="Search every link">
+  <div class="palette-search">
+    <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+    <input type="text" id="palette-input" placeholder="Search ACORN, exam schedule, GPA…" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="palette-list" aria-autocomplete="list" aria-label="Search every link">
+    <kbd>Esc</kbd>
+  </div>
+  <ul class="palette-list" id="palette-list" role="listbox" aria-label="Results"></ul>
+  <div class="palette-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>Ctrl</kbd><kbd>↵</kbd> new tab</span></div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="/js/app.js"></script>

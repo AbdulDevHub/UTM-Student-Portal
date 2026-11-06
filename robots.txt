@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /partials/
+Disallow: /scripts/
+Disallow: /tests/
 
 Sitemap: https://utmstudentportal.netlify.app/sitemap.xml
