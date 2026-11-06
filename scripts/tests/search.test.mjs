@@ -1,7 +1,7 @@
 import { test } from "node:test"
 import assert from "node:assert/strict"
-import { indexItems, search, editDistance } from "../js/lib/search.js"
-import { allLinks } from "../js/data/links.js"
+import { indexItems, search, editDistance } from "../../js/lib/search.js"
+import { allLinks } from "../../js/data/links.js"
 
 const index = indexItems(allLinks())
 const top = (q) => search(q, index, 1)[0]?.item.name

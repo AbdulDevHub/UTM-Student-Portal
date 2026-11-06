@@ -20,7 +20,7 @@ jobs:
       - name: Generated pages are up to date
         run: node scripts/build.mjs --check
       - name: Unit tests
-        run: node --test tests/*.test.mjs
+        run: node --test scripts/tests/*.test.mjs
 
   lighthouse:
     name: Lighthouse
@@ -32,4 +32,4 @@ jobs:
         with:
           node-version: 22
       - name: Run Lighthouse CI
-        run: npx --yes @lhci/cli@0.14.0 autorun
+        run: npx --yes @lhci/cli@0.14.0 autorun --config=scripts/lighthouserc.json

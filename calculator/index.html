@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Online Calculator for Students | UTM Student Portal</title>
-    <meta name="description" content="Fast, free online calculator with keyboard support, percentages, powers, square roots and saved history. Built for UofT Mississauga students.">
+    <title>Free Scientific, Graphing &amp; Matrix Calculators | UTM Student Portal</title>
+    <meta name="description" content="Free online scientific, graphing, matrix and geometry calculators (powered by Desmos) in one tab, for University of Toronto Mississauga students.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://utmstudentportal.netlify.app/calculator/">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://utmstudentportal.netlify.app/calculator/">
     <meta property="og:site_name" content="UTM Student Portal">
-    <meta property="og:title" content="Online Calculator for Students | UTM Student Portal">
-    <meta property="og:description" content="Fast, free online calculator with keyboard support and saved history.">
+    <meta property="og:title" content="Free Scientific, Graphing & Matrix Calculators">
+    <meta property="og:description" content="Scientific, graphing, matrix and geometry calculators (powered by Desmos) in one tab.">
     <meta property="og:image" content="https://utmstudentportal.netlify.app/images/og-image.jpg">
     <meta property="og:locale" content="en_CA">
     <meta name="twitter:card" content="summary_large_image">
@@ -22,7 +22,7 @@
     <meta name="color-scheme" content="light dark">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="icon" href="/images/icons/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="/images/icons/logo.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,14 +31,13 @@
     <link rel="stylesheet" href="/css/style.css">
     <script>try{var t=localStorage.getItem("theme");if(!t&&localStorage.getItem("dark-mode")==="true")t="dark";if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t}catch(e){}document.documentElement.classList.add("js")</script>
     <!-- /@head -->
-    <link rel="stylesheet" href="/css/calculator.css">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "UTM Student Portal", "item": "https://utmstudentportal.netlify.app/" },
-        { "@type": "ListItem", "position": 2, "name": "Calculator", "item": "https://utmstudentportal.netlify.app/calculator/" }
+        { "@type": "ListItem", "position": 2, "name": "Calculators", "item": "https://utmstudentportal.netlify.app/calculator/" }
       ]
     }
     </script>
@@ -82,14 +81,13 @@
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="/" aria-label="UTM Student Portal home">
-          <img src="/images/icons/logo-96.png" alt="" width="42" height="42">
+          <img src="/images/icons/logo.svg" alt="" width="40" height="40">
           <span class="brand-text"><span class="eyebrow">University of Toronto Mississauga</span><span class="brand-name">Student Portal</span></span>
         </a>
         <nav class="site-nav" aria-label="Main">
           <a href="/" data-nav="/">Home</a>
-          <a href="/gpa-calculator/" data-nav="/gpa-calculator/">GPA Calculator</a>
-          <a href="/calculator/" data-nav="/calculator/" aria-current="page">Calculator</a>
-          <a href="/desmos/" data-nav="/desmos/">Desmos</a>
+          <a href="/gpa-calculator/" data-nav="/gpa-calculator/">GPA<span class="nav-long"> Calculator</span></a>
+          <a href="/calculator/" data-nav="/calculator/" aria-current="page">Calculators</a>
           <a href="/notes/" data-nav="/notes/">Notes</a>
           <a href="/student-projects/" data-nav="/student-projects/">Projects</a>
         </nav>
@@ -114,54 +112,18 @@
 
     <main id="main" class="container">
         <section class="page-hero">
-            <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Portal</a> / <span aria-current="page">Calculator</span></nav>
-            <h1>Calculator</h1>
-            <p>Type or tap. Supports <b>( )</b>, <b>^</b> powers, <b>√</b> roots and <b>%</b>. Press <kbd>Enter</kbd> for the answer and <kbd>Esc</kbd> to clear. Need graphs? Try <a href="/desmos/">Desmos</a>.</p>
+            <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Portal</a> / <span aria-current="page">Calculators</span></nav>
+            <h1>Calculators</h1>
+            <p>Scientific, graphing, matrix and geometry calculators from <a href="https://www.desmos.com/" target="_blank" rel="noopener">Desmos</a>. For a quick sum, just press <kbd>Ctrl</kbd> <kbd>K</kbd> on any page and type it, like <b>85*0.4+72*0.6</b>.</p>
         </section>
-
-        <div class="calc-layout">
-            <section class="calc" aria-label="Calculator">
-                <div class="calc-display">
-                    <label class="visually-hidden" for="calc-expr">Expression</label>
-                    <input id="calc-expr" class="calc-expr" type="text" inputmode="none" autocomplete="off" spellcheck="false" placeholder="0">
-                    <output class="calc-preview" for="calc-expr" aria-live="polite" data-preview></output>
-                </div>
-                <div class="keys" data-keys>
-                    <button type="button" class="k fn" data-act="clear">C</button>
-                    <button type="button" class="k fn" data-act="back" aria-label="Backspace">⌫</button>
-                    <button type="button" class="k fn" data-ins="(">(</button>
-                    <button type="button" class="k fn" data-ins=")">)</button>
-                    <button type="button" class="k op" data-ins="÷" aria-label="Divide">÷</button>
-                    <button type="button" class="k" data-ins="7">7</button>
-                    <button type="button" class="k" data-ins="8">8</button>
-                    <button type="button" class="k" data-ins="9">9</button>
-                    <button type="button" class="k fn" data-ins="√" aria-label="Square root">√</button>
-                    <button type="button" class="k op" data-ins="×" aria-label="Multiply">×</button>
-                    <button type="button" class="k" data-ins="4">4</button>
-                    <button type="button" class="k" data-ins="5">5</button>
-                    <button type="button" class="k" data-ins="6">6</button>
-                    <button type="button" class="k fn" data-ins="^" aria-label="Power">xʸ</button>
-                    <button type="button" class="k op" data-ins="−" aria-label="Minus">−</button>
-                    <button type="button" class="k" data-ins="1">1</button>
-                    <button type="button" class="k" data-ins="2">2</button>
-                    <button type="button" class="k" data-ins="3">3</button>
-                    <button type="button" class="k fn" data-ins="%" aria-label="Percent">%</button>
-                    <button type="button" class="k op" data-ins="+" aria-label="Plus">+</button>
-                    <button type="button" class="k wide" data-ins="0">0</button>
-                    <button type="button" class="k" data-ins=".">.</button>
-                    <button type="button" class="k fn" data-act="ans" aria-label="Insert last answer">Ans</button>
-                    <button type="button" class="k eq" data-act="equals" aria-label="Equals">=</button>
-                </div>
-            </section>
-
-            <section class="card calc-history" aria-labelledby="history-title">
-                <div class="card-head">
-                    <h2 id="history-title">History</h2>
-                    <button class="btn btn-sm btn-ghost" type="button" data-clear-history>Clear</button>
-                </div>
-                <p class="sub">Click a result to reuse it.</p>
-                <ol class="history-list" data-history></ol>
-            </section>
+        <div class="tabs" role="tablist" aria-label="Calculator type" data-tabs>
+            <button type="button" role="tab" aria-selected="true" aria-controls="calc-frame" data-src="https://www.desmos.com/scientific" id="tab-scientific">Scientific</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="calc-frame" data-src="https://www.desmos.com/calculator" id="tab-graphing">Graphing</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="calc-frame" data-src="https://www.desmos.com/matrix" id="tab-matrix">Matrix</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="calc-frame" data-src="https://www.desmos.com/geometry" id="tab-geometry">Geometry</button>
+        </div>
+        <div class="embed" id="calc-frame" role="tabpanel" aria-labelledby="tab-scientific">
+            <iframe src="https://www.desmos.com/scientific" title="Desmos scientific calculator" allow="clipboard-write; fullscreen"></iframe>
         </div>
     </main>
 
@@ -181,10 +143,9 @@
           <h2>Portal tools</h2>
           <ul class="footer-links">
             <li><a href="/gpa-calculator/">UofT GPA Calculator</a></li>
-            <li><a href="/calculator/">Calculator</a></li>
-            <li><a href="/desmos/">Desmos Calculators</a></li>
+            <li><a href="/calculator/">Scientific &amp; Graphing Calculators</a></li>
             <li><a href="/notes/">Note Taker</a></li>
-            <li><a href="/public-notes/">Public Notes</a></li>
+            <li><a href="/notes/?view=public">Public Notes</a></li>
             <li><a href="/student-projects/">Student Projects</a></li>
           </ul>
         </div>
@@ -217,6 +178,30 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script type="module" src="/js/app.js"></script>
     <!-- /@footer -->
-    <script type="module" src="/js/calc-page.js"></script>
+    <script type="module">
+        import { store } from "/js/store.js"
+        const tabs = [...document.querySelectorAll("[data-tabs] [role=tab]")]
+        const panel = document.getElementById("calc-frame")
+        const frame = panel.querySelector("iframe")
+        function select(tab, focus) {
+            tabs.forEach((t) => { t.setAttribute("aria-selected", String(t === tab)); t.tabIndex = t === tab ? 0 : -1 })
+            panel.setAttribute("aria-labelledby", tab.id)
+            if (frame.src !== tab.dataset.src) frame.src = tab.dataset.src
+            frame.title = `Desmos ${tab.textContent.toLowerCase()} calculator`
+            store.set("portal.calc-tab", tab.id)
+            history.replaceState(null, "", "#" + tab.id.replace("tab-", ""))
+            if (focus) tab.focus()
+        }
+        tabs.forEach((t, i) => {
+            t.addEventListener("click", () => select(t))
+            t.addEventListener("keydown", (e) => {
+                const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0
+                if (d) select(tabs[(i + d + tabs.length) % tabs.length], true)
+            })
+        })
+        const fromHash = document.getElementById("tab-" + location.hash.slice(1))
+        const saved = document.getElementById(store.get("portal.calc-tab", ""))
+        select(fromHash || saved || tabs[0])
+    </script>
 </body>
 </html>

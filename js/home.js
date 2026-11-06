@@ -4,6 +4,7 @@ import { terms, events } from "./data/dates.js"
 import { termStatus, upcomingEvents, torontoToday, fmtShort } from "./lib/term.js"
 import { indexItems, search, normalize } from "./lib/search.js"
 import { getPins, togglePin, getRecent, store } from "./store.js"
+import { tryCalc } from "./lib/calc.js"
 import { toast } from "./app.js"
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c])
@@ -107,6 +108,7 @@ const tiles = [...document.querySelectorAll("#directory .tile")]
 const cats = [...document.querySelectorAll("#directory .cat")]
 const index = indexItems(links)
 let topHit = null
+let calcAnswer = null
 
 function highlight(nameEl, name, q) {
   // Mark the first query word that literally appears in the name (typo matches stay unmarked)
@@ -130,19 +132,22 @@ function runFilter() {
     meta.textContent = ""
     noResults.hidden = true
     topHit = null
+    calcAnswer = null
     return
   }
   const hits = search(q, index)
   const ids = new Set(hits.map((h) => h.item.id))
   topHit = hits[0]?.item || null
+  calcAnswer = tryCalc(q)
   tiles.forEach((t) => {
     const on = ids.has(t.dataset.id)
     t.classList.toggle("is-hidden", !on)
     if (on) highlight(t.querySelector(".tile-name"), byId.get(t.dataset.id).name, q)
   })
   cats.forEach((c) => c.classList.toggle("is-hidden", !c.querySelector(".tile:not(.is-hidden)")))
-  noResults.hidden = hits.length > 0
-  meta.textContent = hits.length ? `${hits.length} match${hits.length === 1 ? "" : "es"} · press Enter to open “${topHit.name}”` : ""
+  noResults.hidden = hits.length > 0 || calcAnswer !== null
+  if (calcAnswer !== null) meta.innerHTML = `<span class="calc-answer">= ${esc(calcAnswer.toLocaleString("en-CA", { maximumFractionDigits: 10 }))}</span> · press Enter to copy`
+  else meta.textContent = hits.length ? `${hits.length} match${hits.length === 1 ? "" : "es"} · press Enter to open “${topHit.name}”` : ""
 }
 
 let urlTimer
@@ -157,7 +162,10 @@ input.addEventListener("input", () => {
   }, 400)
 })
 input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" && topHit) {
+  if (e.key === "Enter" && calcAnswer !== null) {
+    e.preventDefault()
+    navigator.clipboard?.writeText(String(calcAnswer)).then(() => toast(`Copied ${calcAnswer}`), () => {})
+  } else if (e.key === "Enter" && topHit) {
     e.preventDefault()
     document.querySelector(`#directory .tile[data-id="${topHit.id}"] a`)?.click()
   } else if (e.key === "Escape") {

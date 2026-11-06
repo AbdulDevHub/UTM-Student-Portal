@@ -104,3 +104,15 @@ export function evaluate(expr) {
   // Trim floating point noise (0.1 + 0.2 → 0.3)
   return parseFloat(result.toPrecision(12))
 }
+
+/** True when text looks like arithmetic someone wants answered ("85*0.4+72*0.6", "√2"). */
+export function looksLikeMath(text) {
+  const t = String(text).trim()
+  return t.length > 1 && /^[\d\s.+\-*/×÷−^%()√]+$/.test(t) && /\d/.test(t) && /[+\-*/×÷−^%√]/.test(t.replace(/^-/, ""))
+}
+
+/** Evaluate if it looks like math; returns the number or null. Never throws. */
+export function tryCalc(text) {
+  if (!looksLikeMath(text)) return null
+  try { return evaluate(text) } catch { return null }
+}

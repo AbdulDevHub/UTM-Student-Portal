@@ -22,7 +22,7 @@
     <meta name="color-scheme" content="light dark">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="icon" href="/images/icons/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="/images/icons/logo.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +31,6 @@
     <link rel="stylesheet" href="/css/style.css">
     <script>try{var t=localStorage.getItem("theme");if(!t&&localStorage.getItem("dark-mode")==="true")t="dark";if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t}catch(e){}document.documentElement.classList.add("js")</script>
     <!-- /@head -->
-    <link rel="stylesheet" href="/css/student_projects.css">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -82,14 +81,13 @@
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="/" aria-label="UTM Student Portal home">
-          <img src="/images/icons/logo-96.png" alt="" width="42" height="42">
+          <img src="/images/icons/logo.svg" alt="" width="40" height="40">
           <span class="brand-text"><span class="eyebrow">University of Toronto Mississauga</span><span class="brand-name">Student Portal</span></span>
         </a>
         <nav class="site-nav" aria-label="Main">
           <a href="/" data-nav="/">Home</a>
-          <a href="/gpa-calculator/" data-nav="/gpa-calculator/">GPA Calculator</a>
-          <a href="/calculator/" data-nav="/calculator/">Calculator</a>
-          <a href="/desmos/" data-nav="/desmos/">Desmos</a>
+          <a href="/gpa-calculator/" data-nav="/gpa-calculator/">GPA<span class="nav-long"> Calculator</span></a>
+          <a href="/calculator/" data-nav="/calculator/">Calculators</a>
           <a href="/notes/" data-nav="/notes/">Notes</a>
           <a href="/student-projects/" data-nav="/student-projects/" aria-current="page">Projects</a>
         </nav>
@@ -258,10 +256,9 @@
           <h2>Portal tools</h2>
           <ul class="footer-links">
             <li><a href="/gpa-calculator/">UofT GPA Calculator</a></li>
-            <li><a href="/calculator/">Calculator</a></li>
-            <li><a href="/desmos/">Desmos Calculators</a></li>
+            <li><a href="/calculator/">Scientific &amp; Graphing Calculators</a></li>
             <li><a href="/notes/">Note Taker</a></li>
-            <li><a href="/public-notes/">Public Notes</a></li>
+            <li><a href="/notes/?view=public">Public Notes</a></li>
             <li><a href="/student-projects/">Student Projects</a></li>
           </ul>
         </div>

@@ -1,6 +1,6 @@
 import { test } from "node:test"
 import assert from "node:assert/strict"
-import { parseGrade, computeGpa, combineCgpa, requiredAverage, requiredFinal, fromPercent } from "../js/lib/gpa.js"
+import { parseGrade, computeGpa, combineCgpa, requiredAverage, requiredFinal, fromPercent } from "../../js/lib/gpa.js"
 
 test("percent → UofT letter and grade points (scale boundaries)", () => {
   const cases = [[100, "A+", 4], [90, "A+", 4], [89, "A", 4], [85, "A", 4], [84, "A-", 3.7], [80, "A-", 3.7], [79, "B+", 3.3], [77, "B+", 3.3], [76, "B", 3], [73, "B", 3], [72, "B-", 2.7], [70, "B-", 2.7], [69, "C+", 2.3], [66, "C", 2], [62, "C-", 1.7], [59, "D+", 1.3], [56, "D", 1], [52, "D-", 0.7], [50, "D-", 0.7], [49, "F", 0], [0, "F", 0]]
@@ -38,7 +38,7 @@ test("CGPA, target planner and final-exam planner", () => {
   assert.equal(requiredFinal(80, 0, 85), null)
 })
 
-import { letterForGpa } from "../js/lib/gpa.js"
+import { letterForGpa } from "../../js/lib/gpa.js"
 test("letterForGpa maps averages to letters", () => {
   assert.equal(letterForGpa(3.33), "B+")
   assert.equal(letterForGpa(4), "A+")

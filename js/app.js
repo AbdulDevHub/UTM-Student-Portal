@@ -65,7 +65,7 @@ document.addEventListener("click", track)
 document.addEventListener("auxclick", track)
 
 // ---------- Ctrl+K palette ----------
-const palette = initPalette({ toggleTheme })
+const palette = initPalette({ toggleTheme, toast })
 document.querySelectorAll("[data-open-palette]").forEach((b) => b.addEventListener("click", () => palette?.open()))
 document.addEventListener("keydown", (e) => {
   const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable

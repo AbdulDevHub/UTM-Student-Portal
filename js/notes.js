@@ -1,4 +1,5 @@
-// Note Taker: private notes per Google account, optionally published to Public Notes.
+// Notes page: private notes per Google account (My notes) plus the feed of
+// notes students chose to publish (Shared notes), on two tabs.
 import { collection, addDoc, getDocs, updateDoc, orderBy, query, where, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js"
 import { auth, db, esc, formatDate, setupAuth } from "./notes-firebase.js"
 import { toast } from "./app.js"
@@ -62,6 +63,7 @@ form.addEventListener("submit", async (e) => {
     if (editingId) {
       await updateDoc(doc(db, "posts", editingId), { title, content })
       Object.assign(posts.find((p) => p.id === editingId), { title, content })
+      publicPosts = null
       toast("Note updated")
     } else {
       const data = { title, content, userId: auth.currentUser.uid, public: false, timestamp: new Date() }
@@ -103,7 +105,8 @@ container.addEventListener("click", async (e) => {
       await updateDoc(doc(db, "posts", id), { public: !post.public })
       post.public = !post.public
       render()
-      toast(post.public ? "Published to Public Notes" : "Note is private again")
+      publicPosts = null
+      toast(post.public ? "Published to Shared notes" : "Note is private again")
     } catch (err) {
       console.error(err)
       toast("Couldn't update. Try again.")
@@ -120,6 +123,7 @@ container.addEventListener("click", async (e) => {
     try {
       await deleteDoc(doc(db, "posts", id))
       posts = posts.filter((p) => p.id !== id)
+      publicPosts = null
       if (editingId === id) resetForm()
       render()
       toast("Note deleted")
@@ -130,7 +134,62 @@ container.addEventListener("click", async (e) => {
   }
 })
 
+// ---------- Shared notes ----------
+const pubSearch = document.getElementById("public-search")
+const pubContainer = document.getElementById("public-container")
+const pubCount = document.getElementById("public-count")
+let publicPosts = null // null = not loaded yet
+
+function renderPublic() {
+  const q = pubSearch.value.trim().toLowerCase()
+  const shown = q ? publicPosts.filter((p) => `${p.title} ${p.content}`.toLowerCase().includes(q)) : publicPosts
+  pubContainer.innerHTML = shown.length
+    ? shown.map((p) => `<article class="post"><div class="post-top"><h2>${esc(p.title) || "Untitled"}</h2></div><p class="post-content">${esc(p.content)}</p><div class="post-foot"><span class="post-date">${formatDate(p.timestamp)}</span></div></article>`).join("")
+    : `<p class="empty-hint">${publicPosts.length ? "No shared notes match that search." : "No shared notes yet. Publish one from My notes to be the first."}</p>`
+  pubCount.textContent = publicPosts.length ? `${publicPosts.length} note${publicPosts.length === 1 ? "" : "s"}` : ""
+}
+async function loadPublic(force = false) {
+  if (publicPosts && !force) return renderPublic()
+  pubContainer.innerHTML = `<p class="empty-hint">Loading shared notes…</p>`
+  try {
+    const snap = await getDocs(query(collection(db, "posts"), where("public", "==", true), orderBy("timestamp", "desc")))
+    publicPosts = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+    renderPublic()
+  } catch (err) {
+    console.error(err)
+    pubContainer.innerHTML = `<p class="empty-hint">Couldn't load shared notes. Refresh to try again.</p>`
+  }
+}
+pubSearch.addEventListener("input", () => publicPosts && renderPublic())
+
+// ---------- Tabs (?view=public opens Shared notes) ----------
+const tabs = [...document.querySelectorAll("[data-note-tabs] [role=tab]")]
+function showTab(id, focus) {
+  for (const t of tabs) {
+    const on = t.id === id
+    t.setAttribute("aria-selected", String(on))
+    t.tabIndex = on ? 0 : -1
+    document.getElementById(t.getAttribute("aria-controls")).hidden = !on
+  }
+  const u = new URL(location.href)
+  if (id === "tab-public") { u.searchParams.set("view", "public"); if (auth.currentUser) loadPublic() }
+  else u.searchParams.delete("view")
+  history.replaceState(null, "", u)
+  if (focus) document.getElementById(id).focus()
+}
+tabs.forEach((t, i) => {
+  t.addEventListener("click", () => showTab(t.id))
+  t.addEventListener("keydown", (e) => {
+    const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0
+    if (d) showTab(tabs[(i + d + tabs.length) % tabs.length].id, true)
+  })
+})
+const startPublic = new URLSearchParams(location.search).get("view") === "public"
+showTab(startPublic ? "tab-public" : "tab-mine")
+
 setupAuth((user) => {
-  if (user) load().catch((err) => { console.error(err); container.innerHTML = `<p class="empty-hint">Couldn't load your notes. Refresh to try again.</p>` })
-  else { posts = []; container.innerHTML = ""; resetForm() }
+  if (user) {
+    load().catch((err) => { console.error(err); container.innerHTML = `<p class="empty-hint">Couldn't load your notes. Refresh to try again.</p>` })
+    if (!document.getElementById("panel-public").hidden) loadPublic()
+  } else { posts = []; publicPosts = null; container.innerHTML = ""; pubContainer.innerHTML = ""; resetForm() }
 })

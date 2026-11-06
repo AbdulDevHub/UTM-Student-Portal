@@ -17,8 +17,7 @@
   ],
   "shortcuts": [
     { "name": "GPA Calculator", "short_name": "GPA", "url": "/gpa-calculator/", "icons": [{ "src": "/images/icons/icon-192.png", "sizes": "192x192" }] },
-    { "name": "Calculator", "url": "/calculator/", "icons": [{ "src": "/images/icons/icon-192.png", "sizes": "192x192" }] },
-    { "name": "Desmos", "url": "/desmos/", "icons": [{ "src": "/images/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Calculators", "url": "/calculator/", "icons": [{ "src": "/images/icons/icon-192.png", "sizes": "192x192" }] },
     { "name": "Note Taker", "short_name": "Notes", "url": "/notes/", "icons": [{ "src": "/images/icons/icon-192.png", "sizes": "192x192" }] }
   ]
 }

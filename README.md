@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href="https://utmstudentportal.netlify.app/"><img src="images/icons/icon-192.png" width="88" alt="UTM Student Portal logo"></a>
+<a href="https://utmstudentportal.netlify.app/"><img src="images/icons/logo.svg" width="88" alt="UTM Student Portal logo"></a>
 
 # UTM Student Portal: Every UofT Mississauga Link, Tool & Deadline in One Search
 
@@ -33,8 +33,8 @@ UTM students juggle a dozen UofT systems: ACORN for enrolment, Quercus for cours
 | **Live term tracker** | "Week 8 of 13", a progress bar for the term, and a countdown to the next UTM deadline, break or exam period. |
 | **Live Mississauga weather** | Current conditions and a 4-day forecast for campus, from [Open-Meteo](https://open-meteo.com/) (free, no API key). |
 | **UofT GPA calculator** | Converts marks or letters to the UofT 4.0 scale, gives you your sessional GPA and CGPA, works out the final-exam mark you need, plans a target CGPA, and makes shareable links. |
-| **Calculator + Desmos** | A keyboard-friendly calculator with history (a safe parser, no `eval`), plus the Desmos scientific, graphing, matrix and geometry calculators in tabs. |
-| **Note Taker + Public Notes** | Google sign-in notes stored in Firebase, with optional publishing to a shared feed. |
+| **Quick math + calculators** | Type a sum like `85*0.4+72*0.6` into any search box for an instant answer (a safe parser, no `eval`). Desmos scientific, graphing, matrix and geometry calculators sit in one tabbed page. |
+| **Notes** | Google sign-in notes stored in Firebase, with a Shared notes tab for notes students choose to publish. |
 | **Student Projects** | A gallery of apps, games and designs built by UTM students. |
 | **Installable and offline** | A PWA with a service worker: add it to your home screen and the main pages still load without a connection. |
 | **Dark mode** | Follows your system setting, or toggle it yourself. |
@@ -89,16 +89,17 @@ Not a coder? [Suggest a link](https://github.com/AbdulDevHub/UTM-Student-Portal/
 ```
 ├── index.html              Home: search, term tracker, pins, link directory, FAQ
 ├── gpa-calculator/         UofT GPA / CGPA / final-exam calculator
-├── calculator/  desmos/    Calculators
-├── notes/  public-notes/   Firebase note taker + shared notes
+├── calculator/             Desmos calculators (tabs)
+├── notes/                  My notes + Shared notes (Firebase)
 ├── student-projects/       Student project gallery
+├── css/style.css           One stylesheet for the whole site
 ├── js/
 │   ├── data/               links.js, dates.js: the content
 │   ├── lib/                Pure logic (search, gpa, term, calc), unit-tested
 │   └── *.js                Page scripts, Ctrl+K palette, weather, store
-├── partials/               Shared <head>, header and footer
-├── scripts/                build, link checker, dev server
-├── tests/                  node:test unit tests
+├── images/                 Icons, project shots, README screenshots
+├── scripts/                Build-only: build, dev server, link checker,
+│                           shared partials/, unit tests/, Lighthouse config
 └── sw.js                   Service worker (offline + install)
 ```
 

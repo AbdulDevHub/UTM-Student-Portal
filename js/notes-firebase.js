@@ -1,4 +1,4 @@
-// Shared Firebase setup + UI helpers for the Note Taker and Public Notes pages.
+// Shared Firebase setup + UI helpers for the Notes page.
 // The config below is Firebase's public web config (safe to ship); access is
 // enforced by Firestore security rules on the server.
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js"

@@ -2,11 +2,12 @@
 import { allLinks, monogram } from "./data/links.js"
 import { indexItems, search } from "./lib/search.js"
 import { getPins, getRecent, addRecent } from "./store.js"
+import { tryCalc } from "./lib/calc.js"
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c])
 const POPULAR = ["acorn", "quercus", "timetable-builder", "exam-schedule", "important-dates", "gpa-calculator"]
 
-export function initPalette({ toggleTheme }) {
+export function initPalette({ toggleTheme, toast }) {
   const dialog = document.getElementById("palette")
   if (!dialog || typeof dialog.showModal !== "function") return null
   const input = dialog.querySelector("#palette-input")
@@ -25,7 +26,17 @@ export function initPalette({ toggleTheme }) {
 
   function groups() {
     const q = input.value.trim()
-    if (q) return [["Results", search(q, index, 30).map((r) => r.item)]]
+    if (q) {
+      const out = []
+      const answer = tryCalc(q)
+      if (answer !== null) {
+        const text = String(answer)
+        out.push(["Calculator", [{ id: "action-calc", mono: "=", name: `= ${answer.toLocaleString("en-CA", { maximumFractionDigits: 10 })}`, desc: `${q} · Enter copies the answer`, categoryTitle: "Copy", color: "internal", action: () => copy(text) }]])
+      }
+      const hits = search(q, index, 30).map((r) => r.item)
+      if (hits.length) out.push(["Results", hits])
+      return out
+    }
     const seen = new Set()
     const take = (ids) => ids.map((id) => byId.get(id)).filter((x) => x && !seen.has(x.id) && seen.add(x.id))
     return [
@@ -43,7 +54,7 @@ export function initPalette({ toggleTheme }) {
       for (const item of arr) {
         const i = results.push(item) - 1
         html += `<li class="palette-item" role="option" id="pal-${i}" data-i="${i}" aria-selected="false" style="--c: var(--c-${item.color})">
-          <span class="mono" aria-hidden="true">${esc(monogram(item.name))}</span>
+          <span class="mono" aria-hidden="true">${esc(item.mono || monogram(item.name))}</span>
           <span class="p-text"><span class="p-name">${esc(item.name)}</span><span class="p-desc">${esc(item.desc || "")}</span></span>
           <span class="p-cat">${esc(item.categoryTitle || "")}</span>
           <svg class="icon p-enter" aria-hidden="true"><use href="#i-enter"/></svg></li>`
@@ -61,6 +72,10 @@ export function initPalette({ toggleTheme }) {
     const el = list.querySelector(`#pal-${active}`)
     input.setAttribute("aria-activedescendant", `pal-${active}`)
     el?.scrollIntoView({ block: "nearest" })
+  }
+
+  async function copy(text) {
+    try { await navigator.clipboard.writeText(text); toast(`Copied ${text}`) } catch { toast(text) }
   }
 
   function choose(item, newTab = false) {

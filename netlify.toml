@@ -37,12 +37,12 @@
   force = true
 [[redirects]]
   from = "/pages/desmos.html"
-  to = "/desmos/"
+  to = "/calculator/"
   status = 301
   force = true
 [[redirects]]
   from = "/pages/desmos"
-  to = "/desmos/"
+  to = "/calculator/"
   status = 301
   force = true
 [[redirects]]
@@ -57,12 +57,12 @@
   force = true
 [[redirects]]
   from = "/pages/public_notes.html"
-  to = "/public-notes/"
+  to = "/notes/?view=public"
   status = 301
   force = true
 [[redirects]]
   from = "/pages/public_notes"
-  to = "/public-notes/"
+  to = "/notes/?view=public"
   status = 301
   force = true
 [[redirects]]
@@ -93,6 +93,28 @@
 [[redirects]]
   from = "/index.html"
   to = "/"
+  status = 301
+  force = true
+
+# Pages merged in v2.1
+[[redirects]]
+  from = "/desmos/*"
+  to = "/calculator/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/desmos"
+  to = "/calculator/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/public-notes/*"
+  to = "/notes/?view=public"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/public-notes"
+  to = "/notes/?view=public"
   status = 301
   force = true
 

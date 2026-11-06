@@ -1,6 +1,6 @@
 import { test } from "node:test"
 import assert from "node:assert/strict"
-import { evaluate } from "../js/lib/calc.js"
+import { evaluate } from "../../js/lib/calc.js"
 
 test("basic arithmetic and precedence", () => {
   assert.equal(evaluate("1+2*3"), 7)
@@ -28,4 +28,14 @@ test("errors", () => {
   assert.throws(() => evaluate("alert(1)"), /Unexpected/)
   assert.throws(() => evaluate("1..2"), /Invalid number/)
   assert.throws(() => evaluate(""), /Nothing/)
+})
+
+import { looksLikeMath, tryCalc } from "../../js/lib/calc.js"
+test("quick-math detection for the search boxes", () => {
+  assert.equal(tryCalc("85*0.4+72*0.6"), 77.2)
+  assert.equal(tryCalc("√2^2"), 2)
+  assert.equal(looksLikeMath("csc108"), false)
+  assert.equal(looksLikeMath("2026"), false)
+  assert.equal(looksLikeMath("-5"), false)
+  assert.equal(tryCalc("1/0"), null)
 })

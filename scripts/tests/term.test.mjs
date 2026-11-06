@@ -1,7 +1,7 @@
 import { test } from "node:test"
 import assert from "node:assert/strict"
-import { termStatus, upcomingEvents, torontoToday } from "../js/lib/term.js"
-import { terms, events } from "../js/data/dates.js"
+import { termStatus, upcomingEvents, torontoToday } from "../../js/lib/term.js"
+import { terms, events } from "../../js/data/dates.js"
 
 test("teaching weeks skip Fall Break", () => {
   assert.equal(termStatus("2026-09-08", terms).label, "Week 1 of 13")

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Note Taker for UTM Students | UTM Student Portal</title>
-    <meta name="description" content="Sign in with Google to write, search and save course notes, then share the best ones with other UofT Mississauga students. Free note taker in the UTM Student Portal.">
+    <title>Notes: Private &amp; Shared Course Notes | UTM Student Portal</title>
+    <meta name="description" content="Write, search and save course notes with Google sign-in, and browse notes shared by other University of Toronto Mississauga students. Free in the UTM Student Portal.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://utmstudentportal.netlify.app/notes/">
     <meta property="og:type" content="website">
@@ -22,7 +22,7 @@
     <meta name="color-scheme" content="light dark">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="icon" href="/images/icons/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="/images/icons/logo.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +31,6 @@
     <link rel="stylesheet" href="/css/style.css">
     <script>try{var t=localStorage.getItem("theme");if(!t&&localStorage.getItem("dark-mode")==="true")t="dark";if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t}catch(e){}document.documentElement.classList.add("js")</script>
     <!-- /@head -->
-    <link rel="stylesheet" href="/css/notes.css">
 </head>
 <body>
     <!-- @header -->
@@ -72,14 +71,13 @@
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="/" aria-label="UTM Student Portal home">
-          <img src="/images/icons/logo-96.png" alt="" width="42" height="42">
+          <img src="/images/icons/logo.svg" alt="" width="40" height="40">
           <span class="brand-text"><span class="eyebrow">University of Toronto Mississauga</span><span class="brand-name">Student Portal</span></span>
         </a>
         <nav class="site-nav" aria-label="Main">
           <a href="/" data-nav="/">Home</a>
-          <a href="/gpa-calculator/" data-nav="/gpa-calculator/">GPA Calculator</a>
-          <a href="/calculator/" data-nav="/calculator/">Calculator</a>
-          <a href="/desmos/" data-nav="/desmos/">Desmos</a>
+          <a href="/gpa-calculator/" data-nav="/gpa-calculator/">GPA<span class="nav-long"> Calculator</span></a>
+          <a href="/calculator/" data-nav="/calculator/">Calculators</a>
           <a href="/notes/" data-nav="/notes/" aria-current="page">Notes</a>
           <a href="/student-projects/" data-nav="/student-projects/">Projects</a>
         </nav>
@@ -105,9 +103,9 @@
     <main id="main" class="container notes-page">
         <section class="page-hero notes-hero">
             <div>
-                <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Portal</a> / <span aria-current="page">Note Taker</span></nav>
-                <h1>Note Taker</h1>
-                <p>Private notes tied to your Google account. Publish any note to share it on <a href="/public-notes/">Public Notes</a>.</p>
+                <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Portal</a> / <span aria-current="page">Notes</span></nav>
+                <h1>Notes</h1>
+                <p>Private notes tied to your Google account. Publish any note to share it with other UTM students under Shared notes.</p>
             </div>
             <div class="profile-section">
                 <div id="user-profile" class="user-chip" hidden></div>
@@ -118,27 +116,42 @@
 
         <div class="signed-out card" data-signed-out>
             <h2>Sign in to start writing</h2>
-            <p class="sub">Your notes sync across devices and stay private until you publish them.</p>
+            <p class="sub">Your notes sync across devices and stay private until you publish them. Shared notes are visible to signed-in students.</p>
         </div>
 
         <div data-signed-in hidden>
-            <form class="card note-form" id="note-form">
-                <label class="visually-hidden" for="post-title">Title</label>
-                <input class="input note-title" id="post-title" type="text" placeholder="Title, e.g. CSC209 Lecture 7: pipes" maxlength="140">
-                <label class="visually-hidden" for="post-content">Note</label>
-                <textarea class="input note-content" id="post-content" rows="6" placeholder="Write your note…"></textarea>
-                <div class="note-form-actions">
-                    <button class="btn" type="button" id="cancel-edit" hidden>Cancel</button>
-                    <button class="btn btn-primary" type="submit">Save note</button>
-                </div>
-            </form>
-
-            <div class="notes-toolbar">
-                <h2 class="notes-title">Your notes <span id="notes-count"></span></h2>
-                <label class="visually-hidden" for="search-field">Search your notes</label>
-                <input class="input" id="search-field" type="search" placeholder="Search your notes…">
+            <div class="tabs notes-tabs" role="tablist" aria-label="Which notes" data-note-tabs>
+                <button type="button" role="tab" id="tab-mine" aria-controls="panel-mine" aria-selected="true">My notes</button>
+                <button type="button" role="tab" id="tab-public" aria-controls="panel-public" aria-selected="false" tabindex="-1">Shared notes</button>
             </div>
-            <div id="posts-container" class="posts"></div>
+
+            <section id="panel-mine" role="tabpanel" aria-labelledby="tab-mine">
+                <form class="card note-form" id="note-form">
+                    <label class="visually-hidden" for="post-title">Title</label>
+                    <input class="input note-title" id="post-title" type="text" placeholder="Title, e.g. CSC209 Lecture 7: pipes" maxlength="140">
+                    <label class="visually-hidden" for="post-content">Note</label>
+                    <textarea class="input note-content" id="post-content" rows="6" placeholder="Write your note…"></textarea>
+                    <div class="note-form-actions">
+                        <button class="btn" type="button" id="cancel-edit" hidden>Cancel</button>
+                        <button class="btn btn-primary" type="submit">Save note</button>
+                    </div>
+                </form>
+                <div class="notes-toolbar">
+                    <h2 class="notes-title">Your notes <span id="notes-count"></span></h2>
+                    <label class="visually-hidden" for="search-field">Search your notes</label>
+                    <input class="input" id="search-field" type="search" placeholder="Search your notes…">
+                </div>
+                <div id="posts-container" class="posts"></div>
+            </section>
+
+            <section id="panel-public" role="tabpanel" aria-labelledby="tab-public" hidden>
+                <div class="notes-toolbar">
+                    <h2 class="notes-title">Shared by UTM students <span id="public-count"></span></h2>
+                    <label class="visually-hidden" for="public-search">Search shared notes</label>
+                    <input class="input" id="public-search" type="search" placeholder="Search by course or topic…">
+                </div>
+                <div id="public-container" class="posts"></div>
+            </section>
         </div>
     </main>
 
@@ -158,10 +171,9 @@
           <h2>Portal tools</h2>
           <ul class="footer-links">
             <li><a href="/gpa-calculator/">UofT GPA Calculator</a></li>
-            <li><a href="/calculator/">Calculator</a></li>
-            <li><a href="/desmos/">Desmos Calculators</a></li>
+            <li><a href="/calculator/">Scientific &amp; Graphing Calculators</a></li>
             <li><a href="/notes/">Note Taker</a></li>
-            <li><a href="/public-notes/">Public Notes</a></li>
+            <li><a href="/notes/?view=public">Public Notes</a></li>
             <li><a href="/student-projects/">Student Projects</a></li>
           </ul>
         </div>

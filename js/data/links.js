@@ -12,14 +12,16 @@
 //    major    (majors category only) which major the link belongs to
 // =====================================================================
 
+// col: which homepage column the category sits in (1 or 2), or "full" for full width.
+// Keep the two columns roughly the same height so the grid has no dead space.
 export const categories = [
-  { id: "essentials", title: "UTM Essentials", color: "essentials" },
-  { id: "tools", title: "UTM Tools", color: "tools" },
-  { id: "services", title: "Support & Services", color: "logistics" },
-  { id: "campus", title: "Campus Life", color: "campus" },
-  { id: "majors", title: "Links by Major", color: "courses" },
-  { id: "portal", title: "Portal Tools", color: "internal" },
-  { id: "external", title: "External Tools", color: "external" },
+  { id: "essentials", title: "UTM Essentials", color: "essentials", col: 1 },
+  { id: "tools", title: "UTM Tools", color: "tools", col: 2 },
+  { id: "services", title: "Support & Services", color: "logistics", col: 1 },
+  { id: "campus", title: "Campus Life", color: "campus", col: 2 },
+  { id: "portal", title: "Portal Tools", color: "internal", col: 1 },
+  { id: "majors", title: "Links by Major", color: "courses", col: 2 },
+  { id: "external", title: "External Tools", color: "external", col: "full" },
 ]
 
 export const majors = [
@@ -106,10 +108,8 @@ export const links = {
   // Site-relative pages that live in this repo
   portal: [
     { name: "GPA Calculator", url: "/gpa-calculator/", desc: "UofT GPA, CGPA and final-exam planner", aliases: ["gpa", "cgpa", "grades", "final exam", "what do i need"] },
-    { name: "Calculator", url: "/calculator/", desc: "Quick calculator with history", aliases: ["calc", "math", "basic calculator"] },
-    { name: "Desmos Calculators", url: "/desmos/", desc: "Scientific, graphing and matrix", aliases: ["desmos", "graphing", "scientific", "matrix", "graph"] },
-    { name: "Note Taker", url: "/notes/", desc: "Save notes with Google sign-in", aliases: ["notes", "notepad", "write"] },
-    { name: "Public Notes", url: "/public-notes/", desc: "Notes shared by other students", aliases: ["shared notes", "public"] },
+    { name: "Calculators", url: "/calculator/", desc: "Desmos scientific, graphing, matrix", aliases: ["calc", "calculator", "desmos", "graphing", "scientific", "matrix", "graph", "math"] },
+    { name: "Notes", url: "/notes/", desc: "Your notes + notes shared by students", aliases: ["notes", "notepad", "note taker", "public notes", "shared notes"] },
     { name: "Student Projects", url: "/student-projects/", desc: "Apps and games built by students", aliases: ["projects", "portfolio", "showcase"] },
   ],
 

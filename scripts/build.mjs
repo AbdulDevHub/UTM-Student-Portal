@@ -23,10 +23,8 @@ const PAGES = [
   { file: "index.html", path: "/", priority: "1.0", changefreq: "weekly" },
   { file: "gpa-calculator/index.html", path: "/gpa-calculator/", priority: "0.9", changefreq: "monthly" },
   { file: "calculator/index.html", path: "/calculator/", priority: "0.6", changefreq: "yearly" },
-  { file: "desmos/index.html", path: "/desmos/", priority: "0.6", changefreq: "yearly" },
   { file: "student-projects/index.html", path: "/student-projects/", priority: "0.6", changefreq: "monthly" },
-  { file: "public-notes/index.html", path: "/public-notes/", priority: "0.5", changefreq: "weekly" },
-  { file: "notes/index.html", path: "/notes/", priority: "0.4", changefreq: "yearly" },
+  { file: "notes/index.html", path: "/notes/", priority: "0.5", changefreq: "weekly" },
   { file: "404.html", path: null },
 ]
 
@@ -36,11 +34,9 @@ const PRECACHE = [
   "/gpa-calculator/",
   "/calculator/",
   "/css/style.css",
-  "/css/calculator.css",
   "/js/app.js",
   "/js/home.js",
   "/js/gpa-page.js",
-  "/js/calc-page.js",
   "/js/palette.js",
   "/js/store.js",
   "/js/weather.js",
@@ -50,7 +46,7 @@ const PRECACHE = [
   "/js/lib/term.js",
   "/js/lib/gpa.js",
   "/js/lib/calc.js",
-  "/images/icons/logo-96.png",
+  "/images/icons/logo.svg",
   "/images/icons/icon-192.png",
   "/images/chatbot_icon_v3.png",
   "/site.webmanifest",
@@ -78,22 +74,32 @@ function tile(link) {
   return `<li class="tile" data-id="${id}"${major}><a href="${esc(link.url)}" data-link-id="${id}"${attrs}><span class="mono" aria-hidden="true">${esc(monogram(link.name))}</span><span class="tile-text"><span class="tile-name">${esc(link.name)}</span><span class="tile-desc">${esc(link.desc || "")}</span></span></a><button class="pin" type="button" aria-pressed="false" aria-label="Pin ${esc(link.name)}"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></button></li>`
 }
 
-function renderDirectory() {
-  return categories
-    .map((cat) => {
-      const items = links[cat.id] || []
-      const tabs =
-        cat.id === "majors"
-          ? `\n  <div class="major-tabs" role="group" aria-label="Choose your major">${majors.map((m, i) => `<button type="button" data-major="${m.id}" aria-pressed="${i === 0}">${esc(m.name)}</button>`).join("")}</div>`
-          : ""
-      return `<section class="cat cat--${cat.id}" id="${cat.id}" data-cat="${cat.id}" aria-labelledby="h-${cat.id}">
+function renderCategory(cat) {
+  const items = links[cat.id] || []
+  const tabs =
+    cat.id === "majors"
+      ? `\n  <div class="major-tabs" role="group" aria-label="Choose your major">${majors.map((m, i) => `<button type="button" data-major="${m.id}" aria-pressed="${i === 0}">${esc(m.name)}</button>`).join("")}</div>`
+      : ""
+  return `<section class="cat cat--${cat.id}" id="${cat.id}" data-cat="${cat.id}" aria-labelledby="h-${cat.id}">
   <div class="cat-head"><h2 id="h-${cat.id}">${esc(cat.title)}</h2><span class="cat-count">${items.length}</span></div>${tabs}
   <ul class="tiles">
 ${items.map((l) => "    " + tile(l)).join("\n")}
-  </ul>
+  </ul>${cat.id === "portal" ? QUICK_MATH_HINT : cat.id === "majors" ? MAJOR_HINT : ""}
 </section>`
-    })
-    .join("\n")
+}
+
+const MAJOR_HINT = `
+  <p class="cat-hint"><span class="mono" aria-hidden="true">+</span><span><b>Missing your program?</b> <a href="https://github.com/AbdulDevHub/UTM-Student-Portal/issues/new?template=suggest-link.yml" target="_blank" rel="noopener">Suggest a link for your major</a> and it can be added for everyone.</span></p>`
+
+// Shown at the bottom of Portal Tools (also soaks up spare column height)
+const QUICK_MATH_HINT = `
+  <p class="cat-hint"><span class="mono" aria-hidden="true">=</span><span><b>Quick math, anywhere.</b> Press <kbd>Ctrl</kbd> <kbd>K</kbd> and type a sum like <code>85*0.4+72*0.6</code> to get the answer.</span></p>`
+
+// Two explicit columns (balanced via `col` in links.js), then full-width categories.
+function renderDirectory() {
+  const col = (n) => categories.filter((c) => c.col === n).map(renderCategory).join("\n")
+  const wrap = (html) => `<div class="dir-col">\n${indent(html, "  ")}\n</div>`
+  return [wrap(col(1)), wrap(col(2)), col("full")].join("\n")
 }
 
 // ---------- FAQ (visible HTML and FAQPage JSON-LD from one source) ----------
@@ -147,9 +153,9 @@ function renderFaqSchema() {
 
 // ---------- run ----------
 const outputs = new Map() // file -> new content
-const headPartial = read("partials/head.html")
-const headerPartial = read("partials/header.html")
-const footerPartial = read("partials/footer.html")
+const headPartial = read("scripts/partials/head.html")
+const headerPartial = read("scripts/partials/header.html")
+const footerPartial = read("scripts/partials/footer.html")
 
 for (const page of PAGES) {
   if (!existsSync(page.file)) throw new Error(`missing page ${page.file}`)
