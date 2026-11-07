@@ -1,6 +1,6 @@
 // Service worker: makes the portal installable and usable offline.
 // VERSION and the precache list are rewritten by `npm run build`.
-const VERSION = "3a592cc3f0"
+const VERSION = "9edeea8e9d"
 const PRECACHE = /* @precache */ [
   "/",
   "/gpa-calculator/",
